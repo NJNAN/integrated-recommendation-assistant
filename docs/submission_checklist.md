@@ -39,7 +39,7 @@ Compress-Archive "..\小组号-项目名" "..\小组号-项目名.zip"
 - [ ] 第5 章数字以 `outputs/` 为准：57 条固定样例（阶段02 要求 ≥20 条、通过率 ≥80%）、
       回归测试数量见 `outputs/test_results.json:tests_run`；失败案例按阶段引用
       `docs/stage_summaries.md` 的证据路径。
-- [ ] 表7-2 的“Git 提交”行：当前目录**没有 Git 仓库**，改用实验日志/结构化输出/截图说明；
+- [x] 表7-2 的“Git 提交”行：已初始化 Git 仓库并推送 GitHub（https://github.com/NJNAN/integrated-recommendation-assistant），直接填仓库地址与提交号；
       如学校要求 Git，先 `git init` 并保留提交历史。
 - [ ] 成绩评定表由指导教师填写评语、等级、签字与日期。
 

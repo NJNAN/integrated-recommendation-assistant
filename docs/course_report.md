@@ -132,7 +132,8 @@ VLModel 调本地视觉模型提取品类与颜色，HumanDetector + GestureReco
 本稿是**共享基础稿，不能替代正式报告**：每位成员仍需按
 `docs/《行业工程实践》普本学生实训报告模板.docx` 独立成稿、补齐封面/表1-3/第7章/第8章并导出 PDF
 （命名“小组号-成员名-实训报告.pdf”），流程见 `docs/submission_checklist.md`。
-当前目录无 Git 仓库，表7-2 的“Git 提交”行需改用实验记录或结构化输出并在报告中说明。
+本项目已初始化 Git 仓库并推送到 GitHub（https://github.com/NJNAN/integrated-recommendation-assistant），
+表7-2 的“Git 提交”行可直接填仓库地址与提交号。
 
 ## 8 实训总结与学习体会
 

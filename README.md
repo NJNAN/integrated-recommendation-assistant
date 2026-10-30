@@ -13,6 +13,7 @@
 - 部署、降级、风险与演示提纲：[docs/deployment.md](docs/deployment.md)
 - 六阶段小结：[docs/stage_summaries.md](docs/stage_summaries.md)
 - 提交清单：[docs/submission_checklist.md](docs/submission_checklist.md)
+- GitHub 仓库：<https://github.com/NJNAN/integrated-recommendation-assistant>
 
 ## 安装与运行
 
