@@ -1,0 +1,3197 @@
+{
+  "generated_at": "2026-10-30T15:06:07.893043+00:00",
+  "metrics": {
+    "case_count": 4,
+    "passed": 4,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "latency_ms": {
+      "sample_count": 4,
+      "p50": 0.225,
+      "p95": 0.679,
+      "max": 0.679
+    }
+  },
+  "cases": [
+    {
+      "name": "正常推荐",
+      "input": {
+        "trace_id": "orchestrator-normal",
+        "user_id": "demo-user",
+        "session_id": "demo",
+        "timestamp": "2026-10-08T10:00:00+08:00",
+        "source": "text",
+        "payload": {
+          "text": "蓝色背包预算300以内"
+        }
+      },
+      "expected_status": "ok",
+      "response": {
+        "trace_id": "orchestrator-normal",
+        "status": "ok",
+        "message": "找到 2 件符合条件的商品。",
+        "items": [
+          {
+            "trace_id": "orchestrator-normal",
+            "item_id": "demo-001",
+            "name": "云朵轻量双肩包",
+            "price": 229,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "category",
+              "popularity"
+            ],
+            "score": 0.368,
+            "score_breakdown": {
+              "popularity": 0.368,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "orchestrator-normal",
+              "item_id": "demo-001",
+              "attributes": {
+                "name": "云朵轻量双肩包",
+                "price": 229,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "category",
+                "popularity"
+              ],
+              "matched_constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "蓝色",
+                  "confidence": 0.96
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-001:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"云朵轻量双肩包\", \"price\": 229, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-001:description",
+                  "source": "catalog",
+                  "text": "轻量双肩设计，设有独立收纳隔层。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "citations": [
+                "catalog:demo-001:attributes",
+                "catalog:demo-001:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "item_id": "demo-013",
+            "name": "轻行运动双肩包",
+            "price": 269,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "category",
+              "popularity"
+            ],
+            "score": 0.344,
+            "score_breakdown": {
+              "popularity": 0.344,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "orchestrator-normal",
+              "item_id": "demo-013",
+              "attributes": {
+                "name": "轻行运动双肩包",
+                "price": 269,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "category",
+                "popularity"
+              ],
+              "matched_constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-013:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"轻行运动双肩包\", \"price\": 269, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-013:description",
+                  "source": "catalog",
+                  "text": "运动背包，设有侧面水杯袋。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+              "speech_text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+              "citations": [
+                "catalog:demo-013:attributes",
+                "catalog:demo-013:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          }
+        ],
+        "context": {
+          "user_id": "demo-user",
+          "session_id": "demo",
+          "constraints": {
+            "category": "背包",
+            "color": "蓝色",
+            "budget_max": 300.0
+          },
+          "slot_evidence": {
+            "category": {
+              "value": "背包",
+              "source": "text",
+              "confidence": 1.0
+            },
+            "color": {
+              "value": "蓝色",
+              "source": "text",
+              "confidence": 1.0
+            },
+            "budget_max": {
+              "value": 300.0,
+              "source": "text",
+              "confidence": 1.0
+            }
+          },
+          "preferences": {},
+          "last_item_ids": [
+            "demo-001",
+            "demo-013"
+          ],
+          "last_intent": "filter",
+          "target_item_ids": [],
+          "top_k": 6
+        },
+        "degraded": true,
+        "warnings": [
+          {
+            "code": "OFFLINE_DEMO",
+            "message": "未配置真实推荐服务，使用离线目录召回"
+          }
+        ],
+        "error": null,
+        "trace": [
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "event",
+            "elapsed_ms": 0.028,
+            "data": {
+              "trace_id": "orchestrator-normal",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "payload": {
+                "text": "蓝色背包预算300以内"
+              }
+            }
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "intent",
+            "elapsed_ms": 0.083,
+            "data": {
+              "intent": "filter",
+              "slots": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "背包",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "color": {
+                  "value": "蓝色",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "item_ids": [],
+              "feedback": null,
+              "action": null,
+              "conflicts": [],
+              "ignored_labels": [],
+              "missing": [],
+              "text": "蓝色背包预算300以内"
+            }
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "context",
+            "elapsed_ms": 0.158,
+            "data": {
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "背包",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "color": {
+                  "value": "蓝色",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "preferences": {},
+              "last_item_ids": [],
+              "last_intent": "filter",
+              "target_item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "request",
+            "elapsed_ms": 0.163,
+            "data": {
+              "trace_id": "orchestrator-normal",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "intent": "filter",
+              "constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "preferences": {},
+              "item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "recall_and_ranking",
+            "elapsed_ms": 0.255,
+            "data": {
+              "mode": "offline_demo",
+              "warnings": [
+                {
+                  "code": "OFFLINE_DEMO",
+                  "message": "未配置真实推荐服务，使用离线目录召回"
+                }
+              ],
+              "recall_count": 18,
+              "filtered_count": 16,
+              "rejected": [
+                {
+                  "item_id": "demo-002",
+                  "reasons": [
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "reasons": [
+                    "category",
+                    "color",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "reasons": [
+                    "color",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                }
+              ],
+              "candidates": [
+                {
+                  "item_id": "demo-001",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "sources": [
+                    "popularity"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "explanation",
+            "elapsed_ms": 0.311,
+            "data": [
+              {
+                "item_id": "demo-001",
+                "explanation": {
+                  "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "citations": [
+                    "catalog:demo-001:attributes",
+                    "catalog:demo-001:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-013",
+                "explanation": {
+                  "text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+                  "speech_text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+                  "citations": [
+                    "catalog:demo-013:attributes",
+                    "catalog:demo-013:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              }
+            ]
+          },
+          {
+            "trace_id": "orchestrator-normal",
+            "stage": "result",
+            "elapsed_ms": 0.313,
+            "data": {
+              "status": "ok",
+              "item_ids": [
+                "demo-001",
+                "demo-013"
+              ]
+            }
+          }
+        ],
+        "mode": "offline_demo",
+        "dataset": "synthetic-demo-v1",
+        "currency": "CNY",
+        "price_notice": "",
+        "elapsed_ms": 0.312
+      },
+      "passed": true
+    },
+    {
+      "name": "硬约束空集",
+      "input": {
+        "trace_id": "orchestrator-empty",
+        "user_id": "demo-user",
+        "session_id": "empty",
+        "timestamp": "2026-10-08T10:00:00+08:00",
+        "source": "text",
+        "payload": {
+          "text": "耳机预算1以内"
+        }
+      },
+      "expected_status": "empty",
+      "response": {
+        "trace_id": "orchestrator-empty",
+        "status": "empty",
+        "message": "没有符合当前品类、预算和颜色的商品。请调整条件或撤销上一步；硬约束保持有效。",
+        "items": [],
+        "context": {
+          "user_id": "demo-user",
+          "session_id": "empty",
+          "constraints": {
+            "category": "耳机",
+            "budget_max": 1.0
+          },
+          "slot_evidence": {
+            "category": {
+              "value": "耳机",
+              "source": "text",
+              "confidence": 1.0
+            },
+            "budget_max": {
+              "value": 1.0,
+              "source": "text",
+              "confidence": 1.0
+            }
+          },
+          "preferences": {},
+          "last_item_ids": [],
+          "last_intent": "filter",
+          "target_item_ids": [],
+          "top_k": 6
+        },
+        "degraded": true,
+        "warnings": [
+          {
+            "code": "OFFLINE_DEMO",
+            "message": "未配置真实推荐服务，使用离线目录召回"
+          }
+        ],
+        "error": null,
+        "trace": [
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "event",
+            "elapsed_ms": 0.013,
+            "data": {
+              "trace_id": "orchestrator-empty",
+              "user_id": "demo-user",
+              "session_id": "empty",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "payload": {
+                "text": "耳机预算1以内"
+              }
+            }
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "intent",
+            "elapsed_ms": 0.044,
+            "data": {
+              "intent": "filter",
+              "slots": {
+                "category": "耳机",
+                "budget_max": 1.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "耳机",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 1.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "item_ids": [],
+              "feedback": null,
+              "action": null,
+              "conflicts": [],
+              "ignored_labels": [],
+              "missing": [],
+              "text": "耳机预算1以内"
+            }
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "context",
+            "elapsed_ms": 0.094,
+            "data": {
+              "user_id": "demo-user",
+              "session_id": "empty",
+              "constraints": {
+                "category": "耳机",
+                "budget_max": 1.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "耳机",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 1.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "preferences": {},
+              "last_item_ids": [],
+              "last_intent": "filter",
+              "target_item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "request",
+            "elapsed_ms": 0.098,
+            "data": {
+              "trace_id": "orchestrator-empty",
+              "user_id": "demo-user",
+              "session_id": "empty",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "intent": "filter",
+              "constraints": {
+                "category": "耳机",
+                "budget_max": 1.0
+              },
+              "preferences": {},
+              "item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "recall_and_ranking",
+            "elapsed_ms": 0.127,
+            "data": {
+              "mode": "offline_demo",
+              "warnings": [
+                {
+                  "code": "OFFLINE_DEMO",
+                  "message": "未配置真实推荐服务，使用离线目录召回"
+                }
+              ],
+              "recall_count": 18,
+              "filtered_count": 18,
+              "rejected": [
+                {
+                  "item_id": "demo-001",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "reasons": [
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "reasons": [
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "reasons": [
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "reasons": [
+                    "category",
+                    "budget"
+                  ]
+                }
+              ],
+              "candidates": [
+                {
+                  "item_id": "demo-001",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "sources": [
+                    "popularity"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "explanation",
+            "elapsed_ms": 0.136,
+            "data": []
+          },
+          {
+            "trace_id": "orchestrator-empty",
+            "stage": "result",
+            "elapsed_ms": 0.138,
+            "data": {
+              "status": "empty",
+              "item_ids": []
+            }
+          }
+        ],
+        "mode": "offline_demo",
+        "dataset": "synthetic-demo-v1",
+        "currency": "CNY",
+        "price_notice": "",
+        "elapsed_ms": 0.137
+      },
+      "passed": true
+    },
+    {
+      "name": "上游超时降级",
+      "input": {
+        "trace_id": "orchestrator-timeout",
+        "user_id": "demo-user",
+        "session_id": "demo",
+        "timestamp": "2026-10-08T10:00:00+08:00",
+        "source": "text",
+        "payload": {
+          "text": "蓝色背包预算300以内"
+        }
+      },
+      "expected_status": "ok",
+      "response": {
+        "trace_id": "orchestrator-timeout",
+        "status": "ok",
+        "message": "找到 2 件符合条件的商品。",
+        "items": [
+          {
+            "trace_id": "orchestrator-timeout",
+            "item_id": "demo-001",
+            "name": "云朵轻量双肩包",
+            "price": 229,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "category",
+              "popularity"
+            ],
+            "score": 0.368,
+            "score_breakdown": {
+              "popularity": 0.368,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "orchestrator-timeout",
+              "item_id": "demo-001",
+              "attributes": {
+                "name": "云朵轻量双肩包",
+                "price": 229,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "category",
+                "popularity"
+              ],
+              "matched_constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "蓝色",
+                  "confidence": 0.96
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-001:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"云朵轻量双肩包\", \"price\": 229, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-001:description",
+                  "source": "catalog",
+                  "text": "轻量双肩设计，设有独立收纳隔层。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "citations": [
+                "catalog:demo-001:attributes",
+                "catalog:demo-001:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "item_id": "demo-013",
+            "name": "轻行运动双肩包",
+            "price": 269,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "category",
+              "popularity"
+            ],
+            "score": 0.344,
+            "score_breakdown": {
+              "popularity": 0.344,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "orchestrator-timeout",
+              "item_id": "demo-013",
+              "attributes": {
+                "name": "轻行运动双肩包",
+                "price": 269,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "category",
+                "popularity"
+              ],
+              "matched_constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-013:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"轻行运动双肩包\", \"price\": 269, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-013:description",
+                  "source": "catalog",
+                  "text": "运动背包，设有侧面水杯袋。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+              "speech_text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+              "citations": [
+                "catalog:demo-013:attributes",
+                "catalog:demo-013:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          }
+        ],
+        "context": {
+          "user_id": "demo-user",
+          "session_id": "demo",
+          "constraints": {
+            "category": "背包",
+            "color": "蓝色",
+            "budget_max": 300.0
+          },
+          "slot_evidence": {
+            "category": {
+              "value": "背包",
+              "source": "text",
+              "confidence": 1.0
+            },
+            "color": {
+              "value": "蓝色",
+              "source": "text",
+              "confidence": 1.0
+            },
+            "budget_max": {
+              "value": 300.0,
+              "source": "text",
+              "confidence": 1.0
+            }
+          },
+          "preferences": {},
+          "last_item_ids": [
+            "demo-001",
+            "demo-013"
+          ],
+          "last_intent": "filter",
+          "target_item_ids": [],
+          "top_k": 6
+        },
+        "degraded": true,
+        "warnings": [
+          {
+            "code": "UPSTREAM_TIMEOUT",
+            "message": "验收故障注入：上游超时，启用离线召回"
+          }
+        ],
+        "error": null,
+        "trace": [
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "event",
+            "elapsed_ms": 0.01,
+            "data": {
+              "trace_id": "orchestrator-timeout",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "payload": {
+                "text": "蓝色背包预算300以内"
+              }
+            }
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "intent",
+            "elapsed_ms": 0.04,
+            "data": {
+              "intent": "filter",
+              "slots": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "背包",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "color": {
+                  "value": "蓝色",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "item_ids": [],
+              "feedback": null,
+              "action": null,
+              "conflicts": [],
+              "ignored_labels": [],
+              "missing": [],
+              "text": "蓝色背包预算300以内"
+            }
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "context",
+            "elapsed_ms": 0.09,
+            "data": {
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "category": {
+                  "value": "背包",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "color": {
+                  "value": "蓝色",
+                  "source": "text",
+                  "confidence": 1.0
+                },
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "preferences": {},
+              "last_item_ids": [],
+              "last_intent": "filter",
+              "target_item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "request",
+            "elapsed_ms": 0.095,
+            "data": {
+              "trace_id": "orchestrator-timeout",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "intent": "filter",
+              "constraints": {
+                "category": "背包",
+                "color": "蓝色",
+                "budget_max": 300.0
+              },
+              "preferences": {},
+              "item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "recall_and_ranking",
+            "elapsed_ms": 0.176,
+            "data": {
+              "mode": "offline_demo",
+              "warnings": [
+                {
+                  "code": "UPSTREAM_TIMEOUT",
+                  "message": "验收故障注入：上游超时，启用离线召回"
+                }
+              ],
+              "recall_count": 18,
+              "filtered_count": 16,
+              "rejected": [
+                {
+                  "item_id": "demo-002",
+                  "reasons": [
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "reasons": [
+                    "category",
+                    "color",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "reasons": [
+                    "color",
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "reasons": [
+                    "category"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "reasons": [
+                    "category",
+                    "color"
+                  ]
+                }
+              ],
+              "candidates": [
+                {
+                  "item_id": "demo-001",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "sources": [
+                    "category",
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "sources": [
+                    "popularity"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "explanation",
+            "elapsed_ms": 0.223,
+            "data": [
+              {
+                "item_id": "demo-001",
+                "explanation": {
+                  "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "citations": [
+                    "catalog:demo-001:attributes",
+                    "catalog:demo-001:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-013",
+                "explanation": {
+                  "text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+                  "speech_text": "轻行运动双肩包，价格 ¥269，蓝色背包。符合当前条件：品类为背包、颜色为蓝色、预算不超过300元。运动背包，设有侧面水杯袋。",
+                  "citations": [
+                    "catalog:demo-013:attributes",
+                    "catalog:demo-013:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              }
+            ]
+          },
+          {
+            "trace_id": "orchestrator-timeout",
+            "stage": "result",
+            "elapsed_ms": 0.225,
+            "data": {
+              "status": "ok",
+              "item_ids": [
+                "demo-001",
+                "demo-013"
+              ]
+            }
+          }
+        ],
+        "mode": "offline_demo",
+        "dataset": "synthetic-demo-v1",
+        "currency": "CNY",
+        "price_notice": "",
+        "elapsed_ms": 0.225
+      },
+      "passed": true
+    },
+    {
+      "name": "确定性复现",
+      "input": {
+        "trace_id": "repro",
+        "user_id": "demo-user",
+        "session_id": "demo",
+        "timestamp": "2026-10-08T10:00:00+08:00",
+        "source": "text",
+        "payload": {
+          "text": "推荐礼物预算300以内"
+        }
+      },
+      "expected_status": "ok",
+      "response": {
+        "trace_id": "repro",
+        "status": "ok",
+        "message": "找到 6 件符合条件的商品。",
+        "items": [
+          {
+            "trace_id": "repro",
+            "item_id": "demo-003",
+            "name": "晨光随行保温杯",
+            "price": 129,
+            "category": "杯子",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.392,
+            "score_breakdown": {
+              "popularity": 0.392,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-003",
+              "attributes": {
+                "name": "晨光随行保温杯",
+                "price": 129,
+                "category": "杯子",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "白色",
+                  "confidence": 0.94
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-003:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"晨光随行保温杯\", \"price\": 129, \"category\": \"杯子\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-003:description",
+                  "source": "catalog",
+                  "text": "不锈钢内胆，容量450毫升。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+              "speech_text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+              "citations": [
+                "catalog:demo-003:attributes",
+                "catalog:demo-003:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-005",
+            "name": "听风无线耳机",
+            "price": 299,
+            "category": "耳机",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.38,
+            "score_breakdown": {
+              "popularity": 0.38,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-005",
+              "attributes": {
+                "name": "听风无线耳机",
+                "price": 299,
+                "category": "耳机",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-005:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"听风无线耳机\", \"price\": 299, \"category\": \"耳机\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-005:description",
+                  "source": "catalog",
+                  "text": "无线蓝牙连接，附充电收纳盒。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+              "speech_text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+              "citations": [
+                "catalog:demo-005:attributes",
+                "catalog:demo-005:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-001",
+            "name": "云朵轻量双肩包",
+            "price": 229,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.368,
+            "score_breakdown": {
+              "popularity": 0.368,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-001",
+              "attributes": {
+                "name": "云朵轻量双肩包",
+                "price": 229,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "蓝色",
+                  "confidence": 0.96
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-001:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"云朵轻量双肩包\", \"price\": 229, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-001:description",
+                  "source": "catalog",
+                  "text": "轻量双肩设计，设有独立收纳隔层。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "citations": [
+                "catalog:demo-001:attributes",
+                "catalog:demo-001:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-007",
+            "name": "微光阅读台灯",
+            "price": 169,
+            "category": "台灯",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.36,
+            "score_breakdown": {
+              "popularity": 0.36,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-007",
+              "attributes": {
+                "name": "微光阅读台灯",
+                "price": 169,
+                "category": "台灯",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-007:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"微光阅读台灯\", \"price\": 169, \"category\": \"台灯\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-007:description",
+                  "source": "catalog",
+                  "text": "三档亮度调节，可调整灯臂角度。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+              "speech_text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+              "citations": [
+                "catalog:demo-007:attributes",
+                "catalog:demo-007:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-018",
+            "name": "暖冬随行杯",
+            "price": 159,
+            "category": "杯子",
+            "color": "黑色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.356,
+            "score_breakdown": {
+              "popularity": 0.356,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-018",
+              "attributes": {
+                "name": "暖冬随行杯",
+                "price": 159,
+                "category": "杯子",
+                "color": "黑色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-018:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"暖冬随行杯\", \"price\": 159, \"category\": \"杯子\", \"color\": \"黑色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-018:description",
+                  "source": "catalog",
+                  "text": "不锈钢内胆，带提手杯盖，容量500毫升。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+              "speech_text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+              "citations": [
+                "catalog:demo-018:attributes",
+                "catalog:demo-018:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-002",
+            "name": "山野通勤双肩包",
+            "price": 189,
+            "category": "背包",
+            "color": "黑色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.352,
+            "score_breakdown": {
+              "popularity": 0.352,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-002",
+              "attributes": {
+                "name": "山野通勤双肩包",
+                "price": 189,
+                "category": "背包",
+                "color": "黑色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-002:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"山野通勤双肩包\", \"price\": 189, \"category\": \"背包\", \"color\": \"黑色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-002:description",
+                  "source": "catalog",
+                  "text": "简约黑色背包，适合日常通勤。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+              "speech_text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+              "citations": [
+                "catalog:demo-002:attributes",
+                "catalog:demo-002:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          }
+        ],
+        "context": {
+          "user_id": "demo-user",
+          "session_id": "demo",
+          "constraints": {
+            "budget_max": 300.0
+          },
+          "slot_evidence": {
+            "budget_max": {
+              "value": 300.0,
+              "source": "text",
+              "confidence": 1.0
+            }
+          },
+          "preferences": {},
+          "last_item_ids": [
+            "demo-003",
+            "demo-005",
+            "demo-001",
+            "demo-007",
+            "demo-018",
+            "demo-002"
+          ],
+          "last_intent": "filter",
+          "target_item_ids": [],
+          "top_k": 6
+        },
+        "degraded": true,
+        "warnings": [
+          {
+            "code": "OFFLINE_DEMO",
+            "message": "未配置真实推荐服务，使用离线目录召回"
+          }
+        ],
+        "error": null,
+        "trace": [
+          {
+            "trace_id": "repro",
+            "stage": "event",
+            "elapsed_ms": 0.018,
+            "data": {
+              "trace_id": "repro",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "payload": {
+                "text": "推荐礼物预算300以内"
+              }
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "intent",
+            "elapsed_ms": 0.056,
+            "data": {
+              "intent": "filter",
+              "slots": {
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "item_ids": [],
+              "feedback": null,
+              "action": null,
+              "conflicts": [],
+              "ignored_labels": [],
+              "missing": [],
+              "text": "推荐礼物预算300以内"
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "context",
+            "elapsed_ms": 0.111,
+            "data": {
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "constraints": {
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "preferences": {},
+              "last_item_ids": [],
+              "last_intent": "filter",
+              "target_item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "request",
+            "elapsed_ms": 0.114,
+            "data": {
+              "trace_id": "repro",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "intent": "filter",
+              "constraints": {
+                "budget_max": 300.0
+              },
+              "preferences": {},
+              "item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "recall_and_ranking",
+            "elapsed_ms": 0.449,
+            "data": {
+              "mode": "offline_demo",
+              "warnings": [
+                {
+                  "code": "OFFLINE_DEMO",
+                  "message": "未配置真实推荐服务，使用离线目录召回"
+                }
+              ],
+              "recall_count": 18,
+              "filtered_count": 2,
+              "rejected": [
+                {
+                  "item_id": "demo-006",
+                  "reasons": [
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "reasons": [
+                    "budget"
+                  ]
+                }
+              ],
+              "candidates": [
+                {
+                  "item_id": "demo-001",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "sources": [
+                    "popularity"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "explanation",
+            "elapsed_ms": 0.673,
+            "data": [
+              {
+                "item_id": "demo-003",
+                "explanation": {
+                  "text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+                  "speech_text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+                  "citations": [
+                    "catalog:demo-003:attributes",
+                    "catalog:demo-003:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-005",
+                "explanation": {
+                  "text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+                  "speech_text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+                  "citations": [
+                    "catalog:demo-005:attributes",
+                    "catalog:demo-005:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-001",
+                "explanation": {
+                  "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "citations": [
+                    "catalog:demo-001:attributes",
+                    "catalog:demo-001:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-007",
+                "explanation": {
+                  "text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+                  "speech_text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+                  "citations": [
+                    "catalog:demo-007:attributes",
+                    "catalog:demo-007:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-018",
+                "explanation": {
+                  "text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+                  "speech_text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+                  "citations": [
+                    "catalog:demo-018:attributes",
+                    "catalog:demo-018:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-002",
+                "explanation": {
+                  "text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+                  "speech_text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+                  "citations": [
+                    "catalog:demo-002:attributes",
+                    "catalog:demo-002:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              }
+            ]
+          },
+          {
+            "trace_id": "repro",
+            "stage": "result",
+            "elapsed_ms": 0.68,
+            "data": {
+              "status": "ok",
+              "item_ids": [
+                "demo-003",
+                "demo-005",
+                "demo-001",
+                "demo-007",
+                "demo-018",
+                "demo-002"
+              ]
+            }
+          }
+        ],
+        "mode": "offline_demo",
+        "dataset": "synthetic-demo-v1",
+        "currency": "CNY",
+        "price_notice": "",
+        "elapsed_ms": 0.679
+      },
+      "second_response": {
+        "trace_id": "repro",
+        "status": "ok",
+        "message": "找到 6 件符合条件的商品。",
+        "items": [
+          {
+            "trace_id": "repro",
+            "item_id": "demo-003",
+            "name": "晨光随行保温杯",
+            "price": 129,
+            "category": "杯子",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.392,
+            "score_breakdown": {
+              "popularity": 0.392,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-003",
+              "attributes": {
+                "name": "晨光随行保温杯",
+                "price": 129,
+                "category": "杯子",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "白色",
+                  "confidence": 0.94
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-003:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"晨光随行保温杯\", \"price\": 129, \"category\": \"杯子\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-003:description",
+                  "source": "catalog",
+                  "text": "不锈钢内胆，容量450毫升。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+              "speech_text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+              "citations": [
+                "catalog:demo-003:attributes",
+                "catalog:demo-003:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-005",
+            "name": "听风无线耳机",
+            "price": 299,
+            "category": "耳机",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.38,
+            "score_breakdown": {
+              "popularity": 0.38,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-005",
+              "attributes": {
+                "name": "听风无线耳机",
+                "price": 299,
+                "category": "耳机",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-005:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"听风无线耳机\", \"price\": 299, \"category\": \"耳机\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-005:description",
+                  "source": "catalog",
+                  "text": "无线蓝牙连接，附充电收纳盒。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+              "speech_text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+              "citations": [
+                "catalog:demo-005:attributes",
+                "catalog:demo-005:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-001",
+            "name": "云朵轻量双肩包",
+            "price": 229,
+            "category": "背包",
+            "color": "蓝色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.368,
+            "score_breakdown": {
+              "popularity": 0.368,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-001",
+              "attributes": {
+                "name": "云朵轻量双肩包",
+                "price": 229,
+                "category": "背包",
+                "color": "蓝色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [
+                {
+                  "label": "蓝色",
+                  "confidence": 0.96
+                }
+              ],
+              "snippets": [
+                {
+                  "id": "catalog:demo-001:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"云朵轻量双肩包\", \"price\": 229, \"category\": \"背包\", \"color\": \"蓝色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-001:description",
+                  "source": "catalog",
+                  "text": "轻量双肩设计，设有独立收纳隔层。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+              "citations": [
+                "catalog:demo-001:attributes",
+                "catalog:demo-001:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-007",
+            "name": "微光阅读台灯",
+            "price": 169,
+            "category": "台灯",
+            "color": "白色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.36,
+            "score_breakdown": {
+              "popularity": 0.36,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-007",
+              "attributes": {
+                "name": "微光阅读台灯",
+                "price": 169,
+                "category": "台灯",
+                "color": "白色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-007:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"微光阅读台灯\", \"price\": 169, \"category\": \"台灯\", \"color\": \"白色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-007:description",
+                  "source": "catalog",
+                  "text": "三档亮度调节，可调整灯臂角度。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+              "speech_text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+              "citations": [
+                "catalog:demo-007:attributes",
+                "catalog:demo-007:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-018",
+            "name": "暖冬随行杯",
+            "price": 159,
+            "category": "杯子",
+            "color": "黑色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.356,
+            "score_breakdown": {
+              "popularity": 0.356,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-018",
+              "attributes": {
+                "name": "暖冬随行杯",
+                "price": 159,
+                "category": "杯子",
+                "color": "黑色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-018:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"暖冬随行杯\", \"price\": 159, \"category\": \"杯子\", \"color\": \"黑色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-018:description",
+                  "source": "catalog",
+                  "text": "不锈钢内胆，带提手杯盖，容量500毫升。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+              "speech_text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+              "citations": [
+                "catalog:demo-018:attributes",
+                "catalog:demo-018:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          },
+          {
+            "trace_id": "repro",
+            "item_id": "demo-002",
+            "name": "山野通勤双肩包",
+            "price": 189,
+            "category": "背包",
+            "color": "黑色",
+            "sources": [
+              "popularity"
+            ],
+            "score": 0.352,
+            "score_breakdown": {
+              "popularity": 0.352,
+              "context": 0.0,
+              "similarity": 0,
+              "upstream": 0.0,
+              "feedback": 0.0,
+              "tag_affinity": 0
+            },
+            "evidence": {
+              "trace_id": "repro",
+              "item_id": "demo-002",
+              "attributes": {
+                "name": "山野通勤双肩包",
+                "price": 189,
+                "category": "背包",
+                "color": "黑色",
+                "currency": "CNY",
+                "price_kind": "catalog"
+              },
+              "sources": [
+                "popularity"
+              ],
+              "matched_constraints": {
+                "budget_max": 300.0
+              },
+              "visual_labels": [],
+              "snippets": [
+                {
+                  "id": "catalog:demo-002:attributes",
+                  "source": "catalog",
+                  "text": "{\"name\": \"山野通勤双肩包\", \"price\": 189, \"category\": \"背包\", \"color\": \"黑色\", \"currency\": \"CNY\", \"price_kind\": \"catalog\"}"
+                },
+                {
+                  "id": "catalog:demo-002:description",
+                  "source": "catalog",
+                  "text": "简约黑色背包，适合日常通勤。"
+                }
+              ]
+            },
+            "explanation": {
+              "text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+              "speech_text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+              "citations": [
+                "catalog:demo-002:attributes",
+                "catalog:demo-002:description"
+              ],
+              "degraded": false,
+              "code": "OK"
+            },
+            "currency": "CNY",
+            "price_kind": "catalog"
+          }
+        ],
+        "context": {
+          "user_id": "demo-user",
+          "session_id": "demo",
+          "constraints": {
+            "budget_max": 300.0
+          },
+          "slot_evidence": {
+            "budget_max": {
+              "value": 300.0,
+              "source": "text",
+              "confidence": 1.0
+            }
+          },
+          "preferences": {},
+          "last_item_ids": [
+            "demo-003",
+            "demo-005",
+            "demo-001",
+            "demo-007",
+            "demo-018",
+            "demo-002"
+          ],
+          "last_intent": "filter",
+          "target_item_ids": [],
+          "top_k": 6
+        },
+        "degraded": true,
+        "warnings": [
+          {
+            "code": "OFFLINE_DEMO",
+            "message": "未配置真实推荐服务，使用离线目录召回"
+          }
+        ],
+        "error": null,
+        "trace": [
+          {
+            "trace_id": "repro",
+            "stage": "event",
+            "elapsed_ms": 0.021,
+            "data": {
+              "trace_id": "repro",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "payload": {
+                "text": "推荐礼物预算300以内"
+              }
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "intent",
+            "elapsed_ms": 0.061,
+            "data": {
+              "intent": "filter",
+              "slots": {
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "item_ids": [],
+              "feedback": null,
+              "action": null,
+              "conflicts": [],
+              "ignored_labels": [],
+              "missing": [],
+              "text": "推荐礼物预算300以内"
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "context",
+            "elapsed_ms": 0.114,
+            "data": {
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "constraints": {
+                "budget_max": 300.0
+              },
+              "slot_evidence": {
+                "budget_max": {
+                  "value": 300.0,
+                  "source": "text",
+                  "confidence": 1.0
+                }
+              },
+              "preferences": {},
+              "last_item_ids": [],
+              "last_intent": "filter",
+              "target_item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "request",
+            "elapsed_ms": 0.118,
+            "data": {
+              "trace_id": "repro",
+              "user_id": "demo-user",
+              "session_id": "demo",
+              "timestamp": "2026-10-08T10:00:00+08:00",
+              "source": "text",
+              "intent": "filter",
+              "constraints": {
+                "budget_max": 300.0
+              },
+              "preferences": {},
+              "item_ids": [],
+              "top_k": 6
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "recall_and_ranking",
+            "elapsed_ms": 0.357,
+            "data": {
+              "mode": "offline_demo",
+              "warnings": [
+                {
+                  "code": "OFFLINE_DEMO",
+                  "message": "未配置真实推荐服务，使用离线目录召回"
+                }
+              ],
+              "recall_count": 18,
+              "filtered_count": 2,
+              "rejected": [
+                {
+                  "item_id": "demo-006",
+                  "reasons": [
+                    "budget"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "reasons": [
+                    "budget"
+                  ]
+                }
+              ],
+              "candidates": [
+                {
+                  "item_id": "demo-001",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-002",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-003",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-004",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-005",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-006",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-007",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-008",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-009",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-010",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-011",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-012",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-013",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-014",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-015",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-016",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-017",
+                  "sources": [
+                    "popularity"
+                  ]
+                },
+                {
+                  "item_id": "demo-018",
+                  "sources": [
+                    "popularity"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "trace_id": "repro",
+            "stage": "explanation",
+            "elapsed_ms": 0.471,
+            "data": [
+              {
+                "item_id": "demo-003",
+                "explanation": {
+                  "text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+                  "speech_text": "晨光随行保温杯，价格 ¥129，白色杯子。符合当前条件：预算不超过300元。不锈钢内胆，容量450毫升。",
+                  "citations": [
+                    "catalog:demo-003:attributes",
+                    "catalog:demo-003:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-005",
+                "explanation": {
+                  "text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+                  "speech_text": "听风无线耳机，价格 ¥299，白色耳机。符合当前条件：预算不超过300元。无线蓝牙连接，附充电收纳盒。",
+                  "citations": [
+                    "catalog:demo-005:attributes",
+                    "catalog:demo-005:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-001",
+                "explanation": {
+                  "text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "speech_text": "云朵轻量双肩包，价格 ¥229，蓝色背包。符合当前条件：预算不超过300元。轻量双肩设计，设有独立收纳隔层。",
+                  "citations": [
+                    "catalog:demo-001:attributes",
+                    "catalog:demo-001:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-007",
+                "explanation": {
+                  "text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+                  "speech_text": "微光阅读台灯，价格 ¥169，白色台灯。符合当前条件：预算不超过300元。三档亮度调节，可调整灯臂角度。",
+                  "citations": [
+                    "catalog:demo-007:attributes",
+                    "catalog:demo-007:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-018",
+                "explanation": {
+                  "text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+                  "speech_text": "暖冬随行杯，价格 ¥159，黑色杯子。符合当前条件：预算不超过300元。不锈钢内胆，带提手杯盖，容量500毫升。",
+                  "citations": [
+                    "catalog:demo-018:attributes",
+                    "catalog:demo-018:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              },
+              {
+                "item_id": "demo-002",
+                "explanation": {
+                  "text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+                  "speech_text": "山野通勤双肩包，价格 ¥189，黑色背包。符合当前条件：预算不超过300元。简约黑色背包，适合日常通勤。",
+                  "citations": [
+                    "catalog:demo-002:attributes",
+                    "catalog:demo-002:description"
+                  ],
+                  "degraded": false,
+                  "code": "OK"
+                }
+              }
+            ]
+          },
+          {
+            "trace_id": "repro",
+            "stage": "result",
+            "elapsed_ms": 0.474,
+            "data": {
+              "status": "ok",
+              "item_ids": [
+                "demo-003",
+                "demo-005",
+                "demo-001",
+                "demo-007",
+                "demo-018",
+                "demo-002"
+              ]
+            }
+          }
+        ],
+        "mode": "offline_demo",
+        "dataset": "synthetic-demo-v1",
+        "currency": "CNY",
+        "price_notice": "",
+        "elapsed_ms": 0.473
+      },
+      "passed": true,
+      "sha256": {
+        "first": "97a925cc20baab2632d7a96665f9ab9c5bdd6200e2ba1421ca63f3b053df2768",
+        "second": "97a925cc20baab2632d7a96665f9ab9c5bdd6200e2ba1421ca63f3b053df2768",
+        "equal": true
+      },
+      "comparison": {
+        "same_items_and_scores": true,
+        "same_context": true
+      }
+    }
+  ]
+}

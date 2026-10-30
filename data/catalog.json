@@ -1,0 +1,24 @@
+{
+  "dataset": "synthetic-demo-v1",
+  "description": "合成演示商品，非真实商家数据",
+  "items": [
+    {"item_id":"demo-001","name":"云朵轻量双肩包","category":"背包","price":229,"color":"蓝色","tags":["通勤","旅行","朋友"],"popularity":0.92,"description":"轻量双肩设计，设有独立收纳隔层。","visual_labels":[{"label":"蓝色","confidence":0.96}]},
+    {"item_id":"demo-002","name":"山野通勤双肩包","category":"背包","price":189,"color":"黑色","tags":["通勤","朋友"],"popularity":0.88,"description":"简约黑色背包，适合日常通勤。","visual_labels":[]},
+    {"item_id":"demo-003","name":"晨光随行保温杯","category":"杯子","price":129,"color":"白色","tags":["通勤","朋友","父母"],"popularity":0.98,"description":"不锈钢内胆，容量450毫升。","visual_labels":[{"label":"白色","confidence":0.94}]},
+    {"item_id":"demo-004","name":"落日陶瓷马克杯","category":"杯子","price":79,"color":"红色","tags":["居家","朋友","礼物"],"popularity":0.84,"description":"陶瓷材质，容量350毫升。","visual_labels":[{"label":"红色","confidence":0.93}]},
+    {"item_id":"demo-005","name":"听风无线耳机","category":"耳机","price":299,"color":"白色","tags":["通勤","运动","朋友"],"popularity":0.95,"description":"无线蓝牙连接，附充电收纳盒。","visual_labels":[]},
+    {"item_id":"demo-006","name":"深海头戴耳机","category":"耳机","price":459,"color":"黑色","tags":["学习","居家","朋友"],"popularity":0.91,"description":"头戴式设计，配有柔软耳罩。","visual_labels":[]},
+    {"item_id":"demo-007","name":"微光阅读台灯","category":"台灯","price":169,"color":"白色","tags":["学习","居家","学生"],"popularity":0.9,"description":"三档亮度调节，可调整灯臂角度。","visual_labels":[]},
+    {"item_id":"demo-008","name":"森林桌面台灯","category":"台灯","price":249,"color":"绿色","tags":["居家","礼物","朋友"],"popularity":0.8,"description":"绿色金属灯罩，暖光照明。","visual_labels":[{"label":"绿色","confidence":0.45}]},
+    {"item_id":"demo-009","name":"纸间机械键盘","category":"键盘","price":279,"color":"白色","tags":["学习","办公","学生"],"popularity":0.87,"description":"有线机械键盘，紧凑布局。","visual_labels":[]},
+    {"item_id":"demo-010","name":"墨色无线键盘","category":"键盘","price":199,"color":"黑色","tags":["办公","通勤"],"popularity":0.85,"description":"无线连接，薄型键帽。","visual_labels":[]},
+    {"item_id":"demo-011","name":"晴空折叠雨伞","category":"雨伞","price":69,"color":"蓝色","tags":["通勤","旅行","朋友"],"popularity":0.82,"description":"三折设计，附便携收纳袋。","visual_labels":[]},
+    {"item_id":"demo-012","name":"莓果晴雨伞","category":"雨伞","price":89,"color":"红色","tags":["旅行","朋友","礼物"],"popularity":0.79,"description":"折叠晴雨伞，圆弧伞柄。","visual_labels":[]},
+    {"item_id":"demo-013","name":"轻行运动双肩包","category":"背包","price":269,"color":"蓝色","tags":["运动","旅行","学生"],"popularity":0.86,"description":"运动背包，设有侧面水杯袋。","visual_labels":[]},
+    {"item_id":"demo-014","name":"小岛玻璃水杯","category":"杯子","price":59,"color":"绿色","tags":["居家","礼物"],"popularity":0.76,"description":"玻璃杯身，容量300毫升。","visual_labels":[]},
+    {"item_id":"demo-015","name":"跃动运动耳机","category":"耳机","price":199,"color":"蓝色","tags":["运动","学生","朋友"],"popularity":0.83,"description":"挂耳式无线耳机，附两组耳塞。","visual_labels":[]},
+    {"item_id":"demo-016","name":"朝露旅行双肩包","category":"背包","price":399,"color":"绿色","tags":["旅行","朋友"],"popularity":0.81,"description":"旅行双肩包，主仓容量25升。","visual_labels":[]},
+    {"item_id":"demo-017","name":"星点学习台灯","category":"台灯","price":99,"color":"蓝色","tags":["学习","学生"],"popularity":0.78,"description":"USB供电，柔性灯臂。","visual_labels":[]},
+    {"item_id":"demo-018","name":"暖冬随行杯","category":"杯子","price":159,"color":"黑色","tags":["通勤","父母","礼物"],"popularity":0.89,"description":"不锈钢内胆，带提手杯盖，容量500毫升。","visual_labels":[]}
+  ]
+}

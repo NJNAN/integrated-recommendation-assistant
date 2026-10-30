@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>拾物 · 懂你的每一次选择</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/" aria-label="拾物首页"><span class="brand-icon">拾</span>拾物<span class="brand-en">CURATED FOR YOU</span></a><div class="header-right"><span id="health" class="mode">连接中</span><span class="local-label">LOCAL STUDIO / 03</span></div></header>
+<main>
+  <section class="intro"><div><p class="eyebrow">PERSONAL SHOPPING COMPANION</p><h1>好选择，<span>从懂你开始。</span></h1><p class="intro-copy">告诉我你的想法，让每一件推荐都有据可循。</p></div><div class="intro-note"><span class="small-star">✳</span><p>你决定条件<br>我们找到合适的物件</p></div></section>
+  <div class="workspace">
+    <aside class="conversation"><div class="section-heading"><h2>一起找到它</h2><button id="reset" class="text-button" type="button">新会话 ↗</button></div>
+      <div id="user-controls" hidden><label for="recommendation-user">模块一推荐用户</label><select id="recommendation-user"></select><p id="price-notice" class="media-note"></p></div>
+      <div id="messages" class="messages" aria-live="polite"><div class="assistant-message"><span class="speaker">拾物助手</span><p>想给朋友挑份礼物，还是为自己找件好物？告诉我预算、颜色或使用场景就好。</p></div></div>
+      <div class="suggestions"><button data-prompt="给朋友买礼物，预算300元以内">300 元内的朋友礼物 ↗</button><button data-prompt="推荐蓝色背包，预算300元以内">蓝色通勤背包 ↗</button><button data-prompt="推荐学习用的台灯，预算200元以内">给书桌一点光 ↗</button></div>
+      <form id="composer"><div class="tabs" role="group" aria-label="输入方式"><button class="active" type="button" data-mode="text">文字</button><button type="button" data-mode="voice">语音</button><button type="button" data-mode="vision">视觉</button><button type="button" data-mode="gesture">手势</button></div>
+        <div id="voice-media" class="media-controls" hidden><div class="media-buttons"><button id="record" class="text-button" type="button">开始录音 ●</button><button id="stop-record" class="text-button" type="button" disabled>结束并识别 ■</button></div><label for="audio-file">或上传 WAV（16kHz / 单声道 / 16位 / 最长20秒）</label><input id="audio-file" type="file" accept="audio/wav,.wav"></div>
+        <div id="vision-media" class="media-controls" hidden><label for="image-file">上传商品图片（JPEG / PNG，最大2MB）</label><input id="image-file" type="file" accept="image/jpeg,image/png"><button id="identify-image" class="text-button" type="button">识别图片并推荐 ↗</button></div>
+        <div id="camera-controls" class="media-controls" hidden><div class="media-buttons"><button id="camera-start" class="text-button" type="button">开启摄像头 ◉</button><button id="camera-stop" class="text-button" type="button" disabled>关闭摄像头</button></div><video id="camera-preview" autoplay muted playsinline hidden></video><button id="camera-identify" class="text-button" type="button" hidden>拍摄当前画面并推荐 ↗</button><p id="camera-hint" class="media-note"></p></div>
+        <p id="media-status" class="media-status" role="status" hidden></p>
+        <label id="input-label" for="query">描述你的需求</label><textarea id="query" rows="3" placeholder="比如：想要一个蓝色背包，预算 300 元以内" maxlength="4000"></textarea>
+        <div id="vision-input" class="modality-extra" hidden><label for="labels">已识别标签（标签:置信度，用逗号分隔）</label><input id="labels" value="背包:0.95,蓝色:0.92" placeholder="背包:0.95,蓝色:0.92"></div>
+        <div id="gesture-input" class="modality-extra" hidden><label for="gesture">已确认手势</label><select id="gesture"><option value="thumbs_up">点赞 thumbs_up</option><option value="thumbs_down">不喜欢 thumbs_down</option><option value="victory">继续发现 victory</option><option value="open_palm">结束会话 open_palm</option></select><label for="gesture-target">反馈对象</label><select id="gesture-target"><option value="">请先选择一件推荐商品</option></select></div>
+        <div class="composer-footer"><span id="input-hint">支持多轮修改与撤销</span><button id="submit" class="primary-button" type="submit">发现好物 <span>↗</span></button></div>
+      </form><p class="demo-note">商品为合成演示数据。录音与图片在本机识别；首次使用会加载本地模型。也可手动提供转写文本、标签与手势。</p>
+    </aside>
+    <section class="results"><div class="section-heading"><div><p class="eyebrow">YOUR SELECTION</p><h2>为你拾选 <span id="result-count">—</span></h2></div><button id="undo" class="text-button" type="button">撤销上一步 ↶</button></div>
+      <div id="constraints" class="constraints"><span class="subtle">你的选择条件会出现在这里</span></div>
+      <div id="result-status" class="result-status" role="status">从左侧的一句话开始，找到适合你的第一件好物。</div>
+      <div id="products" class="products"><div class="empty-state"><span class="empty-art">✳</span><h3>留下选择的空间</h3><p>预算、颜色、场景，都由你来定。<br>每一件推荐，我们都会说明理由。</p></div></div>
+      <div class="result-tools"><button id="compare" class="text-button" disabled type="button">比较所选商品 <span id="compare-count">0</span> ↗</button><span>选择卡片上的复选框开始比较</span></div>
+      <details class="trace-panel"><summary>查看本次请求证据 <span id="trace-label">尚无请求</span></summary><div class="trace-actions"><button id="export" class="text-button" disabled type="button">导出 JSON ↓</button><span>包含当前输入与推荐结果，请按需保存</span></div><pre id="trace">等待请求</pre></details>
+    </section>
+  </div><footer><span>拾物 / 每一份推荐，都有来由。</span><span>多模态个性化推荐助手 · 行业工程实践</span></footer>
+</main>
+</body></html>

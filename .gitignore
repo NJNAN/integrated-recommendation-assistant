@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.wav
+*.mp4
+*.sqlite3
+models/
+outputs/browser_qa/
+runtime/
+.audit/
+dist/
+outputs/.test_tmp/

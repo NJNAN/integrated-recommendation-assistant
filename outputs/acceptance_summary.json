@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-10-30T15:06:07.913842+00:00",
+  "stage01": {
+    "case_count": 6,
+    "passed": 6,
+    "failed": 0
+  },
+  "stage02": {
+    "case_count": 30,
+    "passed": 30,
+    "failed": 0
+  },
+  "stage03": {
+    "case_count": 4,
+    "passed": 4,
+    "failed": 0
+  },
+  "stage04": {
+    "case_count": 5,
+    "passed": 5,
+    "failed": 0
+  },
+  "stage05": {
+    "case_count": 5,
+    "passed": 5,
+    "failed": 0
+  },
+  "stage06": {
+    "case_count": 7,
+    "passed": 7,
+    "failed": 0
+  },
+  "total_case_count": 57,
+  "total_passed": 57,
+  "total_failed": 0
+}

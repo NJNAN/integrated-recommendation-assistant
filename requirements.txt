@@ -1,0 +1,10 @@
+# 离线核心与网页服务仅依赖 Python 3.10+ 标准库，无必装第三方包；
+# 因此本文件没有安装条目，pip install -r requirements.txt 不会安装任何包。
+#
+# 可选依赖（默认 auto 接入模式才需要）：当前解释器需安装 Flask，用于启动同级
+# 模块一的冻结 Flask 服务（与 ../01_recommender_system/release/requirements-web.txt 一致）：
+#   python -m pip install Flask==3.1.3
+# 若当前环境没有 Flask，可改用纯离线演示：设置 IRA_PROFILE=demo 后运行 python -B app.py
+# （或让自动接入失败后按 README 的“降级与失败出口”回退）。
+#
+# 同级模块二在自身 .venv 中运行本地模型，其重型依赖不在本项目安装。

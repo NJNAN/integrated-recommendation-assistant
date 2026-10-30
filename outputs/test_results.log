@@ -1,0 +1,44 @@
+test_payload_must_match_source (test_contracts.EventTests.test_payload_must_match_source) ... ok
+test_required_metadata_and_source_enum (test_contracts.EventTests.test_required_metadata_and_source_enum) ... ok
+test_valid_event_roundtrip (test_contracts.EventTests.test_valid_event_roundtrip) ... ok
+test_invalid_request (test_contracts.RequestTests.test_invalid_request) ... ok
+test_request_roundtrip (test_contracts.RequestTests.test_request_roundtrip) ... ok
+test_invalid_slots_rejected (test_contracts.SlotTests.test_invalid_slots_rejected) ... ok
+test_valid_slots_pass_through (test_contracts.SlotTests.test_valid_slots_pass_through) ... ok
+test_attribute_mismatch_degrades (test_explanation.ExplanationTest.test_attribute_mismatch_degrades)
+证据属性缺失或与商品不一致时降级，并清空引用。 ... ok
+test_citations_are_verifiable (test_explanation.ExplanationTest.test_citations_are_verifiable)
+正常解释的每条引用都能在 evidence.snippets 里查到。 ... ok
+test_no_evidence_degrades (test_explanation.ExplanationTest.test_no_evidence_degrades)
+没有证据片段时不生成引用，也不编造解释。 ... ok
+test_speech_text_matches_text (test_explanation.ExplanationTest.test_speech_text_matches_text)
+TTS 直接复用正文：正常与降级都必须完全一致。 ... ok
+test_invalid_sign_and_unseen_item_rejected (test_feedback.FeedbackTests.test_invalid_sign_and_unseen_item_rejected) ... ok
+test_repeat_feedback_overwrites_without_accumulating (test_feedback.FeedbackTests.test_repeat_feedback_overwrites_without_accumulating) ... ok
+test_sessions_are_isolated (test_feedback.FeedbackTests.test_sessions_are_isolated) ... ok
+test_event (test_feedback.HttpBoundaryTests.test_event) ... ok
+test_health (test_feedback.HttpBoundaryTests.test_health) ... ok
+test_invalid_json_400 (test_feedback.HttpBoundaryTests.test_invalid_json_400) ... ok
+test_media_without_worker_503 (test_feedback.HttpBoundaryTests.test_media_without_worker_503) ... ok
+test_oversized_body_413 (test_feedback.HttpBoundaryTests.test_oversized_body_413) ... ok
+test_unknown_path_404 (test_feedback.HttpBoundaryTests.test_unknown_path_404) ... ok
+test_wrong_content_type_415 (test_feedback.HttpBoundaryTests.test_wrong_content_type_415) ... ok
+test_invalid_catalog_raises_contract_error (test_recommendation.CatalogTests.test_invalid_catalog_raises_contract_error) ... ok
+test_hard_constraints_are_not_overridden_by_scores (test_recommendation.RecommendationTests.test_hard_constraints_are_not_overridden_by_scores) ... ok
+test_missing_price_is_excluded_by_budget_filter (test_recommendation.RecommendationTests.test_missing_price_is_excluded_by_budget_filter) ... ok
+test_ranking_is_deterministic_and_topk_is_applied (test_recommendation.RecommendationTests.test_ranking_is_deterministic_and_topk_is_applied) ... ok
+test_upstream_timeout_degrades_to_popularity_recall (test_recommendation.RecommendationTests.test_upstream_timeout_degrades_to_popularity_recall) ... ok
+test_merge_conflict_does_not_pollute_and_undo_restores (test_understanding.SessionTests.test_merge_conflict_does_not_pollute_and_undo_restores) ... ok
+test_store_ttl_and_end (test_understanding.SessionTests.test_store_ttl_and_end) ... ok
+test_budget_bounds_range_and_currency (test_understanding.UnderstandingTests.test_budget_bounds_range_and_currency) ... ok
+test_category_color_and_context_slots (test_understanding.UnderstandingTests.test_category_color_and_context_slots) ... ok
+test_gesture_feedback_and_actions (test_understanding.UnderstandingTests.test_gesture_feedback_and_actions) ... ok
+test_low_confidence_labels_are_ignored_not_slotted (test_understanding.UnderstandingTests.test_low_confidence_labels_are_ignored_not_slotted) ... ok
+test_same_round_conflict_keeps_first_value (test_understanding.UnderstandingTests.test_same_round_conflict_keeps_first_value) ... ok
+test_six_intents_and_priority (test_understanding.UnderstandingTests.test_six_intents_and_priority) ... ok
+test_unparsed_budget_asks_with_fixed_message (test_understanding.UnderstandingTests.test_unparsed_budget_asks_with_fixed_message) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.579s
+
+OK

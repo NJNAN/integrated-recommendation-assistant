@@ -1,0 +1,12 @@
+command: python -B scripts/01_contract_test.py
+runner: python -B scripts/run_all.py
+python: 3.13.6
+report: outputs/stage01_contract_report.json
+request_json_roundtrip: PASS
+
+合法事件: PASS
+边界预算零: PASS
+缺少 trace_id: PASS
+缺少 source: PASS
+视觉非法置信度: PASS
+空筛选追问: PASS

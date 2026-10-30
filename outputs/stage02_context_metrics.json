@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-10-30T15:06:07.886786+00:00",
+  "metrics": {
+    "case_count": 30,
+    "passed": 30,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "latency_ms": {
+      "sample_count": 30,
+      "p50": 0.253,
+      "p95": 0.487,
+      "max": 0.629
+    }
+  },
+  "minimum_pass_rate": 0.8,
+  "failed_cases": []
+}
