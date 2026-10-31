@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-30T15:06:07.846788+00:00",
+  "generated_at": "2026-10-31T09:35:28.648930+00:00",
   "metrics": {
     "case_count": 6,
     "passed": 6,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 6,
-      "p50": 0.039,
-      "p95": 2.185,
-      "max": 2.185
+      "p50": 0.026,
+      "p95": 1.456,
+      "max": 1.456
     }
   },
   "cases": [
@@ -487,7 +487,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "event",
-            "elapsed_ms": 0.031,
+            "elapsed_ms": 0.029,
             "data": {
               "trace_id": "contract-ok",
               "user_id": "demo-user",
@@ -502,7 +502,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "intent",
-            "elapsed_ms": 1.369,
+            "elapsed_ms": 0.939,
             "data": {
               "intent": "filter",
               "slots": {
@@ -533,7 +533,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "context",
-            "elapsed_ms": 1.497,
+            "elapsed_ms": 1.018,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -563,7 +563,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "request",
-            "elapsed_ms": 1.505,
+            "elapsed_ms": 1.023,
             "data": {
               "trace_id": "contract-ok",
               "user_id": "demo-user",
@@ -583,7 +583,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 1.985,
+            "elapsed_ms": 1.336,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -734,7 +734,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "explanation",
-            "elapsed_ms": 2.179,
+            "elapsed_ms": 1.454,
             "data": [
               {
                 "item_id": "demo-003",
@@ -819,7 +819,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "result",
-            "elapsed_ms": 2.187,
+            "elapsed_ms": 1.457,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -837,7 +837,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 2.185
+        "elapsed_ms": 1.456
       },
       "passed": true
     },
@@ -892,7 +892,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "event",
-            "elapsed_ms": 0.032,
+            "elapsed_ms": 0.017,
             "data": {
               "trace_id": "contract-zero",
               "user_id": "demo-user",
@@ -909,7 +909,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "intent",
-            "elapsed_ms": 0.074,
+            "elapsed_ms": 0.042,
             "data": {
               "intent": "filter",
               "slots": {
@@ -934,7 +934,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "context",
-            "elapsed_ms": 0.158,
+            "elapsed_ms": 0.094,
             "data": {
               "user_id": "demo-user",
               "session_id": "zero",
@@ -958,7 +958,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "request",
-            "elapsed_ms": 0.164,
+            "elapsed_ms": 0.098,
             "data": {
               "trace_id": "contract-zero",
               "user_id": "demo-user",
@@ -977,7 +977,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.437,
+            "elapsed_ms": 0.269,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1213,13 +1213,13 @@
           {
             "trace_id": "contract-zero",
             "stage": "explanation",
-            "elapsed_ms": 0.458,
+            "elapsed_ms": 0.282,
             "data": []
           },
           {
             "trace_id": "contract-zero",
             "stage": "result",
-            "elapsed_ms": 0.461,
+            "elapsed_ms": 0.285,
             "data": {
               "status": "empty",
               "item_ids": []
@@ -1230,7 +1230,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.46
+        "elapsed_ms": 0.284
       },
       "passed": true
     },
@@ -1247,7 +1247,7 @@
       },
       "expected_status": "error",
       "response": {
-        "trace_id": "3ab5a082-be1d-4217-a6c0-f8e5e1914fe7",
+        "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
         "status": "error",
         "message": "trace_id 必须是非空字符串",
         "items": [],
@@ -1260,25 +1260,25 @@
         },
         "trace": [
           {
-            "trace_id": "3ab5a082-be1d-4217-a6c0-f8e5e1914fe7",
+            "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
             "stage": "error",
-            "elapsed_ms": 0.037,
+            "elapsed_ms": 0.024,
             "data": {
               "code": "INVALID_EVENT",
               "message": "trace_id 必须是非空字符串"
             }
           },
           {
-            "trace_id": "3ab5a082-be1d-4217-a6c0-f8e5e1914fe7",
+            "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
             "stage": "result",
-            "elapsed_ms": 0.04,
+            "elapsed_ms": 0.026,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.039
+        "elapsed_ms": 0.026
       },
       "passed": true
     },
@@ -1310,7 +1310,7 @@
           {
             "trace_id": "contract-missing-source",
             "stage": "error",
-            "elapsed_ms": 0.007,
+            "elapsed_ms": 0.005,
             "data": {
               "code": "INVALID_EVENT",
               "message": "source 必须是非空字符串"
@@ -1319,14 +1319,14 @@
           {
             "trace_id": "contract-missing-source",
             "stage": "result",
-            "elapsed_ms": 0.009,
+            "elapsed_ms": 0.006,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.008
+        "elapsed_ms": 0.006
       },
       "passed": true
     },
@@ -1364,7 +1364,7 @@
           {
             "trace_id": "contract-bad-label",
             "stage": "error",
-            "elapsed_ms": 0.015,
+            "elapsed_ms": 0.01,
             "data": {
               "code": "INVALID_EVENT",
               "message": "confidence 必须是 [0, 1] 内的有限数值"
@@ -1373,14 +1373,14 @@
           {
             "trace_id": "contract-bad-label",
             "stage": "result",
-            "elapsed_ms": 0.017,
+            "elapsed_ms": 0.011,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.016
+        "elapsed_ms": 0.01
       },
       "passed": true
     },
@@ -1420,7 +1420,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "event",
-            "elapsed_ms": 0.017,
+            "elapsed_ms": 0.011,
             "data": {
               "trace_id": "contract-filter",
               "user_id": "demo-user",
@@ -1435,7 +1435,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "intent",
-            "elapsed_ms": 0.048,
+            "elapsed_ms": 0.032,
             "data": {
               "intent": "filter",
               "slots": {},
@@ -1454,7 +1454,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "context",
-            "elapsed_ms": 0.083,
+            "elapsed_ms": 0.057,
             "data": {
               "user_id": "demo-user",
               "session_id": "filter",
@@ -1470,7 +1470,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "result",
-            "elapsed_ms": 0.086,
+            "elapsed_ms": 0.059,
             "data": {
               "status": "needs_clarification",
               "item_ids": []
@@ -1480,7 +1480,7 @@
         "missing_slots": [
           "至少一个筛选条件"
         ],
-        "elapsed_ms": 0.085
+        "elapsed_ms": 0.058
       },
       "passed": true
     }

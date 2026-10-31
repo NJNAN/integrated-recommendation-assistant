@@ -39,6 +39,6 @@ test_six_intents_and_priority (test_understanding.UnderstandingTests.test_six_in
 test_unparsed_budget_asks_with_fixed_message (test_understanding.UnderstandingTests.test_unparsed_budget_asks_with_fixed_message) ... ok
 
 ----------------------------------------------------------------------
-Ran 35 tests in 0.579s
+Ran 35 tests in 0.613s
 
 OK

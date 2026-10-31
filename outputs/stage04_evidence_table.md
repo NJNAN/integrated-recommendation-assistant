@@ -1,6 +1,6 @@
 # 解释与证据对照表
 
-- generated_at: 2026-10-30T15:06:07.898423+00:00
+- generated_at: 2026-10-31T09:35:28.697407+00:00
 - 证据路径: `outputs/stage04_explanation_cases.jsonl`
 
 | 商品 | 价格 | 解释 | 引用 |
