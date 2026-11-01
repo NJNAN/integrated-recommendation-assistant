@@ -1,6 +1,6 @@
 # 阶段04 异常解释记录
 
-- generated_at: 2026-10-31T09:35:28.697407+00:00
+- generated_at: 2026-11-01T14:23:08.780190+00:00
 - 重跑命令: `python -B scripts/04_explanation_test.py`
 - 证据路径: `outputs/stage04_explanation_cases.jsonl`、`outputs/stage04_evidence_table.md`
 

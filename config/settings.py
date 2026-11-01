@@ -17,6 +17,16 @@ def _path(name, default):
     return Path(os.getenv(name, default))
 
 
+def _module_root(name):
+    """找兄弟项目的代码：开发机优先用同级目录，否则用仓库内 vendor/ 副本。
+
+    这样别人 clone 仓库后，模块一/模块二的源码仍然可见（vendor 见仓库 vendor/README.md）；
+    没有 vendor 副本时返回一个不存在的路径，调用方按“没有上游”处理，自动走离线。
+    """
+    sibling = ROOT.parent / name
+    return sibling if sibling.is_dir() else ROOT / 'vendor' / name
+
+
 @dataclass(frozen=True)
 class Settings:
     catalog_path: Path = field(default_factory=lambda: _path('IRA_CATALOG', ROOT / 'data/catalog.json'))
@@ -38,9 +48,9 @@ class Settings:
     recommender_accounts: tuple = field(default=(), repr=False)
     recommender_max_candidates: int = 2000
     module_one_accounts: tuple = field(default=MODULE_ONE_ACCOUNTS, repr=False)
-    module_one_root: Path = field(default_factory=lambda: _path('IRA_MODULE_ONE_ROOT', ROOT.parent / '01_recommender_system'))
+    module_one_root: Path = field(default_factory=lambda: _path('IRA_MODULE_ONE_ROOT', _module_root('01_recommender_system')))
     module_one_port: int = field(default_factory=lambda: int(os.getenv('IRA_MODULE_ONE_PORT', '5001')))
-    module_two_root: Path = field(default_factory=lambda: _path('IRA_MODULE_TWO_ROOT', ROOT.parent / '02_multimodal_ai_assistant'))
+    module_two_root: Path = field(default_factory=lambda: _path('IRA_MODULE_TWO_ROOT', _module_root('02_multimodal_ai_assistant')))
     module_two_python: str = field(default_factory=lambda: os.getenv('IRA_MODULE_TWO_PYTHON', ''))
     module_two_timeout: float = field(default_factory=lambda: float(os.getenv('IRA_MEDIA_TIMEOUT', '180')))
     module_two_text_port: int = field(default_factory=lambda: int(os.getenv('IRA_MODULE_TWO_TEXT_PORT', '8082')))

@@ -17,8 +17,9 @@
 
 离线核心（`IRA_PROFILE=demo` 或未发现同级模块时）只用 Python 3.10+ 标准库、HTML/CSS/JS：
 `http.server` 提供服务，`dataclasses` 定义契约，`unittest` 做回归，`urllib` 调上游。
-默认 auto 模式会接入同级模块一的冻结 Flask 服务（需运行 `app.py` 的解释器安装 Flask）
-和模块二自己的 `.venv` 模型环境，这两部分不属于“零依赖”。
+默认 auto 模式会接入模块一的冻结 Flask 服务（优先同级项目，否则用仓库内
+`vendor/01_recommender_system`；需运行 `app.py` 的解释器安装 Flask）和模块二自己的 `.venv` 模型环境，
+这两部分不属于“零依赖”。模块一/模块二的源码副本都在仓库 `vendor/` 下，便于阅读与对照。
 
 关键配置统一在 `config/settings.py`；脚本可用 `-B` 从任意目录执行；结构化证据写在 `outputs/`；
 运行命令、接口协议与降级矩阵见 `README.md` 与 `docs/deployment.md`。
@@ -48,7 +49,8 @@ VLModel 调本地视觉模型提取品类与颜色，HumanDetector + GestureReco
 ### 5.1 场景与边界
 
 主链路：语音转写提出需求 → 融合预算与对象 → 多路召回 → 硬约束过滤 → 排序 → 证据解释 → 点赞反馈重排。
-默认接入同级模块一的真实目录与冻结排序；`IRA_PROFILE=demo` 使用 18 件合成商品。业务代码不固定推荐商品。
+默认接入模块一的真实目录与冻结排序（同级项目优先，否则仓库 `vendor/01_recommender_system`）；
+`IRA_PROFILE=demo` 使用 18 件合成商品。业务代码不固定推荐商品。
 
 ### 5.2 架构与契约
 

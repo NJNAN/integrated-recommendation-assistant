@@ -1,0 +1,482 @@
+[
+  {
+    "role": "training_data",
+    "path": "data/train.csv",
+    "bytes": 29483459,
+    "sha256": "49e1d05ce33a64d1e734c13a31c8ce59908b7c7aaade8517be204c67f172e6ea",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/engine.pkl",
+    "bytes": 42598543,
+    "sha256": "02a90f8985cddb927468240a46cfbb066f374a024d8aa311e5973e8b218fbb6d",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/item2vec.model",
+    "bytes": 2035362,
+    "sha256": "2650afc0f3ea8fdbf5405fc1be62545ac5da909e37554127188598ad7dacd040",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/itemcf.npz",
+    "bytes": 866912,
+    "sha256": "90f622038a78905165c69050f116ebf3cd1e51f35e1959914e0a923d227e25da",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/model_meta.json",
+    "bytes": 11281,
+    "sha256": "8f9bca34b0e4a6b7a1a02d7b6b5643819cf0868498620d971492b0645b7ab2f5",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/rankers.pkl",
+    "bytes": 181631387,
+    "sha256": "57581bcde550ef5b513f6ea0224efb114b8daab2e75cc537ca94d3baf34cd30c",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/seasonal_state.pkl",
+    "bytes": 1244423,
+    "sha256": "b64953b1710ea5de5bc6761d1aa48d45561b30c783aae208ab21a41c1626cefe",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/user_vectors.npz",
+    "bytes": 1095666,
+    "sha256": "00ff3d77fe232aeeb1ee57a5351e4f03031c966cad1cc161bff6c9d1da61f595",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_model",
+    "path": "models/competition_v11_season/vector_index.npz",
+    "bytes": 907040,
+    "sha256": "d28b4edbb7faeacb38ec10073efde4fb44614e06601e316d76a5846a4a872e05",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "v65_feature_cache",
+    "path": "outputs/competition_v65_capacity/cache/full.pkl",
+    "bytes": 27427854,
+    "sha256": "fec4c61b523869556b7b9ef0d7c06c199cf8307a11e775a8925d8f588c7a0a84",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "v65_feature_cache",
+    "path": "outputs/competition_v65_capacity/cache/train_win3.pkl",
+    "bytes": 82895689,
+    "sha256": "01a84779761adec41d281917621d53b837a7e7dfa64a21f546d7296f34fbe1f7",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "v65_feature_cache",
+    "path": "outputs/competition_v65_capacity/cache/train_win5.pkl",
+    "bytes": 138115291,
+    "sha256": "c3603b2f083b9f8883b26de27c4758d01ff36326150500aee0305e4c9f869bfa",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/experiment_v9b.cpython-313.pyc",
+    "bytes": 12098,
+    "sha256": "781bb1f2d1a9351d3af6a5d854bedb5f0a12f2a442d55a2135e36cf21b7ff15c",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/final_v10.cpython-311.pyc",
+    "bytes": 22386,
+    "sha256": "df7d34bf5fe3692a0a9fa62b46e7b0e3f47d5043dacd8e1abfabb5268490cabe",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/final_v10.cpython-313.pyc",
+    "bytes": 19098,
+    "sha256": "b120eb378b881417275f59977d5540a1105b23fb512977a78cf24472019e2538",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/greedy_ease.cpython-313.pyc",
+    "bytes": 11017,
+    "sha256": "6074ea795a11fa01d162f822eb6a4dc068207ae6bcc3df24e0882424db135146",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/optimize_v6.cpython-311.pyc",
+    "bytes": 34562,
+    "sha256": "40c8649faae8305d906c915ea48625a8613e5d85233269e5dea2eefcb80949bb",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/__pycache__/optimize_v6.cpython-313.pyc",
+    "bytes": 29393,
+    "sha256": "c1690cc5b7e4323320644d03a89e6072ef39700ef1eaa65affd9e0a7bba5809a",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/diag_curve.py",
+    "bytes": 3324,
+    "sha256": "c81f84954c2da83fa86a187d25d1216ddd76cfbe426da6bf669eef94b6f7149b",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/ease_test.py",
+    "bytes": 6270,
+    "sha256": "6ce7719bb1639c84b5bb6cfae15b2151f240660c9c5b209a2422319b8046ae3c",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/ease_variants.py",
+    "bytes": 5873,
+    "sha256": "6dc3f3a7f5ad92d8b038be35cb96e54eeda34922feee981ed6527a78087fbfec",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/ensemble_submission.py",
+    "bytes": 2292,
+    "sha256": "2b89aa6d5a3f7b71edde8044a1f641794bcb13638271aa1bcb09b5b7001a2daf",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/eval_gbdt.py",
+    "bytes": 10131,
+    "sha256": "7318ae728d3c4b7081ed235d1378cc2a09dac97f8c9cfae92fbd3297383918e1",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/eval_random.py",
+    "bytes": 7292,
+    "sha256": "13f5a0b3da21aaf88393a2be6184724250cc2e29844474613b2f1c132d34eba8",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/eval_scorers.py",
+    "bytes": 7729,
+    "sha256": "0070039bffaf6bb048d9e46ac78be9b63caa8b0cb8f2b73c0fde44b308c51e57",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10.py",
+    "bytes": 6004,
+    "sha256": "2e1d1fab46dd816ec857e98d6d0234c6e3fba5e58de88e56c998d30382a8e312",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10b.py",
+    "bytes": 6867,
+    "sha256": "6b2e81c5bfa90ed384b4095ae88581c7f3f017a5f2bb2df4c9b5599ef85eee19",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10c.py",
+    "bytes": 6622,
+    "sha256": "573830db39c112b6af8793ce6ea36d4f8708b1b00de9733c85b56db23686c6ac",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10d.py",
+    "bytes": 6726,
+    "sha256": "b81babe28691683ef43a9a3900cfa5cd71e6cbc634925756d3d957e82d9bf054",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10e.py",
+    "bytes": 6439,
+    "sha256": "a0dab42703a342480cc57814ca8467840e180d4d01372eeb108333c910ab0504",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v10f.py",
+    "bytes": 3707,
+    "sha256": "8ed766b38f2ad79d82874244d0a8d1f91e7856ed82fef225d6fec8fecb9efb9e",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v9.py",
+    "bytes": 7988,
+    "sha256": "0ef9ad6387e88ca3159e4d11437d33730fcaaca8ab14c3bbfe3fc399be4372af",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v9b.py",
+    "bytes": 5949,
+    "sha256": "eb9889277ee6a6451e386146997da034d1614cce7d2afd436e7b0e0ba79da0a5",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v9c.py",
+    "bytes": 2182,
+    "sha256": "4d5fddee910be778ee85a79ab065dfa9ccb24e6ad4056b33130bf1085f423413",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v9d.py",
+    "bytes": 5199,
+    "sha256": "092a9edb2581aa1276205394b3425ce794f3b95dfaa365050337ade14440b17a",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/experiment_v9e.py",
+    "bytes": 4355,
+    "sha256": "3558d0ee1ca9b3ecec05b963f3ff215954f4205b3fdc9511a14b38a688bf5175",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_ease.py",
+    "bytes": 3509,
+    "sha256": "f2d6cf45458e7f03f812907225d92c7e43ec1079fdbf59667a52a083bac7fa2e",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_submission.py",
+    "bytes": 9096,
+    "sha256": "f82ae263d006f21a2cab61fb767f409cebd33de7aac7493b32b3706944d19ee3",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_v10.py",
+    "bytes": 11117,
+    "sha256": "5b609fff7bfd554c3283c2bcdac33bf7ed4e8a8a85724c9b01b7aabc9ec0ecb0",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_v8.py",
+    "bytes": 4797,
+    "sha256": "da0f388f7774d2bd6cda9d7ae07c0a6eed4cd0dbd2a39eb7acdf04a42c4cfa75",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_v9.py",
+    "bytes": 4950,
+    "sha256": "cf661563a16afaf8b9013c3849542212fd4b385b390f5e6e76d88203c851bfc7",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/final_verify.py",
+    "bytes": 1861,
+    "sha256": "5c661f5428296b05966b23f0af318456cc0f961096a75e1e246680891de9c0ec",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/generate_submission.py",
+    "bytes": 11598,
+    "sha256": "8654f26c0bca0cb98ae03ed3825216c1e5c1f3f760dd1d9230acf160110bf765",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/generate_submission_v3.py",
+    "bytes": 18720,
+    "sha256": "c2134e9d94221c601af367ef569c1dc2d64dfba81f2098e2da2a25958154999a",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/generate_submission_v4.py",
+    "bytes": 17529,
+    "sha256": "d3cf0920570513b23f198e4f6d2a97ae9df107b8eaa2a5da6d7fe75975cbe5da",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/greedy_ease.py",
+    "bytes": 5497,
+    "sha256": "aab6e7995cafb2879989e3e3bc0349afc62957091caefcbd2cb859901b159640",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/optimize_v6.py",
+    "bytes": 19357,
+    "sha256": "9014e70c4aa158be911fa76105c6eb95994d1f2f00350487d9dae2ec1bf62ee0",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/order_ease.py",
+    "bytes": 4669,
+    "sha256": "e5583d4adc8c7ec7fd45c16ba23b40cdd8cff9d306c2acb1b3af897ece2c41c8",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/recency_ease.py",
+    "bytes": 5985,
+    "sha256": "2a637e7358f8e916b3e88d755a907b0ab9e2bd402ff36ac896a7c4c163833133",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/robust_ease.py",
+    "bytes": 3731,
+    "sha256": "3b6b592db7987054074e136457214d362a89378449a274ab1370198d796ea91a",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission.csv",
+    "bytes": 1286997,
+    "sha256": "5a69fc83ab0feb42022e784c29c19ca3aa277fde8c5d6cb86d65d13ff89c4084",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v1.0_gbdt_baseline_20260910_105153.csv",
+    "bytes": 1286997,
+    "sha256": "ba10731a13126127b3ea98c0c994822e7d11bff323a49594a7be3c1a5b3031da",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v10.0_ease_lambdarank_20260910_161502.csv",
+    "bytes": 1286997,
+    "sha256": "8a1d7f09269457025d038ff0049d9a1f4798070657231660276821f88e289896",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v10.0_ease_lambdarank_20260910_161743.csv",
+    "bytes": 1286997,
+    "sha256": "5a69fc83ab0feb42022e784c29c19ca3aa277fde8c5d6cb86d65d13ff89c4084",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v2.0_svd_gbdt_20260910_112956.csv",
+    "bytes": 1286997,
+    "sha256": "5ea382ac3951683baff3a511b3f461b8dcac2098ee30bbe7bcb1fdd9746e2381",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v3.0_lgbm_rank_20260910_115510.csv",
+    "bytes": 1286997,
+    "sha256": "ee74ecfe881d6330a667264bedce615b179f778bf3c945ee558312db8f604232",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v3.0_lgbm_rank_20260910_140055.csv",
+    "bytes": 1286997,
+    "sha256": "60d8a278a311673bae14c2f0997889dc4bb74a2bfc457881e4c126933fb78153",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v4.0_cf_lgbm_20260910_140328.csv",
+    "bytes": 1286997,
+    "sha256": "57d3294202e5bea555b4c72c4cdb2a290dbd5bdc82de341a21b245a0dce5483d",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v5.0_blend_gbdt_20260910_141333.csv",
+    "bytes": 1286997,
+    "sha256": "2c6eb0362ec4ae0b85154887eddcecd6fbc65d1efeaba46a4300a8419c398ae9",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v6.0_feat_bagging_20260910_142647.csv",
+    "bytes": 1286997,
+    "sha256": "50c411937ec8e8620cb709dabcefead876a9eafd709fb333e16cec34c3ba99b9",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v7.0_ease_20260910_143936.csv",
+    "bytes": 1299334,
+    "sha256": "dce78c5f8524cc815fc49e63872f6754b600ed89b41eb99284cd937de14c2baf",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v8.0_ease_ens_20260910_152435.csv",
+    "bytes": 1286997,
+    "sha256": "d8ec6d28513bfee2f27fccf8ddbadfbdd387770509fc44b37e1595e7ac78408c",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/submission_v9.0_ease_multiview_20260910_154608.csv",
+    "bytes": 1286997,
+    "sha256": "75b67ad1d250184572a1eb6d3f6aa0d8f46e49b0a5264e3febe8666cac24fd3f",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "external_feature_code",
+    "path": "0.7912的模型/recommendation/verify_configs.py",
+    "bytes": 5310,
+    "sha256": "d0cbb9fc2b06c129932101cf13b5c345f65912db0d557209bb74c462409772fb",
+    "included_in_quick_package": false
+  },
+  {
+    "role": "baseline_module",
+    "path": "baseline/config.py",
+    "bytes": 10550,
+    "sha256": "209592ad3547bd56eb53b612271a986d7567c636891da623b0c54c337a114a14",
+    "included_in_quick_package": true,
+    "note": "模块级 import（engine.py:38 from .config import ROUTES），缺了 import baseline 直接失败"
+  },
+  {
+    "role": "baseline_module",
+    "path": "baseline/bpr.py",
+    "bytes": 7737,
+    "sha256": "a9f9871720ee031298dd28d2021cab5d37e9c7721927fe3c99cda66a1586077a",
+    "included_in_quick_package": true,
+    "note": "链上脚本 import attach_bpr_state / train_time_decay_bpr（BPR 附着）"
+  },
+  {
+    "role": "baseline_module",
+    "path": "baseline/data.py",
+    "bytes": 20819,
+    "sha256": "f98d89a3b93734d43070dc6b564ff7cfb3f4757dc1b6181a18e3b9816c6b3371",
+    "included_in_quick_package": true,
+    "note": "链上脚本 import sequences（订单序列 → Item2Vec 训练输入）"
+  },
+  {
+    "role": "layer2_intermediate",
+    "path": "outputs/competition_v38_categorical/production_v15_features.pkl",
+    "bytes": 35082307,
+    "sha256": "999b427a1b58c434f74a5ff2a54e39a7a7962adb3b4e7951e505892e61fa5e33",
+    "included_in_quick_package": true,
+    "note": "v94/v95 在第 86 行无条件读取；生成脚本 scripts/experiment_v38_categorical.py:155（已随包提供）"
+  }
+]

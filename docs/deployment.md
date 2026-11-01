@@ -9,8 +9,15 @@
 | --- | --- | --- |
 | 模块三离线核心 | Python 3.10+ 标准库 | 契约、意图、会话、召回、解释、HTTP、验收脚本都不用第三方包 |
 | 模块三 HTTP 服务 | 同上 | `python -B app.py`，只绑定 `127.0.0.1` |
-| 模块一接入（auto 模式） | 当前解释器装 Flask | 用于启动同级 `01_recommender_system/release` 的冻结服务 |
-| 模块二接入（语音/视觉/手势） | 同级 `02_multimodal_ai_assistant/.venv` | 模型与重型依赖在模块二自己的环境里，不在本项目安装 |
+| 模块一代码 | 仓库内 `vendor/01_recommender_system/`（或同级原项目） | 冻结 Flask 服务 + 冻结排序结果 + 商品目录；代码副本已在仓库里，clone 就能读 |
+| 模块一接入（auto 模式） | 当前解释器装 Flask | 用于启动上面这份 `release/` 的冻结服务（无需 173 MB 模型 pickle） |
+| 模块二代码 | 仓库内 `vendor/02_multimodal_ai_assistant/`（或同级原项目） | 只有 `src/` + `config/` 源码，供阅读 |
+| 模块二接入（语音/视觉/手势） | 模块二自己的 `.venv` | 模型与重型依赖在模块二环境里；没有 venv 时媒体接口 503、保留手动输入 |
+
+兄弟项目根目录规则：**同级优先，否则 vendor**（见 `config/settings.py::_module_root`）；
+`IRA_MODULE_ONE_ROOT` / `IRA_MODULE_TWO_ROOT` 可显式指定。仓库没有带的东西：
+模块一 173 MB 模型 pickle、61 MB 特征、72 MB 原始交易数据；模块二 `.venv` 与模型权重
+（详见 [vendor/README.md](../vendor/README.md)）。
 
 ```powershell
 # 默认 auto：自动接入同级模块一（需要 Flask）
@@ -33,14 +40,16 @@ python -B -m unittest discover -s tests -v
 
 ## 2. 自动接入失败与回退
 
-只有「自动发现到同级 `01_recommender_system/release`、且未显式设置 `IRA_PROFILE=demo`/`IRA_CATALOG`/
-`IRA_RECOMMENDER_URL`」时，`app.py` 才会启动模块一：先由 `integrated_settings()` 把模块一 CSV 合成
-`data/module_one_catalog.json`，再启动冻结 Flask 子进程（5001）。
+只有「找得到模块一发布包（同级 `01_recommender_system/release` 或仓库内 `vendor/01_recommender_system/release`）、
+且未显式设置 `IRA_PROFILE=demo`/`IRA_CATALOG`/`IRA_RECOMMENDER_URL`」时，`app.py` 才会启动模块一：
+- 有 `development/data/train.csv`（原项目）→ 每次启动由两份 CSV 重新生成 `data/module_one_catalog.json`；
+- 没有原始交易数据（仓库 vendor 副本）→ 直接用仓库里已生成的 `data/module_one_catalog.json`；
+然后启动冻结 Flask 子进程（5001）。
 
-- **有同级模块一但启动失败**（缺 Flask、5001 被占用、启动超时）：`prepare()` 捕获异常、关闭子进程，
+- **有模块一但启动失败**（缺 Flask、5001 被占用、启动超时）：`prepare()` 捕获异常、关闭子进程，
   回退到 `offline_demo_settings()`（固定 `data/catalog.json`、清空远端凭据），stderr 打印
   「警告：自动接入模块一失败，已回退离线演示（<异常类型>: <异常信息>）。」，主服务继续可用。
-- **没有同级模块一，或显式 `IRA_PROFILE=demo`**：正常离线启动，不打印回退警告。
+- **找不到模块一（同级和 vendor 都没有），或显式 `IRA_PROFILE=demo`**：正常离线启动，不打印回退警告。
 - **显式 `IRA_RECOMMENDER_URL` / `IRA_CATALOG`**：按显式配置运行，不自动启动模块一。
 - **本项目自身端口被占用**：直接抛错退出（不属于模块一接入失败），用 `IRA_PORT` 换端口。
 
@@ -51,7 +60,7 @@ python -B -m unittest discover -s tests -v
 
 | 场景 | 行为 | 观察点 / 证据 |
 | --- | --- | --- |
-| 无同级模块一 或 `IRA_PROFILE=demo` | 用 `data/catalog.json` 合成目录正常启动，不打印回退警告 | `GET /api/health` 的 `mode=offline_demo` |
+| 找不到模块一（同级和 vendor 都没有）或 `IRA_PROFILE=demo` | 用 `data/catalog.json` 合成目录正常启动，不打印回退警告 | `GET /api/health` 的 `mode=offline_demo` |
 | 有模块一但启动失败 | stderr 打印回退警告，改用合成目录继续服务 | 启动 stderr/stdout |
 | 推荐上游超时/不可用 | 按 popularity 离线召回，`degraded=true`，`warnings[0].code=UPSTREAM_TIMEOUT` | `outputs/stage03_demo.json`、`stage06_acceptance.json` |
 | 商品ID与目录无交集 | `INVALID_UPSTREAM` 告警并降级，不编造价格或属性 | `warnings` |

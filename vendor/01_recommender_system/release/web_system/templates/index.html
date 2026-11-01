@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f0eadc">
+  <title>拾光集 · 个性化推荐</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2317201d'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='38' fill='%23f0eadc'%3E%E6%8B%BE%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <section class="login-shell" id="login-view" aria-labelledby="login-title">
+    <div class="login-art" aria-hidden="true">
+      <span class="catalog-no">CATALOG / 10</span>
+      <div class="orbit orbit-a"></div>
+      <div class="orbit orbit-b"></div>
+      <p class="art-word">拾<br>光<br>集</p>
+      <p class="art-note">把每一次选择<br>变成下一次惊喜</p>
+    </div>
+    <div class="login-panel">
+      <p class="eyebrow">PERSONALIZED GOODS INDEX</p>
+      <h1 id="login-title">欢迎回来，<br>继续发现好物。</h1>
+      <p class="login-copy">选择一个演示采购账号。每个账号绑定独立行为历史，因此会看到不同的推荐排序。</p>
+
+      <div class="account-list" id="account-list" aria-label="演示账号"></div>
+
+      <form id="login-form" class="login-form">
+        <label>账号<input id="username" name="username" autocomplete="username" required></label>
+        <label>密码<input id="password" name="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary-button" type="submit"><span>进入猜你喜欢</span><b aria-hidden="true">↗</b></button>
+        <p class="form-error" id="login-error" role="alert"></p>
+      </form>
+    </div>
+  </section>
+
+  <div class="app-shell is-hidden" id="app-view">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="拾光集首页">
+        <span class="brand-mark">拾</span>
+        <span><b>拾光集</b><small>SHIGUANG SELECT</small></span>
+      </a>
+      <nav aria-label="主导航">
+        <a class="active" href="#feed">猜你喜欢</a>
+        <a href="#model-story">推荐档案</a>
+      </nav>
+      <div class="user-menu">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span id="user-name">访客</span>
+        <button id="logout-button" type="button">退出</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">CURATED FOR <span id="user-id-label">—</span></p>
+          <h1>不追逐所有流行，<br><em>只靠近你的偏好。</em></h1>
+          <p>你的历史选择经过 Oblivionis 九源分段秩融合精排。点开任意商品，相似好物会顺着这次兴趣即时进入推荐流。</p>
+        </div>
+        <aside class="score-ticket" id="model-story" aria-label="模型指标">
+          <div class="ticket-cut"></div>
+          <span>ONLINE SCORE</span>
+          <strong id="online-score">0.8060</strong>
+          <div class="metric-row"><span>NDCG@10</span><b id="ndcg-score">0.8992</b></div>
+          <div class="metric-row"><span>Recall@10</span><b id="recall-score">0.4728</b></div>
+          <p id="model-name">Oblivionis / v2-r1-head48</p>
+        </aside>
+      </section>
+
+      <section class="feed-section" id="feed" aria-labelledby="feed-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">YOUR DAILY EDIT</p><h2 id="feed-title">猜你喜欢</h2></div>
+          <button class="refresh-button" id="refresh-button" type="button"><span aria-hidden="true">↻</span> 换一批</button>
+        </div>
+        <div class="feed-grid" id="feed-grid" aria-live="polite"></div>
+        <div class="feed-status" id="feed-status">
+          <span class="status-line"></span>
+          <button id="load-more-button" type="button">继续向下发现</button>
+          <span class="status-line"></span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>拾光集 · 推荐系统课程实践</span>
+      <span>行为可追溯 / 推荐可解释 / 结果可复现</span>
+    </footer>
+  </div>
+
+  <dialog class="detail-dialog" id="detail-dialog">
+    <button class="dialog-close" id="dialog-close" type="button" aria-label="关闭详情">×</button>
+    <div id="detail-content"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <template id="skeleton-template">
+    <article class="product-card skeleton"><div class="product-visual"></div><div class="skeleton-line wide"></div><div class="skeleton-line"></div></article>
+  </template>
+</body>
+</html>

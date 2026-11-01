@@ -10,20 +10,34 @@
 
 - 六阶段符合性逐条对照：[docs/requirements_check.md](docs/requirements_check.md)
 - 架构与接口契约（阶段1 提交物）：[docs/architecture.md](docs/architecture.md)
+- **代码阅读指南（30 分钟读懂整个仓库）**：[docs/代码阅读指南.md](docs/代码阅读指南.md)
 - 部署、降级、风险与演示提纲：[docs/deployment.md](docs/deployment.md)
 - 六阶段小结：[docs/stage_summaries.md](docs/stage_summaries.md)
 - 提交清单：[docs/submission_checklist.md](docs/submission_checklist.md)
 - GitHub 仓库：<https://github.com/NJNAN/integrated-recommendation-assistant>
 
+## 三个项目的代码都在这个仓库里
+
+整合项目要调两个兄弟项目，所以它们的**代码副本**放在 `vendor/` 下（只读，供阅读与对照）：
+
+| 目录 | 是哪个项目 | 里面有什么 | 怎么被用 |
+| --- | --- | --- | --- |
+| `assistant/` `web/` `scripts/` `tests/` | **模块三**（本仓库主体） | 整合、编排、前端、六阶段证据 | 直接运行 |
+| `vendor/01_recommender_system/` | **模块一 推荐系统** | 冻结 Flask 服务（`release/web_system/`）、Oblivionis v2 冻结排序结果、2,208 件商品目录、模型源码 | 模块三通过 HTTP（登录 + 推荐分页）调用 |
+| `vendor/02_multimodal_ai_assistant/` | **模块二 多模态助手** | `src/` 40 个源文件（ASR、视觉、手势、RAG…）、`config/` | 模块三通过 JSON-lines 子进程调用 |
+
+`config/settings.py` 的规则：**同级目录优先，没有就退回 `vendor/`**——开发机用原项目，
+别人 clone 这个仓库也能看到、甚至跑起来（需要 Flask）。体积原因未纳入：模块一 173 MB 模型 pickle、
+72 MB 原始交易数据、模块二 `.venv` 与模型权重；详见 [vendor/README.md](vendor/README.md)。
+
 ## 安装与运行
 
-- Python 3.10+（实测 3.13.6）。离线核心、HTTP 服务、测试与六阶段脚本**只用标准库**，
-  `requirements.txt` 没有必装依赖。
-- **默认 auto 模式**：自动发现同级 `01_recommender_system`，接入 2,208 件真实商品与
-  Oblivionis v2 冻结排序。模块一冻结 Flask 服务由运行 `app.py` 的同一个解释器启动，
-  因此该解释器需要 Flask（见 `../01_recommender_system/release/requirements-web.txt`）。
-- **模块二（语音/视觉/手势）**：自动发现同级 `02_multimodal_ai_assistant/.venv`，
-  模型与重型依赖在模块二自己的环境里，不在本项目安装；不可用时页面保留手动输入。
+- Python 3.10+（实测 3.13.6）。离线核心、HTTP 服务、测试与六阶段脚本**只用标准库**。
+- **默认 auto 模式**：优先用同级 `01_recommender_system`，没有就用仓库里的 `vendor/01_recommender_system`，
+  接入 2,208 件真实商品与 Oblivionis v2 冻结排序。模块一冻结 Flask 服务由运行 `app.py` 的同一个解释器启动，
+  因此该解释器需要 Flask（任一路径下都一样）。
+- **模块二（语音/视觉/手势）**：需要模块二自己的 `.venv`（原项目里，或 `IRA_MODULE_TWO_PYTHON` 指向它）；
+  仓库里的 `vendor/02…/src` 只有源码，没有 venv，所以媒体接口会返回 503 并保留手动输入。
 - **纯离线模式**：`IRA_PROFILE=demo`，不启动模块一、不加载模型，只用 `data/catalog.json` 的 18 件合成商品。
 
 ```powershell
@@ -109,9 +123,11 @@ python -B -m unittest discover -s tests -v     # 回归测试
 
 ```text
 app.py                 入口：选运行模式 → 起 HTTP → 接入失败回退
-config/settings.py     路径、端口、阈值（唯一配置源）
+config/settings.py     路径、端口、阈值（唯一配置源）+ 兄弟项目/vendor 自动发现
 assistant/             契约、意图、会话、召回、编排、解释、反馈、媒体、适配器、HTTP（共 13 个文件）
-integrations/          模块一/模块二的独立进程入口（复用其公开能力）
+integrations/          模块一/模块二的独立进程入口（很薄，复用其公开能力）
+vendor/01_recommender_system/  模块一代码副本：冻结 Flask 服务 + 冻结排序结果 + 商品目录 + 模型源码
+vendor/02_multimodal_ai_assistant/  模块二代码副本：ASR / 视觉 / 手势 / RAG 等 40 个源文件
 web/                   前端：index.html + app.js + style.css
 scripts/               01~06 六阶段证据脚本 + run_all + test_report
 tests/                 五个模块各自的回归测试

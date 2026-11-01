@@ -1,0 +1,29 @@
+{
+  "model": "Oblivionis",
+  "implementation": "R1_head48",
+  "score_online": 0.806,
+  "ndcg_at_10": 0.8992,
+  "recall_at_10": 0.4728,
+  "gauc": 0.8793,
+  "sha256": "d924f90e7b3c661614738ecc6353882f6497508338fc85153b2dd555a4cd66a0",
+  "rows": 58205,
+  "users": 736,
+  "head_weights": {
+    "ours": 0.1,
+    "binary": 0.23,
+    "R120": 0.48,
+    "R300": 0.19
+  },
+  "tail_weights": {
+    "ours": 0.1,
+    "binary": 0.08,
+    "R120": 0.3,
+    "R300": 0.1,
+    "nL15": 0.084,
+    "nL7": 0.084,
+    "n07": 0.084,
+    "n11": 0.084,
+    "n15": 0.084
+  },
+  "supersedes": "123816780ae366ee5e9bea43cd69d4188bc55fe8c12cd67c126b9923a25518e3"
+}

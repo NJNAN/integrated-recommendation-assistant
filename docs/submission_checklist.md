@@ -72,8 +72,8 @@ Compress-Archive "..\小组号-项目名" "..\小组号-项目名.zip"
       的结构化数据，**不代表物理设备已现场测试**（`scope.real_models_verified=false`）。
 - [ ] 10 分钟演示 + 5 分钟答辩，按 `docs/deployment.md` 第5、6 节彩排。
 - [ ] 演示视频（如学校要求）：按同一提纲录制；当前没有视频文件，用文档 + 运行截图作为演示材料。
-- [ ] 演示环境：auto 模式需当前解释器装 Flask 并能发现同级模块一；否则用 `IRA_PROFILE=demo`；
-      语音/视觉/手势需模块二 `.venv` 与物理设备，无设备时用手动输入并明确说明。
+- [ ] 演示环境：auto 模式需当前解释器装 Flask，能发现同级模块一或使用仓库内 `vendor/01_recommender_system`；
+      否则用 `IRA_PROFILE=demo`；语音/视觉/手势需模块二 `.venv` 与物理设备，无设备时用手动输入并明确说明。
 
 ## 6. 隐私、密钥与数据
 

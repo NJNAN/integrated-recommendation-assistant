@@ -13,6 +13,12 @@
 价格是 **GBP 历史最后观测单价**，不是当前售价；`IRA_PROFILE=demo` 或自动接入失败回退时使用
 `data/catalog.json` 的 18 件合成商品。合成样例只用于验收流程，不代表真实业务效果。
 
+为了让任何人 clone 这个仓库就能读懂全链路，模块一、模块二的**代码副本**放在仓库
+`vendor/01_recommender_system/`（冻结 Flask 服务、冻结排序结果、商品目录、模型源码）和
+`vendor/02_multimodal_ai_assistant/`（ASR / 视觉 / 手势 / RAG 源码）。它们不参与模块三的 import，
+只作为子进程工作目录与阅读材料；`config/settings.py::_module_root()` 优先用同级原项目、
+没有则退回 `vendor/`。详见 [vendor/README.md](../vendor/README.md) 与 [代码阅读指南](代码阅读指南.md)。
+
 ## 2. 系统上下文图
 
 ```mermaid
@@ -128,6 +134,8 @@ sequenceDiagram
 ## 8. 配置与接入
 
 路径、端口、阈值、TTL、TopK、超时全部来自 `config/settings.py`，可用 `IRA_*` 环境变量覆盖。
+兄弟项目根目录的规则是「**同级优先、否则 vendor**」：`../01_recommender_system` 存在就用原项目，
+否则用 `vendor/01_recommender_system`（模块二同理），也可用 `IRA_MODULE_ONE_ROOT` / `IRA_MODULE_TWO_ROOT` 显式指定。
 模块一通过 `/api/auth/login` 与 `/api/recommendations` 公开接口接入（演示账号见 `settings.py`，
 仅用于本机课程演示）；模块二通过独立 `.venv` 子进程的 JSON-lines 协议接入，工作进程串行执行、
 超时回收自己的进程树，识别结果先转成统一事件再进入编排。启动时不加载任何模型；

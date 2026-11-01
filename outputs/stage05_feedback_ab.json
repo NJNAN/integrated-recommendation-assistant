@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-31T09:35:28.704544+00:00",
+  "generated_at": "2026-11-01T14:23:08.787910+00:00",
   "metrics": {
     "case_count": 5,
     "passed": 5,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 5,
-      "p50": 0.555,
-      "p95": 0.734,
-      "max": 0.734
+      "p50": 0.581,
+      "p95": 0.659,
+      "max": 0.659
     }
   },
   "cases": [
@@ -1106,7 +1106,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "event",
-            "elapsed_ms": 0.013,
+            "elapsed_ms": 0.011,
             "data": {
               "trace_id": "feedback-up",
               "user_id": "demo-user",
@@ -1122,7 +1122,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "intent",
-            "elapsed_ms": 0.034,
+            "elapsed_ms": 0.03,
             "data": {
               "intent": "feedback",
               "slots": {},
@@ -1141,7 +1141,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "context",
-            "elapsed_ms": 0.089,
+            "elapsed_ms": 0.085,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -1184,7 +1184,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "request",
-            "elapsed_ms": 0.093,
+            "elapsed_ms": 0.089,
             "data": {
               "trace_id": "feedback-up",
               "user_id": "demo-user",
@@ -1205,7 +1205,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.345,
+            "elapsed_ms": 0.37,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1345,7 +1345,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "explanation",
-            "elapsed_ms": 0.567,
+            "elapsed_ms": 0.601,
             "data": [
               {
                 "item_id": "demo-010",
@@ -1560,7 +1560,7 @@
           {
             "trace_id": "feedback-up",
             "stage": "result",
-            "elapsed_ms": 0.57,
+            "elapsed_ms": 0.604,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -1588,7 +1588,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.569
+        "elapsed_ms": 0.602
       },
       "primary_reason": "目标商品 feedback +2.5；同标签商品 tag_affinity 正影响",
       "passed": true,
@@ -2689,7 +2689,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "event",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.012,
             "data": {
               "trace_id": "feedback-repeat",
               "user_id": "demo-user",
@@ -2705,7 +2705,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "intent",
-            "elapsed_ms": 0.028,
+            "elapsed_ms": 0.032,
             "data": {
               "intent": "feedback",
               "slots": {},
@@ -2724,7 +2724,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "context",
-            "elapsed_ms": 0.079,
+            "elapsed_ms": 0.085,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2767,7 +2767,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "request",
-            "elapsed_ms": 0.083,
+            "elapsed_ms": 0.089,
             "data": {
               "trace_id": "feedback-repeat",
               "user_id": "demo-user",
@@ -2788,7 +2788,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.322,
+            "elapsed_ms": 0.347,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -2928,7 +2928,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "explanation",
-            "elapsed_ms": 0.553,
+            "elapsed_ms": 0.57,
             "data": [
               {
                 "item_id": "demo-010",
@@ -3143,7 +3143,7 @@
           {
             "trace_id": "feedback-repeat",
             "stage": "result",
-            "elapsed_ms": 0.557,
+            "elapsed_ms": 0.572,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -3171,7 +3171,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.555
+        "elapsed_ms": 0.571
       },
       "primary_reason": "同方向反馈覆盖旧值，权重不累积",
       "passed": true,
@@ -4272,7 +4272,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "event",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.011,
             "data": {
               "trace_id": "feedback-down",
               "user_id": "demo-user",
@@ -4288,7 +4288,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "intent",
-            "elapsed_ms": 0.028,
+            "elapsed_ms": 0.03,
             "data": {
               "intent": "feedback",
               "slots": {},
@@ -4307,7 +4307,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "context",
-            "elapsed_ms": 0.078,
+            "elapsed_ms": 0.081,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -4350,7 +4350,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "request",
-            "elapsed_ms": 0.082,
+            "elapsed_ms": 0.085,
             "data": {
               "trace_id": "feedback-down",
               "user_id": "demo-user",
@@ -4371,7 +4371,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.323,
+            "elapsed_ms": 0.355,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -4511,7 +4511,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "explanation",
-            "elapsed_ms": 0.544,
+            "elapsed_ms": 0.58,
             "data": [
               {
                 "item_id": "demo-007",
@@ -4726,7 +4726,7 @@
           {
             "trace_id": "feedback-down",
             "stage": "result",
-            "elapsed_ms": 0.547,
+            "elapsed_ms": 0.583,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -4754,7 +4754,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.545
+        "elapsed_ms": 0.581
       },
       "primary_reason": "目标商品 feedback -2.5 覆盖正反馈；同标签商品 tag_affinity 转负",
       "passed": true,
@@ -4829,7 +4829,7 @@
           {
             "trace_id": "feedback-invalid",
             "stage": "event",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.011,
             "data": {
               "trace_id": "feedback-invalid",
               "user_id": "demo-user",
@@ -4845,7 +4845,7 @@
           {
             "trace_id": "feedback-invalid",
             "stage": "intent",
-            "elapsed_ms": 0.03,
+            "elapsed_ms": 0.029,
             "data": {
               "intent": "feedback",
               "slots": {},
@@ -4864,7 +4864,7 @@
           {
             "trace_id": "feedback-invalid",
             "stage": "error",
-            "elapsed_ms": 0.081,
+            "elapsed_ms": 0.076,
             "data": {
               "code": "INVALID_FEEDBACK",
               "message": "只能反馈当前会话最近展示的商品"
@@ -4873,14 +4873,14 @@
           {
             "trace_id": "feedback-invalid",
             "stage": "result",
-            "elapsed_ms": 0.083,
+            "elapsed_ms": 0.078,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.082
+        "elapsed_ms": 0.077
       },
       "primary_reason": "目标不在当前会话最近展示集：返回 INVALID_FEEDBACK 且会话回滚到上一次",
       "passed": true,
@@ -5995,7 +5995,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "intent",
-            "elapsed_ms": 0.067,
+            "elapsed_ms": 0.043,
             "data": {
               "intent": "filter",
               "slots": {
@@ -6020,7 +6020,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "context",
-            "elapsed_ms": 0.135,
+            "elapsed_ms": 0.088,
             "data": {
               "user_id": "demo-user",
               "session_id": "fresh",
@@ -6044,7 +6044,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "request",
-            "elapsed_ms": 0.139,
+            "elapsed_ms": 0.091,
             "data": {
               "trace_id": "feedback-isolation",
               "user_id": "demo-user",
@@ -6063,7 +6063,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.397,
+            "elapsed_ms": 0.318,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -6203,7 +6203,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "explanation",
-            "elapsed_ms": 0.732,
+            "elapsed_ms": 0.655,
             "data": [
               {
                 "item_id": "demo-003",
@@ -6418,7 +6418,7 @@
           {
             "trace_id": "feedback-isolation",
             "stage": "result",
-            "elapsed_ms": 0.736,
+            "elapsed_ms": 0.661,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -6446,7 +6446,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.734
+        "elapsed_ms": 0.659
       },
       "primary_reason": "新会话无偏好，排序恢复无反馈基线",
       "passed": true,

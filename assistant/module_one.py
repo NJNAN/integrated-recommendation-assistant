@@ -149,12 +149,21 @@ def integrated_settings(settings):
     if os.getenv('IRA_PROFILE', 'auto') == 'demo' or settings.recommender_url or os.getenv('IRA_CATALOG'):
         return settings, None
     root = settings.module_one_root
-    files = (root / 'release/web_system/data/catalog.csv', root / 'development/data/train.csv',
-             root / 'release/expected/submission_v2_R1_head48.csv')
-    if not all(path.is_file() for path in files):
-        return settings, None                                       # 没有同级模块一：纯离线
-    # 有模块一：先由两份 CSV 生成带证据的目录，再把 settings 指向本机 5001 和这份目录。
-    import_catalog(files[0], files[1], output := ROOT / 'data/module_one_catalog.json')
+    release = root / 'release'
+    catalog_csv = release / 'web_system/data/catalog.csv'
+    transactions = root / 'development/data/train.csv'
+    scores = release / 'expected/submission_v2_R1_head48.csv'
+    output = ROOT / 'data/module_one_catalog.json'
+    # 发布包（web_system 源码 + 冻结排序 + 商品目录）必须存在，否则视为没有模块一。
+    if not (catalog_csv.is_file() and scores.is_file()):
+        return settings, None                                       # 没有模块一代码：纯离线
+    # 有原始交易数据就现场重算目录；仓库里的 vendor 副本不含 72MB 原始数据，
+    # 此时直接用已生成的 data/module_one_catalog.json（内容与原始数据一致，带 sha256 来源）。
+    if transactions.is_file():
+        import_catalog(catalog_csv, transactions, output)
+    elif not output.is_file():
+        return settings, None
+    # 再把 settings 指向本机 5001 的服务与这份目录。
     active = replace(settings, catalog_path=output, recommender_accounts=settings.module_one_accounts,
                      recommender_url=f'http://127.0.0.1:{settings.module_one_port}',
                      upstream_timeout_seconds=5)

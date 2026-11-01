@@ -1,0 +1,18 @@
+[Unit]
+Description=Oblivionis recommendation web system
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/oblivionis-app
+EnvironmentFile=/etc/oblivionis.env
+ExecStart=/opt/oblivionis-venv/bin/gunicorn --workers 1 --threads 4 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - web_system.app:app
+Restart=always
+RestartSec=3
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

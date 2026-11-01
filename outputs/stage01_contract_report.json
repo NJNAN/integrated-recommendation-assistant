@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-31T09:35:28.648930+00:00",
+  "generated_at": "2026-11-01T14:23:08.733280+00:00",
   "metrics": {
     "case_count": 6,
     "passed": 6,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 6,
-      "p50": 0.026,
-      "p95": 1.456,
-      "max": 1.456
+      "p50": 0.024,
+      "p95": 1.785,
+      "max": 1.785
     }
   },
   "cases": [
@@ -487,7 +487,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "event",
-            "elapsed_ms": 0.029,
+            "elapsed_ms": 0.035,
             "data": {
               "trace_id": "contract-ok",
               "user_id": "demo-user",
@@ -502,7 +502,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "intent",
-            "elapsed_ms": 0.939,
+            "elapsed_ms": 1.113,
             "data": {
               "intent": "filter",
               "slots": {
@@ -533,7 +533,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "context",
-            "elapsed_ms": 1.018,
+            "elapsed_ms": 1.208,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -563,7 +563,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "request",
-            "elapsed_ms": 1.023,
+            "elapsed_ms": 1.213,
             "data": {
               "trace_id": "contract-ok",
               "user_id": "demo-user",
@@ -583,7 +583,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 1.336,
+            "elapsed_ms": 1.64,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -734,7 +734,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "explanation",
-            "elapsed_ms": 1.454,
+            "elapsed_ms": 1.781,
             "data": [
               {
                 "item_id": "demo-003",
@@ -819,7 +819,7 @@
           {
             "trace_id": "contract-ok",
             "stage": "result",
-            "elapsed_ms": 1.457,
+            "elapsed_ms": 1.787,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -837,7 +837,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 1.456
+        "elapsed_ms": 1.785
       },
       "passed": true
     },
@@ -892,7 +892,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "event",
-            "elapsed_ms": 0.017,
+            "elapsed_ms": 0.021,
             "data": {
               "trace_id": "contract-zero",
               "user_id": "demo-user",
@@ -909,7 +909,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "intent",
-            "elapsed_ms": 0.042,
+            "elapsed_ms": 0.051,
             "data": {
               "intent": "filter",
               "slots": {
@@ -934,7 +934,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "context",
-            "elapsed_ms": 0.094,
+            "elapsed_ms": 0.109,
             "data": {
               "user_id": "demo-user",
               "session_id": "zero",
@@ -958,7 +958,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "request",
-            "elapsed_ms": 0.098,
+            "elapsed_ms": 0.113,
             "data": {
               "trace_id": "contract-zero",
               "user_id": "demo-user",
@@ -977,7 +977,7 @@
           {
             "trace_id": "contract-zero",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.269,
+            "elapsed_ms": 0.31,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1213,13 +1213,13 @@
           {
             "trace_id": "contract-zero",
             "stage": "explanation",
-            "elapsed_ms": 0.282,
+            "elapsed_ms": 0.324,
             "data": []
           },
           {
             "trace_id": "contract-zero",
             "stage": "result",
-            "elapsed_ms": 0.285,
+            "elapsed_ms": 0.326,
             "data": {
               "status": "empty",
               "item_ids": []
@@ -1230,7 +1230,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.284
+        "elapsed_ms": 0.325
       },
       "passed": true
     },
@@ -1247,7 +1247,7 @@
       },
       "expected_status": "error",
       "response": {
-        "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
+        "trace_id": "fd83ddf8-5be3-48cd-83cb-324918ca26c9",
         "status": "error",
         "message": "trace_id 必须是非空字符串",
         "items": [],
@@ -1260,25 +1260,25 @@
         },
         "trace": [
           {
-            "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
+            "trace_id": "fd83ddf8-5be3-48cd-83cb-324918ca26c9",
             "stage": "error",
-            "elapsed_ms": 0.024,
+            "elapsed_ms": 0.023,
             "data": {
               "code": "INVALID_EVENT",
               "message": "trace_id 必须是非空字符串"
             }
           },
           {
-            "trace_id": "2512c492-935b-4201-bd03-c52ffc4e20eb",
+            "trace_id": "fd83ddf8-5be3-48cd-83cb-324918ca26c9",
             "stage": "result",
-            "elapsed_ms": 0.026,
+            "elapsed_ms": 0.025,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.026
+        "elapsed_ms": 0.024
       },
       "passed": true
     },
@@ -1310,7 +1310,7 @@
           {
             "trace_id": "contract-missing-source",
             "stage": "error",
-            "elapsed_ms": 0.005,
+            "elapsed_ms": 0.004,
             "data": {
               "code": "INVALID_EVENT",
               "message": "source 必须是非空字符串"
@@ -1326,7 +1326,7 @@
             }
           }
         ],
-        "elapsed_ms": 0.006
+        "elapsed_ms": 0.005
       },
       "passed": true
     },
@@ -1364,7 +1364,7 @@
           {
             "trace_id": "contract-bad-label",
             "stage": "error",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.011,
             "data": {
               "code": "INVALID_EVENT",
               "message": "confidence 必须是 [0, 1] 内的有限数值"
@@ -1373,14 +1373,14 @@
           {
             "trace_id": "contract-bad-label",
             "stage": "result",
-            "elapsed_ms": 0.011,
+            "elapsed_ms": 0.013,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.01
+        "elapsed_ms": 0.012
       },
       "passed": true
     },
@@ -1420,7 +1420,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "event",
-            "elapsed_ms": 0.011,
+            "elapsed_ms": 0.012,
             "data": {
               "trace_id": "contract-filter",
               "user_id": "demo-user",
@@ -1435,7 +1435,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "intent",
-            "elapsed_ms": 0.032,
+            "elapsed_ms": 0.033,
             "data": {
               "intent": "filter",
               "slots": {},
@@ -1454,7 +1454,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "context",
-            "elapsed_ms": 0.057,
+            "elapsed_ms": 0.056,
             "data": {
               "user_id": "demo-user",
               "session_id": "filter",
@@ -1470,7 +1470,7 @@
           {
             "trace_id": "contract-filter",
             "stage": "result",
-            "elapsed_ms": 0.059,
+            "elapsed_ms": 0.058,
             "data": {
               "status": "needs_clarification",
               "item_ids": []
@@ -1480,7 +1480,7 @@
         "missing_slots": [
           "至少一个筛选条件"
         ],
-        "elapsed_ms": 0.058
+        "elapsed_ms": 0.057
       },
       "passed": true
     }
