@@ -1,0 +1,7 @@
+docs(成员3): 讲解稿补 §4.6「上游（模块一）的代码在哪」+ 修正一处易被追问的事实
+
+- 新增调用链图：我们的 adapters.HTTPRecommender.recall（登录+翻页）→ vendor 模块一 app.py::login/recommendations（L89–99/L115–126）→ service.py::account/recommendations（L131/L160）→ 读 catalog.csv 与 expected/submission_v2_R1_head48.csv → 返回 has_more/next_cursor → 我们只取 item_id+score
+- 文件表：web_system 各文件、data/catalog.csv、item_neighbors.json、expected 冻结排序、manifest/v2_meta、source 模型源码，各自作用与关键行号
+- 三个必答点：为什么只取 item_id+score、分页怎么处理（limit=24/cursor/2000 上限）、身份怎么不串（独立 CookieJar + user_id 校验）
+- 服务由 module_one.py::ModuleOneService.start（L161）子进程拉起，20 秒健康检查
+- 新增「注意」与 Q11：模块一 score 是负数（-95/-24，越接近 0 越好），真实模式下游主导排序，合成目录里点赞一下到第一、真实目录只能挪几位（已知限制）
