@@ -14,6 +14,7 @@
 - **阅读清单（按人分配：每人的精读文件与自测问题）**：[docs/阅读清单.md](docs/阅读清单.md)
 - **数据流与失败出口（任务书步骤1：trace_id / 主要字段 / 失败出口）**：[docs/数据流与失败出口.md](docs/数据流与失败出口.md)
 - **超时与降级说明（阶段3 提交物）：[docs/超时与降级说明.md](docs/超时与降级说明.md)**
+- **成员3 逐函数讲稿（按文件/函数/参数逐个讲）：[docs/成员3_讲稿_按文件逐函数.md](docs/成员3_讲稿_按文件逐函数.md)**
 - 部署、降级、风险与演示提纲：[docs/deployment.md](docs/deployment.md)
 - 六阶段小结：[docs/stage_summaries.md](docs/stage_summaries.md)
 - 提交清单：[docs/submission_checklist.md](docs/submission_checklist.md)
