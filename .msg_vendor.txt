@@ -1,8 +1,0 @@
-docs(成员3): 模块一必须读的 3 个文件补齐中文注释（参数/返回/怎么做），逻辑零改动
-
-- vendor/.../web_system/app.py 190→344：create_app（四个路径配置）、ok/fail/require_auth/int_arg、每个路由的参数/返回/怎么做；标注模块三用到 login/recommendations/health 三个，其余未用
-- vendor/.../web_system/service.py 245→398：TTLCache、__init__、_load_rankings（按名次归一化 0~1 的公式与原因）、_load_catalog、_global_ranking、_seed_database、_ranking_user_id、account、product、system_info、recommendations（分页/写库）、similar、feedback
-- vendor/.../web_system/database.py 87→123：六张表逐张注释、connect/record_feedback 参数与幂等说明
-- 验证：app/service 去 docstring 后 AST 与上游完全一致；database 建表结构（列/外键/索引）逐表一致；auto 模式端到端跑通（2208 件、hybrid、真实商品）；六阶段 57/57、回归 35 OK
-- 同步更新：模块一对接讲稿与讲解稿里的行号（app.py L29/L179/L223、service.py L80/L106/.../L270、database.py L70/L88）
-- vendor/README.md 补充“注释”说明与只读约定
