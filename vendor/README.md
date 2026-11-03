@@ -61,7 +61,10 @@
 
 ## 4. 使用约定
 
-- **只读**：不要直接改 vendor 里的文件；上游项目改完后重新复制（保持两边一致）。
+- **只读**：不要直接改 vendor 里的逻辑；上游项目改完后重新复制（保持两边一致）。
+- **注释**：`01_recommender_system/release/web_system/` 下的 `app.py`、`service.py`、`database.py`
+  为了讲解补充了中文注释（参数/返回/怎么做），**逻辑与上游一致**（AST 与 sqlite 建表结构已对比）。
+  重新从上游复制会覆盖这些注释，重新补一遍即可。
 - 复制来源与时间：2026-11-01 从同级 `01_recommender_system`、`02_multimodal_ai_assistant` 复制；
   模块一 84 个文件 / 4.4 MB，模块二 55 个文件 / 0.36 MB。
 - 数据来源：模块一使用 UCI Online Retail II 公开数据集（见

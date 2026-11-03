@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-03T01:33:20.192933+00:00",
+  "generated_at": "2026-11-03T09:08:05.320537+00:00",
   "metrics": {
     "case_count": 7,
     "passed": 7,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 7,
-      "p50": 0.214,
-      "p95": 0.914,
-      "max": 0.914
+      "p50": 0.199,
+      "p95": 0.571,
+      "max": 0.571
     }
   },
   "cases": [
@@ -487,7 +487,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "event",
-            "elapsed_ms": 0.043,
+            "elapsed_ms": 0.048,
             "data": {
               "trace_id": "e2e-voice",
               "user_id": "demo-user",
@@ -502,7 +502,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "intent",
-            "elapsed_ms": 0.265,
+            "elapsed_ms": 0.102,
             "data": {
               "intent": "filter",
               "slots": {
@@ -533,7 +533,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "context",
-            "elapsed_ms": 0.359,
+            "elapsed_ms": 0.171,
             "data": {
               "user_id": "demo-user",
               "session_id": "e2e-voice",
@@ -563,7 +563,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "request",
-            "elapsed_ms": 0.363,
+            "elapsed_ms": 0.182,
             "data": {
               "trace_id": "e2e-voice",
               "user_id": "demo-user",
@@ -583,7 +583,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.764,
+            "elapsed_ms": 0.459,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -734,7 +734,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "explanation",
-            "elapsed_ms": 0.91,
+            "elapsed_ms": 0.569,
             "data": [
               {
                 "item_id": "demo-003",
@@ -819,7 +819,7 @@
           {
             "trace_id": "e2e-voice",
             "stage": "result",
-            "elapsed_ms": 0.916,
+            "elapsed_ms": 0.572,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -837,7 +837,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.914
+        "elapsed_ms": 0.571
       },
       "passed": true
     },
@@ -1046,7 +1046,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "event",
-            "elapsed_ms": 0.051,
+            "elapsed_ms": 0.017,
             "data": {
               "trace_id": "e2e-vision",
               "user_id": "demo-user",
@@ -1070,7 +1070,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "intent",
-            "elapsed_ms": 0.087,
+            "elapsed_ms": 0.044,
             "data": {
               "intent": "filter",
               "slots": {
@@ -1101,7 +1101,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "context",
-            "elapsed_ms": 0.147,
+            "elapsed_ms": 0.098,
             "data": {
               "user_id": "demo-user",
               "session_id": "e2e-vision",
@@ -1131,7 +1131,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "request",
-            "elapsed_ms": 0.151,
+            "elapsed_ms": 0.102,
             "data": {
               "trace_id": "e2e-vision",
               "user_id": "demo-user",
@@ -1151,7 +1151,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.224,
+            "elapsed_ms": 0.168,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1390,7 +1390,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "explanation",
-            "elapsed_ms": 0.275,
+            "elapsed_ms": 0.216,
             "data": [
               {
                 "item_id": "demo-001",
@@ -1423,7 +1423,7 @@
           {
             "trace_id": "e2e-vision",
             "stage": "result",
-            "elapsed_ms": 0.278,
+            "elapsed_ms": 0.218,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -1437,7 +1437,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.277
+        "elapsed_ms": 0.218
       },
       "passed": true
     },
@@ -1675,7 +1675,7 @@
           {
             "trace_id": "e2e-gesture",
             "stage": "context",
-            "elapsed_ms": 0.084,
+            "elapsed_ms": 0.081,
             "data": {
               "user_id": "demo-user",
               "session_id": "e2e-vision",
@@ -1710,7 +1710,7 @@
           {
             "trace_id": "e2e-gesture",
             "stage": "request",
-            "elapsed_ms": 0.088,
+            "elapsed_ms": 0.085,
             "data": {
               "trace_id": "e2e-gesture",
               "user_id": "demo-user",
@@ -1732,7 +1732,7 @@
           {
             "trace_id": "e2e-gesture",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.167,
+            "elapsed_ms": 0.154,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1971,7 +1971,7 @@
           {
             "trace_id": "e2e-gesture",
             "stage": "explanation",
-            "elapsed_ms": 0.213,
+            "elapsed_ms": 0.198,
             "data": [
               {
                 "item_id": "demo-001",
@@ -2004,7 +2004,7 @@
           {
             "trace_id": "e2e-gesture",
             "stage": "result",
-            "elapsed_ms": 0.215,
+            "elapsed_ms": 0.2,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -2018,7 +2018,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.214
+        "elapsed_ms": 0.199
       },
       "passed": true
     },
@@ -2213,7 +2213,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "event",
-            "elapsed_ms": 0.024,
+            "elapsed_ms": 0.019,
             "data": {
               "trace_id": "e2e-fault",
               "user_id": "demo-user",
@@ -2228,7 +2228,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "intent",
-            "elapsed_ms": 0.141,
+            "elapsed_ms": 0.062,
             "data": {
               "intent": "filter",
               "slots": {
@@ -2259,7 +2259,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "context",
-            "elapsed_ms": 0.238,
+            "elapsed_ms": 0.121,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2289,7 +2289,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "request",
-            "elapsed_ms": 0.244,
+            "elapsed_ms": 0.125,
             "data": {
               "trace_id": "e2e-fault",
               "user_id": "demo-user",
@@ -2309,7 +2309,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.354,
+            "elapsed_ms": 0.213,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -2537,7 +2537,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "explanation",
-            "elapsed_ms": 0.408,
+            "elapsed_ms": 0.265,
             "data": [
               {
                 "item_id": "demo-005",
@@ -2570,7 +2570,7 @@
           {
             "trace_id": "e2e-fault",
             "stage": "result",
-            "elapsed_ms": 0.41,
+            "elapsed_ms": 0.267,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -2584,7 +2584,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.41
+        "elapsed_ms": 0.266
       },
       "passed": true
     },
@@ -2595,7 +2595,7 @@
       },
       "expected_status": "error",
       "response": {
-        "trace_id": "1982bf73-c9fd-4192-874b-f79ac3d9b6b8",
+        "trace_id": "1ead9b1e-24d5-4ccd-9be2-c4d3b0d6eae0",
         "status": "error",
         "message": "trace_id 必须是非空字符串",
         "items": [],
@@ -2608,25 +2608,25 @@
         },
         "trace": [
           {
-            "trace_id": "1982bf73-c9fd-4192-874b-f79ac3d9b6b8",
+            "trace_id": "1ead9b1e-24d5-4ccd-9be2-c4d3b0d6eae0",
             "stage": "error",
-            "elapsed_ms": 0.035,
+            "elapsed_ms": 0.023,
             "data": {
               "code": "INVALID_EVENT",
               "message": "trace_id 必须是非空字符串"
             }
           },
           {
-            "trace_id": "1982bf73-c9fd-4192-874b-f79ac3d9b6b8",
+            "trace_id": "1ead9b1e-24d5-4ccd-9be2-c4d3b0d6eae0",
             "stage": "result",
-            "elapsed_ms": 0.037,
+            "elapsed_ms": 0.025,
             "data": {
               "status": "error",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.036
+        "elapsed_ms": 0.024
       },
       "passed": true
     },
@@ -2656,7 +2656,7 @@
           {
             "trace_id": "e2e-end",
             "stage": "event",
-            "elapsed_ms": 0.012,
+            "elapsed_ms": 0.01,
             "data": {
               "trace_id": "e2e-end",
               "user_id": "demo-user",
@@ -2671,7 +2671,7 @@
           {
             "trace_id": "e2e-end",
             "stage": "intent",
-            "elapsed_ms": 0.038,
+            "elapsed_ms": 0.03,
             "data": {
               "intent": "discover",
               "slots": {},
@@ -2688,20 +2688,20 @@
           {
             "trace_id": "e2e-end",
             "stage": "context",
-            "elapsed_ms": 0.059,
+            "elapsed_ms": 0.05,
             "data": {}
           },
           {
             "trace_id": "e2e-end",
             "stage": "result",
-            "elapsed_ms": 0.061,
+            "elapsed_ms": 0.052,
             "data": {
               "status": "ended",
               "item_ids": []
             }
           }
         ],
-        "elapsed_ms": 0.06
+        "elapsed_ms": 0.051
       },
       "passed": true
     },
@@ -2760,7 +2760,7 @@
           {
             "trace_id": "e2e-empty",
             "stage": "event",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.009,
             "data": {
               "trace_id": "e2e-empty",
               "user_id": "demo-user",
@@ -2775,7 +2775,7 @@
           {
             "trace_id": "e2e-empty",
             "stage": "intent",
-            "elapsed_ms": 0.043,
+            "elapsed_ms": 0.037,
             "data": {
               "intent": "filter",
               "slots": {
@@ -2806,7 +2806,7 @@
           {
             "trace_id": "e2e-empty",
             "stage": "context",
-            "elapsed_ms": 0.094,
+            "elapsed_ms": 0.085,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2836,7 +2836,7 @@
           {
             "trace_id": "e2e-empty",
             "stage": "request",
-            "elapsed_ms": 0.098,
+            "elapsed_ms": 0.089,
             "data": {
               "trace_id": "e2e-empty",
               "user_id": "demo-user",
@@ -2856,7 +2856,7 @@
           {
             "trace_id": "e2e-empty",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.133,
+            "elapsed_ms": 0.118,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -3110,13 +3110,13 @@
           {
             "trace_id": "e2e-empty",
             "stage": "explanation",
-            "elapsed_ms": 0.143,
+            "elapsed_ms": 0.127,
             "data": []
           },
           {
             "trace_id": "e2e-empty",
             "stage": "result",
-            "elapsed_ms": 0.145,
+            "elapsed_ms": 0.129,
             "data": {
               "status": "empty",
               "item_ids": []
@@ -3127,7 +3127,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.144
+        "elapsed_ms": 0.128
       },
       "passed": true
     }
