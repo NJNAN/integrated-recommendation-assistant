@@ -58,6 +58,8 @@ python -B -m unittest discover -s tests -v
 
 ## 3. 降级矩阵（故障注入与观察点）
 
+> 阶段3 的推荐上游超时降级有单独说明（触发、响应字段变化、现场命令）：[超时与降级说明](超时与降级说明.md)。
+
 | 场景 | 行为 | 观察点 / 证据 |
 | --- | --- | --- |
 | 找不到模块一（同级和 vendor 都没有）或 `IRA_PROFILE=demo` | 用 `data/catalog.json` 合成目录正常启动，不打印回退警告 | `GET /api/health` 的 `mode=offline_demo` |
