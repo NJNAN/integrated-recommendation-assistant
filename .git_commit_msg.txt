@@ -1,0 +1,9 @@
+docs(成员3): 5 个文件补齐每个函数的参数说明（是什么/从哪来/取值/返回/异常）
+
+- recommendation.py 270→412：Catalog/RecommendationAdapter 等 8 个函数，逐参数说明目录行字段、约束键、上游分数表、诊断信息 6 个键
+- orchestrator.py 183→254：__init__/handle/_handle/record/finish，写清 data 字典、六种 status、trace 阶段名与回滚
+- module_one.py 170→288：_prices/import_catalog/ModuleOneService/integrated_settings，写清两个 CSV 的必需列与三种离线分支
+- scripts/03 82→164：TimeoutRemote/digest/run/三个判定函数，写清每条用例构造什么、断言什么
+- tests 106→199：demo_settings/request/各 test 的构造与验证点
+- 逻辑零改动：AST（去 docstring）与原文件逐节点一致；57/57 与 35 项测试全过
+- 同步更新阅读清单/五人分工/讲解稿里的行号与行数

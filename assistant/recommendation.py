@@ -7,6 +7,8 @@
 4. `_score_breakdown`  六项加权（热门/上下文/相似/上游/反馈/标签亲和），每项都留痕。
 5. `_evidence`         组装 EvidencePack，解释模块只允许引用这里的片段。
 6. `recommend`         把 1~5 串起来的五步主流程，返回 (TopK 商品, 诊断信息)。
+
+阅读约定：每个函数的 docstring 都写了「参数（每个参数是什么、从哪来、取值）」「返回」「异常」。
 """
 import json
 from pathlib import Path
@@ -22,6 +24,23 @@ class Catalog:
     """
 
     def __init__(self, path):
+        """读取并校验商品目录文件。
+
+        参数：
+            path (str | pathlib.Path): 目录 JSON 的路径。
+                正常来自 `config/settings.py` 的 `settings.catalog_path`
+                （默认 `data/catalog.json`，真实模式是生成的 `data/module_one_catalog.json`）。
+
+        副作用：
+            把结果存在两个属性上：
+            - `self.items`：dict，{item_id: 商品行}，商品行是 JSON 里的一个对象；
+            - `self.dataset` / `self.currency` / `self.real` / `self.price_notice`：目录级元信息，
+              分别表示数据集名、币种（CNY/GBP）、是否真实目录、价格口径说明。
+
+        异常：
+            ContractError(code='INVALID_CATALOG')：文件读不了、JSON 不合法、缺字段、
+            价格缺失却没标 `price_kind='missing'`、热度越界、商品ID重复……都收敛成这一个错误码。
+        """
         try:
             document = json.loads(Path(path).read_text(encoding='utf-8'))
             rows = document['items']
@@ -75,7 +94,20 @@ class Catalog:
             raise ContractError(f'商品目录读取或校验失败：{exc}', 'INVALID_CATALOG') from exc
 
     def get(self, item_id):
-        """按 ID 取商品；不存在时抛 ITEM_NOT_FOUND，而不是返回 None 让人猜。"""
+        """按商品 ID 取一行商品。
+
+        参数：
+            item_id (str): 商品编号，必须是目录里存在的 ID（例如 'demo-001' 或 '21238'）。
+                通常来自用户请求里的 `item_ids`（点名的商品），或内部召回时的候选 ID。
+
+        返回：
+            dict: 目录里的一行商品（`self.items[item_id]`），
+            包含 item_id/name/price/category/color/tags/popularity/description/visual_labels 等字段。
+
+        异常：
+            ContractError(code='ITEM_NOT_FOUND')：ID 不在目录里。
+            上层（orchestrator）会把它转成 400 错误，而不是返回 None 让人猜。
+        """
         if item_id not in self.items:
             raise ContractError(f'商品不存在：{item_id}', 'ITEM_NOT_FOUND')
         return self.items[item_id]
@@ -89,18 +121,48 @@ class RecommendationAdapter:
     """
 
     def __init__(self, settings, remote=None):
+        """准备好目录和上游。
+
+        参数：
+            settings (config.settings.Settings): 只读配置，本类用到其中三项：
+                - `catalog_path`：商品目录 JSON 的路径（交给 Catalog 读）；
+                - `visual_threshold`：视觉标签置信度阈值（默认 0.7，低于它的标签不进证据）；
+                - `recommender_url`：模块一服务地址；为空表示纯离线。
+            remote (可选，默认 None): 上游对象，只要有 `recall(request)` 方法并返回
+                `[{'item_id': str, 'score': float}, ...]` 即可。
+                - 传 None：如果 settings 里有 `recommender_url` 就自动建 `HTTPRecommender`，
+                  否则就是纯离线（响应里会带 OFFLINE_DEMO 警告）；
+                - 传具体对象：用传入的这个。测试用它注入“必超时的假上游”（故障注入）。
+
+        副作用：
+            `self.catalog`：Catalog 实例（已加载并校验完目录）；
+            `self.remote`：上游对象或 None。
+        """
         self.settings = settings
         self.catalog = Catalog(settings.catalog_path)
         # remote 为 None 表示纯离线：只靠目录召回，响应会带 OFFLINE_DEMO 警告。
         self.remote = remote if remote is not None else (HTTPRecommender(settings) if settings.recommender_url else None)
 
     def _recall_upstream(self, request):
-        """调模块一真实推荐接口，只取候选 ID 和分数。
+        """向模块一真实推荐服务要一批候选，只取「候选 ID + 分数」。
 
-        返回 (分数表, warnings, mode)：
-        - 没配上游：({}, [OFFLINE_DEMO], 'offline_demo')
-        - 成功：({item_id: 分数}, [], 'hybrid')
-        - 超时/不可用/格式错：({}, [错误码], 'offline_demo')  ← 只降级，不抛给编排层
+        参数：
+            request (RecommendationRequest): 本次推荐请求。本函数实际只用到其中两个字段：
+                - `user_id`：上游按用户给推荐，登录和取候选都用它；
+                - `trace_id`：拼进 HTTP 头 X-Trace-ID，方便两边日志对上。
+
+        返回：
+            tuple，三个值：
+            1. `scores` (dict): {item_id: 上游分数}，只保留本目录里存在的商品；
+               同一商品被上游返回多次时取最高分。离线/失败时是空字典。
+            2. `warnings` (list[dict]): 降级说明。每项形如
+               {'code': 'OFFLINE_DEMO'|'UPSTREAM_TIMEOUT'|'INVALID_UPSTREAM'|'UPSTREAM_UNAVAILABLE',
+                'message': '中文说明'}。成功时是空列表。
+            3. `mode` (str): 'hybrid'（上游成功）或 'offline_demo'（没配/失败/降级）。
+
+        异常：
+            不向外抛任何异常——上游超时、不可用、响应格式错，全部转成 warnings 返回。
+            这是刻意的：上游坏掉不能导致用户拿不到结果，只能降级。
         """
         if self.remote is None:
             return {}, [{'code': 'OFFLINE_DEMO', 'message': '未配置真实推荐服务，使用离线目录召回'}], 'offline_demo'
@@ -127,9 +189,27 @@ class RecommendationAdapter:
 
     @staticmethod
     def _hard_failures(product, constraints):
-        """四个硬约束：品类、颜色、预算、缺失价格。返回失败原因列表，空列表表示通过。
+        """判断一件商品是否违反硬约束（违反就不许推荐，跟分数无关）。
 
-        这一步在打分之前执行，所以“上游分数高 / 热门”都不能让不合规商品过关。
+        参数：
+            product (dict): 目录里的一行商品。本函数只读三个键：
+                - `category` (str)：商品品类；
+                - `color` (str)：商品颜色；
+                - `price` (float | None)：价格；None 表示缺失。
+            constraints (dict): 本次会话的约束，键是槽位名、值是用户给的值。
+                本函数可能读到：`category`、`color`、`budget_min`、`budget_max`
+                （其他键如 recipient/scene 是软偏好，这里不看）。
+
+        返回：
+            list[str]: 违反的原因列表，空列表表示通过。可能的元素：
+            - 'category'：品类不符；
+            - 'color'：颜色不符；
+            - 'missing_price'：商品没有价格，但用户给了预算（没依据，不能推）；
+            - 'budget'：价格低于预算下限或高于上限。
+            多个原因可以同时出现（例如 ['category', 'color', 'budget']）。
+
+        说明：
+            这一步在 `_score_breakdown` 之前执行，所以“上游分数高 / 热度高”都不能让不合规商品过关。
         """
         # 品类、颜色是精确匹配；别名和模糊说法在意图层已经归一化成标准值了。
         failures = [key for key in ('category', 'color') if key in constraints and product[key] != constraints[key]]
@@ -143,14 +223,30 @@ class RecommendationAdapter:
         return failures
 
     def _score_breakdown(self, request, product, targets, upstream, mode, constraints):
-        """六项加权打分。权重是答辩必问项，改任何数值都会直接影响阶段5 的反馈排名对照。
+        """给一个候选商品算六项分数（每一项都能单独解释，总分就是六项之和）。
 
-        - popularity   0.4×热度；真实目录 hybrid 模式置 0（避免合成热度干扰真实排序）
-        - context      0.2×(对象命中 + 场景命中)，对象/场景是软偏好
-        - similarity   0.3×同品类 + 0.1×共同标签数，只在 similar 意图计算
-        - upstream     0.3×上游分数；真实目录 hybrid 模式用 1.0（以模块一排序为主）
-        - feedback     2.5×该商品偏好(±1)，当前会话点赞/倒踩
-        - tag_affinity 0.06×共同标签数×符号，喜欢一个商品会稍微带动同类
+        参数：
+            request (RecommendationRequest): 本次请求。本函数用到：
+                - `intent` (str)：意图，只有 'similar' 才计算相似度；
+                - `preferences` (dict)：{商品ID: +1/-1}，当前会话的点赞/倒踩；
+                - `trace_id`：不用来算分，只用于追溯。
+            product (dict): 候选商品行。本函数读到：
+                - `item_id` (str)、`category` (str)、`tags` (list[str])、
+                - `popularity` (float, 0~1)。
+                （price/color 不参与打分，它们在硬约束里已经筛过了。）
+            targets (list[dict]): 用户点名的目标商品行（来自 request.item_ids）。
+                - similar 意图：用 `targets[0]` 算相似度（同品类 +0.3，共同标签每个 +0.1）；
+                - 其他意图：传空列表即可，不参与计算。
+            upstream (dict): {item_id: 上游分数}，来自 `_recall_upstream`；离线/降级时是 `{}`。
+            mode (str): 'hybrid'（上游可用）或 'offline_demo'（离线/降级）。
+                只有「真实目录 + hybrid」时热门项记 0，避免合成热度干扰真实排序。
+            constraints (dict): 会话约束，可能含 category/color/budget_*/recipient/scene/currency。
+                这里只读 `recipient` 和 `scene`（软偏好，命中就加分）。
+
+        返回：
+            dict: 六个键，值都已 round 到 6 位小数：
+            {'popularity','context','similarity','upstream','feedback','tag_affinity'}。
+            调用方 `sum()` 后作为总分写进 `RecommendationItem.score_breakdown`。
         """
         tags = product['tags']
 
@@ -181,7 +277,28 @@ class RecommendationAdapter:
                 'tag_affinity': round(affinity, 6)}
 
     def _evidence(self, request, product, sources, constraints):
-        """组装证据包：解释模块只能引用这里的事实，所以事实必须完整、可核对。"""
+        """给一件商品组装「证据包」（解释模块只能引用这里的内容）。
+
+        参数：
+            request (RecommendationRequest): 本次请求；只用它的 `trace_id`
+                （写进证据包，保证证据和请求能对上）。
+            product (dict): 候选商品行。会读出 name/price/category/color/description，
+                以及（真实目录才有的）price_source/color_source/original_category。
+            sources (set[str] | list[str]): 这件商品的召回来源集合，例如
+                {'popularity', 'category', 'module_one_http'}。
+                函数内部会 `sorted()` 后写进证据包（输出稳定，可复现）。
+            constraints (dict): 会话约束；用来生成「命中了哪些条件」，
+                其中 category/color/budget_* 一律算命中，recipient/scene 要值出现在商品 tags 里才算。
+
+        返回：
+            EvidencePack: 数据结构的实例（定义在 contracts.py），字段：
+            - trace_id / item_id：标识；
+            - attributes (dict)：名字、价格、品类、颜色、币种、价格类型；
+            - sources (list[str])：召回来源；
+            - matched_constraints (dict)：命中的约束；
+            - visual_labels (list)：只保留置信度 ≥ settings.visual_threshold 的标签；
+            - snippets (list[dict])：证据片段，id 形如 `catalog:<商品ID>:attributes`。
+        """
         item_id = product['item_id']
 
         # 商品属性：解释模块会把它和 RecommendationItem 上的同名字段逐项比对，不一致就停止解释。
@@ -209,10 +326,35 @@ class RecommendationAdapter:
         return EvidencePack(request.trace_id, item_id, attributes, sorted(sources), matched, labels, snippets)
 
     def recommend(self, request):
-        """主流程（五步）。返回 (按分数降序的 TopK 商品, diagnostic)。
+        """主流程：召回 → 路由 → 硬约束过滤 → 打分 → 排序 → 取 TopK。
 
-        diagnostic 固定 6 个键，会进 trace 并出现在 stage03_demo.json：
-        mode / warnings / recall_count / filtered_count / rejected / candidates。
+        参数：
+            request (RecommendationRequest): 一次推荐请求，字段含义：
+                - `trace_id/user_id/session_id/timestamp/source`：请求元信息，会复制到每件商品上；
+                - `intent` (str)：discover/similar/filter/compare/feedback/explain 之一，
+                  决定召回走哪些路由（explain/compare 只取点名的商品）；
+                - `constraints` (dict)：会话里累积的硬/软条件，例如
+                  {'category': '背包', 'color': '蓝色', 'budget_max': 300.0, 'recipient': '朋友'}；
+                - `preferences` (dict)：{商品ID: +1/-1}，当前会话的反馈，用于 feedback/tag_affinity 两项；
+                - `item_ids` (list[str])：用户点名的商品（similar/explain/compare 用；其他意图是空列表）；
+                - `top_k` (int)：最多返回几件，1~24。
+
+        返回：
+            tuple，两个值：
+            1. `items` (list[RecommendationItem])：按分数降序排好的前 top_k 件商品，
+               每件都带 sources/score/score_breakdown/evidence。
+            2. `diagnostic` (dict)：固定 6 个键，用来解释「这一次召回发生了什么」：
+               - `mode` (str)：'hybrid' 或 'offline_demo'；
+               - `warnings` (list[dict])：降级原因（空列表表示一切正常）；
+               - `recall_count` (int)：进入候选的商品数；
+               - `filtered_count` (int)：被硬约束筛掉的商品数；
+               - `rejected` (list[dict])：被筛掉的具体商品与原因，[{'item_id','reasons'}]；
+               - `candidates` (list[dict])：每个候选的召回来源，[{'item_id','sources'}]。
+
+        异常：
+            ContractError(code='ITEM_NOT_FOUND')：`item_ids` 里有目录中不存在的商品
+            （在取 targets 时就会抛，不会带着错误目标继续算）。
+            上游问题不抛异常——它们会变成 `diagnostic['warnings']`。
         """
         catalog, constraints = self.catalog, request.constraints
 

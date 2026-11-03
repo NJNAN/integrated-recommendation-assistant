@@ -1,6 +1,6 @@
 # 阶段05 性能与失败摘要
 
-- generated_at: 2026-11-03T00:42:46.632743+00:00
+- generated_at: 2026-11-03T01:33:20.182406+00:00
 - 重跑: `python -B scripts/05_feedback_ab.py`（或 `python -B scripts/run_all.py`）
 - 证据: `stage05_feedback_ab.json`、`stage05_feedback_table.md`
 
@@ -10,7 +10,7 @@
 | --- | --- |
 | 用例数 | 5 |
 | 通过 / 失败 | 5 / 0 |
-| p50 / p95 / max 延迟(ms) | 0.598 / 1.024 / 1.024 |
+| p50 / p95 / max 延迟(ms) | 0.62 / 0.673 / 0.673 |
 | 计时样本数 | 5 |
 
 - 计时口径：单次响应 elapsed_ms，含会话合并、召回排序与逐条解释。

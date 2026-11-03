@@ -5,6 +5,8 @@
 2. 三个内部小函数：`record`（记一条 trace）、`finish`（统一收尾）、快照/回滚。
 3. 六种 status：ok / empty / needs_clarification / conflict / ended / error。
 4. 两条异常路径：ContractError（业务/校验错 → 400）与 Exception（兜底 → 500），都会回滚会话。
+
+阅读约定：每个函数的 docstring 都写了「参数（每个参数是什么、从哪来、取值）」「返回」「异常」。
 """
 from threading import RLock
 import time
@@ -21,17 +23,66 @@ class Orchestrator:
     """编排器：唯一入口。依赖通过构造注入，测试时可以换成假上游 / 假会话。"""
 
     def __init__(self, settings, recommender=None, store=None):
+        """装配三个依赖，并准备一把锁。
+
+        参数：
+            settings (config.settings.Settings): 只读配置，本类用到：
+                - `visual_threshold`：传给 understand()，决定多低置信度的视觉标签被忽略；
+                - 其余路径/端口/超时等由下面两个依赖各自读取。
+            recommender (可选，默认 None): 推荐器，必须有 `catalog` 属性和 `recommend(request)` 方法。
+                - 传 None：用 `RecommendationAdapter(settings)`（正常路径）；
+                - 传具体对象：用传入的。测试/阶段3 用它注入「假上游」（例如必超时的 TimeoutRemote 包进去）。
+            store (可选，默认 None): 会话存储，必须有 `get(user_id, session_id)` 和 `end(...)`。
+                - 传 None：用 `SessionStore(settings)`（内存会话 + TTL）；
+                - 传具体对象：用传入的（测试可以给一个可控时钟的 store）。
+
+        副作用：
+            `self.lock`：可重入锁（RLock）。HTTP 是多线程的，加锁后同一个进程内一次只处理一个事件，
+            避免两个用户的会话状态互相覆盖。
+        """
         self.settings = settings
         self.recommender = recommender or RecommendationAdapter(settings)
         self.store = store or SessionStore(settings)
         self.lock = RLock()          # HTTP 是多线程的：同一进程内串行处理，避免会话状态互相打架
 
     def handle(self, data):
-        """线程安全地处理一条事件字典，返回统一响应。"""
+        """对外唯一入口：线程安全地处理一条事件，返回统一响应。
+
+        参数：
+            data (dict): 原始事件 JSON，字段见 contracts.InteractionEvent：
+                trace_id / user_id / session_id / timestamp / source / payload。
+                可能是非法输入（缺字段、类型不对），这里不做校验，交给 `_handle` 里的契约校验。
+
+        返回：
+            dict: 统一响应，固定字段：
+            trace_id / status / message / items / context / degraded / warnings / error / trace / elapsed_ms。
+
+        异常：
+            不向外抛异常。业务错误变成 `status='error'` + `error.code`；
+            未预期异常变成 `status='error'` + `error.code='INTERNAL_ERROR'`。
+        """
         with self.lock:
             return self._handle(data)
 
     def _handle(self, data):
+        """主链路（12 步）。调用方应当是 `handle`（它负责加锁）。
+
+        参数：
+            data (dict): 同 `handle` 的 data——原始事件字典。
+
+        返回：
+            dict: 统一响应。`status` 只会是六种之一：
+            - 'ok'：有结果；
+            - 'empty'：硬约束把所有候选都筛掉了（不放宽条件）；
+            - 'needs_clarification'：缺必选槽位/币种不符，需要用户补充；
+            - 'conflict'：同一轮里条件互相矛盾，或预算上下界矛盾；
+            - 'ended'：用户说结束/重置，会话已清理；
+            - 'error'：校验失败或内部异常（带 `error.code`）。
+
+        说明：
+            进入后先存一份会话快照（snapshot），任何一步抛 ContractError 都恢复到这份快照，
+            所以「失败的请求不会污染会话」。上游问题不算失败，只写 `warnings` + `degraded=true`。
+        """
         start = time.perf_counter()
 
         # 事件可能连 trace_id 都没有（非法输入）：先用传入值/新 UUID 兜底，
@@ -41,12 +92,32 @@ class Orchestrator:
                     'degraded': False, 'warnings': [], 'error': None, 'trace': []}
 
         def record(stage, value):
-            """记一条 trace：trace_id 与响应一致，elapsed_ms 是相对本次请求开始的时间。"""
+            """记一条 trace（流水账）。
+
+            参数：
+                stage (str): 阶段名，只允许这几种：
+                    'event' / 'intent' / 'context' / 'request' / 'recall_and_ranking'
+                    / 'explanation' / 'result' / 'error'。
+                value (任意可 JSON 序列化的数据): 这个阶段当时的数据，例如
+                    事件字典、意图字典、请求字典、召回诊断信息、解释列表。
+
+            返回：
+                None。副作用是往 `response['trace']` 末尾追加一条：
+                {'trace_id': 与响应一致, 'stage': 阶段名, 'elapsed_ms': 相对本次请求开始, 'data': value}。
+            """
             response['trace'].append({'trace_id': response['trace_id'], 'stage': stage,
                                       'elapsed_ms': round((time.perf_counter() - start) * 1000, 3), 'data': value})
 
         def finish(status, message):
-            """统一收尾：写状态/文案/总耗时，并补一条 result 阶段。"""
+            """统一收尾：写状态、写文案、记总耗时，并补一条 result 阶段的 trace。
+
+            参数：
+                status (str): 六种状态之一（ok/empty/needs_clarification/conflict/ended/error）。
+                message (str): 给用户看的中文提示（例如「找到 2 件符合条件的商品。」）。
+
+            返回：
+                dict: 同一个 `response` 对象（已经填好 status/message/elapsed_ms/trace[result]）。
+            """
             response['status'], response['message'] = status, message
             response['elapsed_ms'] = round((time.perf_counter() - start) * 1000, 3)
             record('result', {'status': status, 'item_ids': [item['item_id'] for item in response['items']]})

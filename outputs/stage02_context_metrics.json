@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-03T00:42:46.606501+00:00",
+  "generated_at": "2026-11-03T01:33:20.153590+00:00",
   "metrics": {
     "case_count": 30,
     "passed": 30,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 30,
-      "p50": 0.233,
-      "p95": 0.75,
-      "max": 0.806
+      "p50": 0.328,
+      "p95": 1.328,
+      "max": 1.617
     }
   },
   "minimum_pass_rate": 0.8,

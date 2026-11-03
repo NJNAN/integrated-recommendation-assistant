@@ -5,6 +5,8 @@
 2. `import_catalog`   商品表 + 价格 → data/module_one_catalog.json（每件商品都带来源证据）。
 3. `ModuleOneService` 拉起 / 关闭模块一的冻结 Flask 服务（端口 5001）。
 4. `integrated_settings` 决定“接真实服务”还是“走离线”，并据此换掉 settings。
+
+阅读约定：每个函数的 docstring 都写了「参数（每个参数是什么、从哪来、取值）」「返回」「异常」。
 """
 import csv, json, math, os, re, socket, subprocess, sys, time
 from dataclasses import replace
@@ -22,10 +24,29 @@ NOUNS = (('杯子', {'MUG', 'MUGS', 'CUP', 'CUPS'}), ('雨伞', {'UMBRELLA', 'UM
 
 
 def _prices(path, known):  # 读交易 CSV，聚合最后观测单价与交易次数
-    """返回 (最后观测价格表, 交易次数表)。
+    """从历史交易 CSV 里，算出每件商品的「最后观测单价」和「交易次数」。
 
-    只统计“正向交易”：退货单（InvoiceNo 以 C 开头）、非正数价格/数量都跳过；
-    日期必须是 ISO 格式，否则直接报错——宁可失败也不能按错误日期排序。
+    参数：
+        path (str | pathlib.Path): 交易明细 CSV 的路径，来自模块一项目的
+            `development/data/train.csv`（UCI Online Retail II 的原始交易表）。
+            必需列：StockCode（商品ID）、InvoiceNo（订单号）、InvoiceDate（时间）、
+            UnitPrice（单价，英镑）、Quantity（数量）。
+        known (set[str]): 只统计这些商品 ID（就是商品表 catalog.csv 里有的 ID）。
+            交易表里出现但商品表里没有的 ID 会被跳过，避免生成“没有名字”的孤儿商品。
+
+    返回：
+        tuple，两个值：
+        1. `latest` (dict): {商品ID: {'date': 'YYYY-MM-DD…', 'unit_price': float}}，
+           每件商品**最后一次**正向交易的日期和单价（不是平均价，也不是现价）。
+        2. `counts` (dict): {商品ID: 交易次数}，后面用来算 popularity（热度）。
+
+    过滤规则（都是为了不把脏数据当价格）：
+        - 退货单（InvoiceNo 以 C 开头）跳过；
+        - 价格或数量不是正数、不是有限数（NaN/inf）的跳过；
+        - 日期格式不是 ISO（YYYY-MM-DD 开头）→ 直接抛错，宁可失败也不按错误日期排序。
+
+    异常：
+        ValueError: 日期不是 ISO 格式时抛出（调用方会把它当成目录生成失败）。
     """
     latest, counts = {}, {}
     with Path(path).open(encoding='utf-8-sig', newline='') as stream:
@@ -48,7 +69,35 @@ def _prices(path, known):  # 读交易 CSV，聚合最后观测单价与交易�
 
 
 def import_catalog(catalog_path, transactions_path, output):
-    """catalog.csv + train.csv → data/module_one_catalog.json（保留价格、颜色与来源证据）。"""
+    """把模块一的「商品表 + 历史交易」合成我们自己的商品目录 JSON。
+
+    参数：
+        catalog_path (str | pathlib.Path): 模块一发布包里的商品表
+            `release/web_system/data/catalog.csv`。
+            必需列：item_id、name（可空）、category（可空）、description（英文描述）。
+        transactions_path (str | pathlib.Path): 模块一的历史交易表
+            `development/data/train.csv`（见 `_prices` 的参数说明）。
+        output (str | pathlib.Path): 生成的 JSON 路径，正常是
+            `data/module_one_catalog.json`。父目录不存在会自动创建。
+
+    返回：
+        dict: 生成的整个目录文档（同时已写入 output 文件），结构：
+        - dataset / source_kind / currency / model_version / price_notice / dataset_reference；
+        - sources：两个源文件的文件名 + sha256（数据来源可追溯）；
+        - items：商品数组，每件商品包含 item_id/name/category/color/price/price_kind/
+          price_source/color_source/popularity/tags/description/visual_labels。
+
+    生成的规则（答辩要点）：
+        - 价格：取最后观测单价，单位 GBP，`price_kind='historical_last_observed'`；
+          没有成交记录的商品 `price=None` 且 `price_kind='missing'`；
+        - 颜色：只从英文描述里找颜色词，唯一才算（多个→“多色”，没有→“未标注”），不猜；
+        - 品类：先用描述里的名词覆盖（MUG/CUP→杯子、UMBRELLA→雨伞、BACKPACK→背包），否则用原品类；
+        - 热度：交易次数 / 全目录峰值次数，归一化到 0~1。
+
+    异常：
+        ValueError: 传入的 CSV 不合法时（由 `_prices` 或 CSV 解析抛出）。
+        OSError: 文件读不了或输出目录不能创建。
+    """
     with Path(catalog_path).open(encoding='utf-8-sig', newline='') as stream:
         rows = list(csv.DictReader(stream))
     latest, counts = _prices(transactions_path, {row['item_id'] for row in rows})
@@ -95,9 +144,39 @@ class ModuleOneService:
     """在 127.0.0.1 拉起模块一的冻结包，日志与数据库都写进本项目 runtime/。"""
 
     def __init__(self, settings):
+        """只记下配置，不启动任何东西（进程在 `start()` 里才起）。
+
+        参数：
+            settings (config.settings.Settings): 本类用到三项：
+                - `module_one_port` (int)：模块一服务端口，默认 5001；
+                - `module_one_root` (Path)：模块一代码目录（同级项目或 vendor 副本），
+                  其下的 `release/` 就是要跑的服务包；
+                - `recommender_url` (str)：启动后用来探活的地址，形如 http://127.0.0.1:5001。
+
+        副作用：
+            `self.process`（子进程句柄，初始 None）、`self.log`（日志文件句柄，初始 None）。
+        """
         self.settings, self.process, self.log = settings, None, None
 
     def start(self):
+        """启动模块一冻结服务，并等它真的就绪（最多 20 秒）。
+
+        参数：
+            无（用 `__init__` 里记下的 settings）。
+
+        返回：
+            None。成功时返回即表示 `/api/health` 回包中 `data.model_ready` 为 True，
+            后续 HTTPRecommender 可以开始登录和取推荐了。
+
+        副作用：
+            - 在 `runtime/module_one/` 下创建日志文件 `server.log` 和运行期数据库 `serving.sqlite3`；
+            - 起一个子进程：`python -B integrations/module_one_server.py <release目录> <端口>`；
+            - 把子进程句柄和日志句柄存到 `self.process` / `self.log`，供 `close()` 回收。
+
+        异常：
+            RuntimeError: 端口被占用 / 子进程没起来 / 20 秒内没就绪（三种都会带中文提示）。
+            异常前会自动调用 `close()`，不会留下僵尸进程。
+        """
         # 先探测端口：被占用时立刻给出明确错误，而不是让子进程静默失败。
         with socket.socket() as probe:
             try:
@@ -133,6 +212,18 @@ class ModuleOneService:
             raise
 
     def close(self):
+        """关闭模块一子进程并关掉日志（可以重复调用，没启动时也安全）。
+
+        参数：
+            无。
+
+        返回：
+            None。
+
+        做法：
+            先 `terminate()` 客气地请它退出，等 5 秒还不退就 `kill()`；
+            最后关闭日志文件。这样程序退出时不会留下 Flask 僵尸进程。
+        """
         if self.process and self.process.poll() is None:
             self.process.terminate()                                # 先礼后兵：terminate，5 秒不退再 kill
             try:
@@ -144,7 +235,34 @@ class ModuleOneService:
 
 
 def integrated_settings(settings):
-    """入口自动接入模块一；demo、显式配置或缺文件时返回 (settings, None) 保持离线。"""
+    """启动时决定：接模块一真实服务，还是走离线目录。
+
+    参数：
+        settings (config.settings.Settings): 原始配置。本函数读：
+            - `module_one_root` (Path)：模块一代码目录（同级项目或仓库 vendor 副本）；
+            - `module_one_port` / `module_one_accounts`：启动服务要用的端口和演示账号；
+            - `recommender_url`（若已显式配置，则不再自动接入）。
+
+    返回：
+        tuple，两个值：
+        1. `active` (Settings)：实际要用的配置。接真实服务时会把
+           `catalog_path` 换成生成的真实目录、`recommender_url` 指向本机 5001、
+           `upstream_timeout_seconds` 放宽到 5 秒；走离线时原样返回传入的 settings。
+        2. `service` (ModuleOneService | None)：需要启动的服务对象；离线时是 None，
+           调用方（app.py）决定是否 `.start()`。
+
+    三种走离线的情况（直接返回 (settings, None)，不启服务）：
+        - 显式 `IRA_PROFILE=demo`；
+        - 显式配置了 `IRA_RECOMMENDER_URL` 或 `IRA_CATALOG`（用户自己指定，不自动接入）；
+        - 找不到模块一发布包（`release/web_system/data/catalog.csv` 或冻结排序结果不存在）。
+
+    数据来源的两种情况：
+        - 有原始交易数据 `development/data/train.csv`：现场重算 `data/module_one_catalog.json`；
+        - 只有 vendor 副本（没有 72MB 原始数据）：直接用仓库里已生成的目录文件。
+
+    异常：
+        一般不抛异常；`import_catalog` 内部出错会向上抛（由 app.py 捕获并回退离线演示）。
+    """
     # 三种情况不接真实服务：显式 demo、显式给了上游/目录、用户自己指定了目录。
     if os.getenv('IRA_PROFILE', 'auto') == 'demo' or settings.recommender_url or os.getenv('IRA_CATALOG'):
         return settings, None

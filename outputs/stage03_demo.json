@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-03T00:42:46.616712+00:00",
+  "generated_at": "2026-11-03T01:33:20.165450+00:00",
   "metrics": {
     "case_count": 4,
     "passed": 4,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 4,
-      "p50": 0.241,
-      "p95": 0.512,
-      "max": 0.512
+      "p50": 0.5,
+      "p95": 0.824,
+      "max": 0.824
     }
   },
   "cases": [
@@ -217,7 +217,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "event",
-            "elapsed_ms": 0.031,
+            "elapsed_ms": 0.097,
             "data": {
               "trace_id": "orchestrator-normal",
               "user_id": "demo-user",
@@ -232,7 +232,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "intent",
-            "elapsed_ms": 0.089,
+            "elapsed_ms": 0.248,
             "data": {
               "intent": "filter",
               "slots": {
@@ -269,7 +269,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "context",
-            "elapsed_ms": 0.166,
+            "elapsed_ms": 0.42,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -305,7 +305,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "request",
-            "elapsed_ms": 0.171,
+            "elapsed_ms": 0.428,
             "data": {
               "trace_id": "orchestrator-normal",
               "user_id": "demo-user",
@@ -326,7 +326,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.436,
+            "elapsed_ms": 0.672,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -567,7 +567,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "explanation",
-            "elapsed_ms": 0.51,
+            "elapsed_ms": 0.786,
             "data": [
               {
                 "item_id": "demo-001",
@@ -600,7 +600,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "result",
-            "elapsed_ms": 0.514,
+            "elapsed_ms": 0.792,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -614,7 +614,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.512
+        "elapsed_ms": 0.791
       },
       "passed": true
     },
@@ -673,7 +673,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "event",
-            "elapsed_ms": 0.018,
+            "elapsed_ms": 0.031,
             "data": {
               "trace_id": "orchestrator-empty",
               "user_id": "demo-user",
@@ -688,7 +688,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "intent",
-            "elapsed_ms": 0.06,
+            "elapsed_ms": 0.114,
             "data": {
               "intent": "filter",
               "slots": {
@@ -719,7 +719,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "context",
-            "elapsed_ms": 0.12,
+            "elapsed_ms": 0.211,
             "data": {
               "user_id": "demo-user",
               "session_id": "empty",
@@ -749,7 +749,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "request",
-            "elapsed_ms": 0.124,
+            "elapsed_ms": 0.219,
             "data": {
               "trace_id": "orchestrator-empty",
               "user_id": "demo-user",
@@ -769,7 +769,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.157,
+            "elapsed_ms": 0.308,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1023,13 +1023,13 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "explanation",
-            "elapsed_ms": 0.166,
+            "elapsed_ms": 0.329,
             "data": []
           },
           {
             "trace_id": "orchestrator-empty",
             "stage": "result",
-            "elapsed_ms": 0.168,
+            "elapsed_ms": 0.332,
             "data": {
               "status": "empty",
               "item_ids": []
@@ -1040,7 +1040,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.167
+        "elapsed_ms": 0.331
       },
       "passed": true
     },
@@ -1248,7 +1248,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "event",
-            "elapsed_ms": 0.01,
+            "elapsed_ms": 0.02,
             "data": {
               "trace_id": "orchestrator-timeout",
               "user_id": "demo-user",
@@ -1263,7 +1263,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "intent",
-            "elapsed_ms": 0.041,
+            "elapsed_ms": 0.085,
             "data": {
               "intent": "filter",
               "slots": {
@@ -1300,7 +1300,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "context",
-            "elapsed_ms": 0.094,
+            "elapsed_ms": 0.185,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -1336,7 +1336,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "request",
-            "elapsed_ms": 0.098,
+            "elapsed_ms": 0.194,
             "data": {
               "trace_id": "orchestrator-timeout",
               "user_id": "demo-user",
@@ -1357,7 +1357,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.189,
+            "elapsed_ms": 0.388,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1598,7 +1598,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "explanation",
-            "elapsed_ms": 0.24,
+            "elapsed_ms": 0.493,
             "data": [
               {
                 "item_id": "demo-001",
@@ -1631,7 +1631,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "result",
-            "elapsed_ms": 0.242,
+            "elapsed_ms": 0.502,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -1645,7 +1645,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.241
+        "elapsed_ms": 0.5
       },
       "passed": true
     },
@@ -2094,7 +2094,7 @@
           {
             "trace_id": "repro",
             "stage": "event",
-            "elapsed_ms": 0.017,
+            "elapsed_ms": 0.036,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2109,7 +2109,7 @@
           {
             "trace_id": "repro",
             "stage": "intent",
-            "elapsed_ms": 0.054,
+            "elapsed_ms": 0.106,
             "data": {
               "intent": "filter",
               "slots": {
@@ -2134,7 +2134,7 @@
           {
             "trace_id": "repro",
             "stage": "context",
-            "elapsed_ms": 0.113,
+            "elapsed_ms": 0.202,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2158,7 +2158,7 @@
           {
             "trace_id": "repro",
             "stage": "request",
-            "elapsed_ms": 0.118,
+            "elapsed_ms": 0.209,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2177,7 +2177,7 @@
           {
             "trace_id": "repro",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.363,
+            "elapsed_ms": 0.629,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -2317,7 +2317,7 @@
           {
             "trace_id": "repro",
             "stage": "explanation",
-            "elapsed_ms": 0.464,
+            "elapsed_ms": 0.82,
             "data": [
               {
                 "item_id": "demo-003",
@@ -2402,7 +2402,7 @@
           {
             "trace_id": "repro",
             "stage": "result",
-            "elapsed_ms": 0.466,
+            "elapsed_ms": 0.825,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -2420,7 +2420,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.465
+        "elapsed_ms": 0.824
       },
       "second_response": {
         "trace_id": "repro",
@@ -2854,7 +2854,7 @@
           {
             "trace_id": "repro",
             "stage": "event",
-            "elapsed_ms": 0.017,
+            "elapsed_ms": 0.025,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2869,7 +2869,7 @@
           {
             "trace_id": "repro",
             "stage": "intent",
-            "elapsed_ms": 0.052,
+            "elapsed_ms": 0.082,
             "data": {
               "intent": "filter",
               "slots": {
@@ -2894,7 +2894,7 @@
           {
             "trace_id": "repro",
             "stage": "context",
-            "elapsed_ms": 0.104,
+            "elapsed_ms": 0.157,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2918,7 +2918,7 @@
           {
             "trace_id": "repro",
             "stage": "request",
-            "elapsed_ms": 0.108,
+            "elapsed_ms": 0.164,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2937,7 +2937,7 @@
           {
             "trace_id": "repro",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.432,
+            "elapsed_ms": 0.563,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -3077,7 +3077,7 @@
           {
             "trace_id": "repro",
             "stage": "explanation",
-            "elapsed_ms": 0.546,
+            "elapsed_ms": 0.731,
             "data": [
               {
                 "item_id": "demo-003",
@@ -3162,7 +3162,7 @@
           {
             "trace_id": "repro",
             "stage": "result",
-            "elapsed_ms": 0.55,
+            "elapsed_ms": 0.735,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -3180,7 +3180,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.549
+        "elapsed_ms": 0.734
       },
       "passed": true,
       "sha256": {
