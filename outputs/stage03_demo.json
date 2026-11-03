@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-01T14:23:08.773906+00:00",
+  "generated_at": "2026-11-03T00:42:46.616712+00:00",
   "metrics": {
     "case_count": 4,
     "passed": 4,
@@ -7,9 +7,9 @@
     "pass_rate": 1.0,
     "latency_ms": {
       "sample_count": 4,
-      "p50": 0.248,
-      "p95": 0.473,
-      "max": 0.473
+      "p50": 0.241,
+      "p95": 0.512,
+      "max": 0.512
     }
   },
   "cases": [
@@ -217,7 +217,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "event",
-            "elapsed_ms": 0.022,
+            "elapsed_ms": 0.031,
             "data": {
               "trace_id": "orchestrator-normal",
               "user_id": "demo-user",
@@ -232,7 +232,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "intent",
-            "elapsed_ms": 0.071,
+            "elapsed_ms": 0.089,
             "data": {
               "intent": "filter",
               "slots": {
@@ -269,7 +269,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "context",
-            "elapsed_ms": 0.138,
+            "elapsed_ms": 0.166,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -305,7 +305,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "request",
-            "elapsed_ms": 0.142,
+            "elapsed_ms": 0.171,
             "data": {
               "trace_id": "orchestrator-normal",
               "user_id": "demo-user",
@@ -326,7 +326,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.227,
+            "elapsed_ms": 0.436,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -567,7 +567,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "explanation",
-            "elapsed_ms": 0.282,
+            "elapsed_ms": 0.51,
             "data": [
               {
                 "item_id": "demo-001",
@@ -600,7 +600,7 @@
           {
             "trace_id": "orchestrator-normal",
             "stage": "result",
-            "elapsed_ms": 0.284,
+            "elapsed_ms": 0.514,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -614,7 +614,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.284
+        "elapsed_ms": 0.512
       },
       "passed": true
     },
@@ -673,7 +673,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "event",
-            "elapsed_ms": 0.023,
+            "elapsed_ms": 0.018,
             "data": {
               "trace_id": "orchestrator-empty",
               "user_id": "demo-user",
@@ -688,7 +688,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "intent",
-            "elapsed_ms": 0.068,
+            "elapsed_ms": 0.06,
             "data": {
               "intent": "filter",
               "slots": {
@@ -719,7 +719,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "context",
-            "elapsed_ms": 0.13,
+            "elapsed_ms": 0.12,
             "data": {
               "user_id": "demo-user",
               "session_id": "empty",
@@ -749,7 +749,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "request",
-            "elapsed_ms": 0.135,
+            "elapsed_ms": 0.124,
             "data": {
               "trace_id": "orchestrator-empty",
               "user_id": "demo-user",
@@ -769,7 +769,7 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.168,
+            "elapsed_ms": 0.157,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1023,13 +1023,13 @@
           {
             "trace_id": "orchestrator-empty",
             "stage": "explanation",
-            "elapsed_ms": 0.179,
+            "elapsed_ms": 0.166,
             "data": []
           },
           {
             "trace_id": "orchestrator-empty",
             "stage": "result",
-            "elapsed_ms": 0.181,
+            "elapsed_ms": 0.168,
             "data": {
               "status": "empty",
               "item_ids": []
@@ -1040,7 +1040,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.18
+        "elapsed_ms": 0.167
       },
       "passed": true
     },
@@ -1248,7 +1248,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "event",
-            "elapsed_ms": 0.011,
+            "elapsed_ms": 0.01,
             "data": {
               "trace_id": "orchestrator-timeout",
               "user_id": "demo-user",
@@ -1263,7 +1263,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "intent",
-            "elapsed_ms": 0.044,
+            "elapsed_ms": 0.041,
             "data": {
               "intent": "filter",
               "slots": {
@@ -1300,7 +1300,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "context",
-            "elapsed_ms": 0.097,
+            "elapsed_ms": 0.094,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -1336,7 +1336,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "request",
-            "elapsed_ms": 0.102,
+            "elapsed_ms": 0.098,
             "data": {
               "trace_id": "orchestrator-timeout",
               "user_id": "demo-user",
@@ -1357,7 +1357,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.191,
+            "elapsed_ms": 0.189,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -1598,7 +1598,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "explanation",
-            "elapsed_ms": 0.247,
+            "elapsed_ms": 0.24,
             "data": [
               {
                 "item_id": "demo-001",
@@ -1631,7 +1631,7 @@
           {
             "trace_id": "orchestrator-timeout",
             "stage": "result",
-            "elapsed_ms": 0.249,
+            "elapsed_ms": 0.242,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -1645,7 +1645,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.248
+        "elapsed_ms": 0.241
       },
       "passed": true
     },
@@ -2134,7 +2134,7 @@
           {
             "trace_id": "repro",
             "stage": "context",
-            "elapsed_ms": 0.112,
+            "elapsed_ms": 0.113,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2177,7 +2177,7 @@
           {
             "trace_id": "repro",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.37,
+            "elapsed_ms": 0.363,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -2317,7 +2317,7 @@
           {
             "trace_id": "repro",
             "stage": "explanation",
-            "elapsed_ms": 0.472,
+            "elapsed_ms": 0.464,
             "data": [
               {
                 "item_id": "demo-003",
@@ -2402,7 +2402,7 @@
           {
             "trace_id": "repro",
             "stage": "result",
-            "elapsed_ms": 0.474,
+            "elapsed_ms": 0.466,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -2420,7 +2420,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.473
+        "elapsed_ms": 0.465
       },
       "second_response": {
         "trace_id": "repro",
@@ -2854,7 +2854,7 @@
           {
             "trace_id": "repro",
             "stage": "event",
-            "elapsed_ms": 0.014,
+            "elapsed_ms": 0.017,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2894,7 +2894,7 @@
           {
             "trace_id": "repro",
             "stage": "context",
-            "elapsed_ms": 0.101,
+            "elapsed_ms": 0.104,
             "data": {
               "user_id": "demo-user",
               "session_id": "demo",
@@ -2918,7 +2918,7 @@
           {
             "trace_id": "repro",
             "stage": "request",
-            "elapsed_ms": 0.105,
+            "elapsed_ms": 0.108,
             "data": {
               "trace_id": "repro",
               "user_id": "demo-user",
@@ -2937,7 +2937,7 @@
           {
             "trace_id": "repro",
             "stage": "recall_and_ranking",
-            "elapsed_ms": 0.354,
+            "elapsed_ms": 0.432,
             "data": {
               "mode": "offline_demo",
               "warnings": [
@@ -3077,7 +3077,7 @@
           {
             "trace_id": "repro",
             "stage": "explanation",
-            "elapsed_ms": 0.453,
+            "elapsed_ms": 0.546,
             "data": [
               {
                 "item_id": "demo-003",
@@ -3162,7 +3162,7 @@
           {
             "trace_id": "repro",
             "stage": "result",
-            "elapsed_ms": 0.455,
+            "elapsed_ms": 0.55,
             "data": {
               "status": "ok",
               "item_ids": [
@@ -3180,7 +3180,7 @@
         "dataset": "synthetic-demo-v1",
         "currency": "CNY",
         "price_notice": "",
-        "elapsed_ms": 0.454
+        "elapsed_ms": 0.549
       },
       "passed": true,
       "sha256": {
