@@ -12,6 +12,7 @@
 - 架构与接口契约（阶段1 提交物）：[docs/architecture.md](docs/architecture.md)
 - **代码阅读指南（30 分钟读懂整个仓库）**：[docs/代码阅读指南.md](docs/代码阅读指南.md)
 - **阅读清单（按人分配：每人的精读文件与自测问题）**：[docs/阅读清单.md](docs/阅读清单.md)
+- **数据流与失败出口（任务书步骤1：trace_id / 主要字段 / 失败出口）**：[docs/数据流与失败出口.md](docs/数据流与失败出口.md)
 - 部署、降级、风险与演示提纲：[docs/deployment.md](docs/deployment.md)
 - 六阶段小结：[docs/stage_summaries.md](docs/stage_summaries.md)
 - 提交清单：[docs/submission_checklist.md](docs/submission_checklist.md)

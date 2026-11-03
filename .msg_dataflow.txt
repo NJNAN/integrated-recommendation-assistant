@@ -1,0 +1,9 @@
+docs: 新增《数据流与失败出口》——补齐任务书步骤1「画出或补充数据流，标明 trace_id、主要字段与失败出口」
+
+- ASCII 数据流图：从 POST /api/events 到响应，每个阶段的输入/输出字段、每条失败分支直接标在箭头旁
+- Mermaid 版本图（GitHub 自动渲染），与 ASCII 版一致
+- trace_id 三处贯穿说明（response / trace[] / items[]）+ 固定 7 段 stage + 每段 4 个字段
+- 每阶段主要字段表（InteractionEvent→IntentResult→SessionContext→RecommendationRequest→路由/被拒→RecommendationItem→Explanation→响应）
+- 失败出口总表 12 种：INVALID_EVENT / conflict / ended / needs_clarification / INVALID_FEEDBACK / ITEM_NOT_FOUND / INVALID_CATALOG / UPSTREAM_* 降级 / empty / 解释降级 / INTERNAL_ERROR，标注 HTTP 码与证据强度（落盘用例/单测/实测命令）
+- 真实 trace 表（stage03_demo.json 四条链路）与三条现场验证命令（均已实跑核对输出）
+- 从 README、architecture.md、成员3 讲解稿加了三处入口链接
