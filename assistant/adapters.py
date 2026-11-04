@@ -11,17 +11,52 @@ from assistant.contracts import InteractionEvent
 
 
 class AdapterError(RuntimeError):
-    """带错误码的外部服务异常：调用方据此决定降级策略。"""
+    """承载外部服务失败的异常，错误码告诉调用方该重试还是降级。
+
+    例如 UPSTREAM_TIMEOUT 可重试，UPSTREAM_USER_MISMATCH 只能提示换账号。
+
+    参数：
+        code (str): 机器可读错误码。
+        message (str): 给人看的失败原因。
+    """
 
     def __init__(self, code, message):
+        """保存错误码和原因，交给上层决定重试、降级还是提示用户。
+
+        例如 code='UPSTREAM_TIMEOUT' 时编排器会走一次降级。
+
+        参数：
+            code (str): 机器可读错误码。
+            message (str): 给人看的失败原因。
+        """
         super().__init__(message)
         self.code = code
 
 
 class MultimodalAdapter:
-    """把已转写的语音、已识别的视觉标签和已确认的手势包装成统一事件。"""
+    """把已转写的语音、已识别的视觉标签和已确认的手势包装成统一事件。
+
+    例如视觉链路只传 labels，这里补齐追踪字段再交给契约校验。
+    """
 
     def event(self, source, payload, user_id, session_id, trace_id=None):
+        """包装成统一事件：补齐追踪字段和时间戳后立刻过一遍契约校验。
+
+        例如语音链路只给 transcript，这里自动生成 trace_id 和 UTC 时间。
+
+        参数：
+            source (str): 输入来源，text/voice/vision/gesture 之一。
+            payload (dict): 交互内容，字段受契约白名单限制。
+            user_id (str): 用户标识。
+            session_id (str): 会话标识。
+            trace_id (str | None): 已有追踪 ID，缺省时自动生成。
+
+        返回：
+            dict: 可直接 JSON 序列化的事件字典。
+
+        异常：
+            ContractError: 来源或内容不合法时抛出。
+        """
         return InteractionEvent.from_dict({
             'trace_id': trace_id or str(uuid.uuid4()), 'user_id': user_id, 'session_id': session_id,
             'timestamp': datetime.now(timezone.utc).isoformat(), 'source': source, 'payload': payload,
@@ -29,16 +64,52 @@ class MultimodalAdapter:
 
 
 class HTTPRecommender:
-    """模块一冻结 Web API：每次召回独立 CookieJar，避免用户身份串线。"""
+    """调用模块一冻结 Web API 召回候选，每次请求用独立 CookieJar 防串号。
+
+    例如同时演示两个账号时，各自的登录态不会互相覆盖。
+    """
 
     def __init__(self, settings):
+        """记住配置，召回时从这里取地址、账号和超时。
+
+        例如离线模式下 recommender_url 为空，编排器不会调用召回。
+
+        参数：
+            settings (Settings): 全局配置。
+        """
         self.settings = settings
 
     def recall(self, request):
+        """登录模块一并分页拉候选，返回原始商品行；失败一律转成 AdapterError。
+
+        例如 user_id 与登录账号对不上时抛 UPSTREAM_USER_MISMATCH，让上层提示换用户。
+
+        参数：
+            request (RecommendationRequest): 已通过契约校验的推荐请求。
+
+        返回：
+            list[dict]: 上游返回的商品行。
+
+        异常：
+            AdapterError: 登录失败、超时、响应非法或候选超上限时抛出。
+        """
         opener = build_opener(HTTPCookieProcessor(CookieJar()))
 
         def call(path, body=None):
-            """发一次请求并解包 {code:0,data:...}，把各种失败映射成带码异常。"""
+            """发一次请求并解包 {code:0, data:...}，各类失败都映射成带码异常。
+
+            例如 HTTP 500 变 UPSTREAM_UNAVAILABLE，超时变 UPSTREAM_TIMEOUT。
+
+            参数：
+                path (str): 相对接口路径，如 /api/auth/login。
+                body (dict | None): 请求体，GET 时传 None。
+
+            返回：
+                object: 上游 data 字段的内容。
+
+            异常：
+                AdapterError: 网络、状态码或 JSON 解包失败时抛出。
+            """
             raw = None if body is None else json.dumps(body).encode('utf-8')
             req = Request(self.settings.recommender_url + path, data=raw,
                           headers={'Content-Type': 'application/json', 'X-Trace-ID': request.trace_id})

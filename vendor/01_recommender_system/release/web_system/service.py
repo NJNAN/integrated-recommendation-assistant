@@ -6,7 +6,7 @@
     2. `recommendations(user_id, cursor, limit, exclude)` 按用户返回排序候选（分页）；
     3. `account(username)`（登录时查账号）+ `product(item_id)`（补商品属性）。
 
-关键点（答辩常问）：CSV 里的原始分数是负数（如 -95、-24），但 `_load_rankings` 会
+CSV 里的原始分数是负数（如 -95、-24），但 `_load_rankings` 会
 **按名次归一化成 0~1**（第一名 1.0、最后一名 0.0），模块三拿到的就是这 0~1 的分。
 阅读约定：每个函数都写了「参数 / 返回 / 怎么做」。
 """

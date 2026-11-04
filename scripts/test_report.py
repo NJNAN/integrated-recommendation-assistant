@@ -12,7 +12,9 @@ from config.settings import ROOT, settings  # noqa: E402
 
 
 def main():
-    """跑全量单元测试并写 outputs/test_results.json 与 test_results.log。"""
+    """跑全量单元测试，把结果写进 JSON 与日志文件。
+    例如落盘 outputs/test_results.json 与同名 log。
+    """
     suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'))
     stream = io.StringIO()
     result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)

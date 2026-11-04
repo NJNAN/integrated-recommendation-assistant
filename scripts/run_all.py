@@ -15,7 +15,9 @@ STAGES = ('01_contract_test', '02_context_test', '03_orchestrator_demo',
 
 
 def run_all(settings=None):
-    """逐个阶段执行；单个阶段失败只记录不中断，最后统一落盘并返回汇总。"""
+    """依次执行 01~06 六个阶段，单阶段失败只记录不中断。
+    例如 03 崩了，04~06 仍会跑完，汇总里把该阶段标成 fatal。
+    """
     base = settings or demo_settings()
     stages = {}
     for name in STAGES:
@@ -41,7 +43,9 @@ def run_all(settings=None):
 
 
 def main():
-    """跑全部阶段并在有失败时非零退出。"""
+    """命令行入口：跑完全部阶段并打印总通过数，有失败就非零退出。
+    例如全部通过时退出码 0，任何阶段失败时退出码 1。
+    """
     summary = run_all()
     print(f"总验收: {summary['total_passed']}/{summary['total_case_count']} PASS")
     if summary['total_failed']:

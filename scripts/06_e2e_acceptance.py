@@ -11,21 +11,30 @@ from assistant.recommendation import RecommendationAdapter  # noqa: E402
 
 
 class TimeoutRemote:
-    """注入上游超时，验证降级后仍按 popularity 召回而不是空结果。"""
+    """假推荐上游：每次召回都抛超时，用来验证降级路径。
+    例如注入后 06 仍应返回 popularity 召回结果，而不是空列表。
+    """
 
     def recall(self, request):
+        """固定抛 UPSTREAM_TIMEOUT，模拟模块一挂掉或网络超时。
+        例如 fault 用例拿到的 warnings 里就是这条错误码。
+        """
         raise AdapterError('UPSTREAM_TIMEOUT', '上游推荐超时')
 
 
 def _traced(response):
-    """trace 与 items 必须使用同一 trace_id，保证一条请求全链路可追踪。"""
+    """检查 trace 与商品是否共用同一 trace_id。
+    例如响应 trace_id 是 e2e-voice，items 里混进别的 id 就算失败。
+    """
     return (bool(response['trace'])
             and all(entry['trace_id'] == response['trace_id'] for entry in response['trace'])
             and all(item['trace_id'] == response['trace_id'] for item in response['items']))
 
 
 def run(settings):
-    """跑 7 条端到端用例并落盘 stage06_acceptance.json。"""
+    """跑 7 条端到端用例，覆盖三条模态链路、降级、非法输入与空集。
+    例如三条链路都要断言同一 trace_id，结果落盘 JSON。
+    """
     app = Orchestrator(settings)
     voice = case('语音转写链路', app, event('e2e-voice', source='voice',
                  payload={'transcript': '给朋友买礼物，预算300以内'}, session='e2e-voice'), 'ok',

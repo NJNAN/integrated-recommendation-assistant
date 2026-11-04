@@ -6,7 +6,19 @@ from assistant.orchestrator import Orchestrator
 
 
 def _check(response, slots, intent, preferences, name):
-    """一条固定样例的完整断言：意图 trace + 会话约束/偏好 + 低置信标签/反馈符号。"""
+    """断言一条固定样例：意图、会话约束/偏好与专项符号。
+    例如弱视觉还要 ignored_labels 恰为红色 .3，点赞要 feedback=+1。
+
+    参数：
+        response (dict): 一次 handle 的响应，含 context 与 trace。
+        slots (dict): 期望的会话约束。
+        intent (str): 期望意图。
+        preferences (dict): 期望偏好，商品ID -> +1/-1。
+        name (str): 样例名，用来追加对应的专项断言。
+
+    返回：
+        bool: 全部匹配为 True。
+    """
     data = next(item['data'] for item in response['trace'] if item['stage'] == 'intent')
     passed = (response['context'].get('constraints', {}) == slots
               and data['intent'] == intent
@@ -19,7 +31,15 @@ def _check(response, slots, intent, preferences, name):
 
 
 def _multi_cases(settings):
-    """4 条多轮用例：更新、冲突不污染、撤销、结束清理后恢复基线。"""
+    """4 条多轮用例：更新、冲突不污染、撤销、结束清理后恢复基线。
+    例如“预算300以内”后再补“蓝色”是更新，补“至少500元”则只报冲突、约束不变。
+
+    参数：
+        settings: 演示配置，用于新建编排器。
+
+    返回：
+        list: 4 条用例记录，字段与单轮样例一致。
+    """
     app = Orchestrator(settings)
     app.handle(event('context-seed'))
     app.handle(event('context-multi-1', '背包预算300以内'))
@@ -37,6 +57,16 @@ def _multi_cases(settings):
                expected_preferences={}, expected_status='conflict')
     cases.append(row)
     def undo_ok(response, expected=updated):
+        """校验撤销结果：回到预算约束且颜色槽位消失。
+        例如撤销“蓝色”后约束里只剩品类和预算上限。
+
+        参数：
+            response (dict): 撤销后的一次响应。
+            expected (dict): 期望保留的约束。
+
+        返回：
+            bool: 约束相等且没有颜色槽位时为 True。
+        """
         return (response['context']['constraints'] == expected
                 and 'color' not in response['context']['constraints'])
     row = case('撤销', app, event('context-undo', payload={'action': 'undo'}), 'ok', undo_ok)
@@ -58,7 +88,15 @@ def _multi_cases(settings):
 
 
 def run(settings):
-    """跑固定样例矩阵与多轮会话，落盘 JSONL、指标和错误案例说明。"""
+    """跑固定样例矩阵与多轮会话，落盘 JSONL、指标和错误案例说明。
+    例如 26 条固定样例各用一份全新会话，期望值手工指定，不拿解析器自己断言自己。
+
+    参数：
+        settings: 演示配置，提供输出目录与模型等设置。
+
+    返回：
+        list: 全部用例记录。
+    """
     warm = Orchestrator(settings)
     ids = [item['item_id'] for item in warm.handle(event('context-warm'))['items']]
     # 手工指定的期望矩阵：期望值不来自解析器自身，避免“自己断言自己”。

@@ -15,7 +15,16 @@ _FENCE = re.compile(r'^```(?:json)?\s*|\s*```$')
 
 
 def decode_media(encoded, limit):
-    """Base64 解码并校验大小；任何不合法输入都以 INVALID_MEDIA 明确失败。"""
+    """解码 Base64 媒体并校验大小，非法输入直接拒绝。
+    例如 2MB 图片编码后超限直接拒绝，而不是悄悄截断成半张图。
+
+    参数：
+        encoded (str): Base64 字符串，先用长度粗筛 limit。
+        limit (int): 解码后字节数上限。
+
+    返回：
+        bytes: 解码后的原始媒体数据。
+    """
     if not isinstance(encoded, str) or len(encoded) > limit * 4 // 3 + 4:
         raise ContractError('媒体数据缺失或超过大小限制', 'INVALID_MEDIA')
     try:
@@ -28,7 +37,16 @@ def decode_media(encoded, limit):
 
 
 def audio_pcm(encoded, fmt):
-    """返回 16kHz/16bit/单声道 PCM；WAV 头必须匹配，长度限制 0.1~20 秒。"""
+    """统一成 16kHz 单声道 PCM，并校验时长 0.1~20 秒。
+    例如 44.1kHz 双声道 WAV 被拒，合规的 16kHz 单声道 WAV 只留 PCM。
+
+    参数：
+        encoded (str): Base64 音频数据。
+        fmt (str): 音频格式，只能是 wav 或 pcm16。
+
+    返回：
+        bytes: 可直接送给识别进程的 PCM 字节。
+    """
     raw = decode_media(encoded, 700000)
     if fmt == 'wav':
         try:
@@ -47,7 +65,15 @@ def audio_pcm(encoded, fmt):
 
 
 def parse_visual_labels(text):
-    """只接受 {"labels":[{label,confidence}]}；去掉模型包裹与代码围栏，拒绝自由文本。"""
+    """解析视觉标签 JSON：先去掉模型包裹与代码围栏，拒绝自由文本。
+    例如 ```json {...} ``` 也能解析；自由文本或两个颜色标签直接拒绝。
+
+    参数：
+        text (str): 视觉模型原始输出。
+
+    返回：
+        list: 最多两个 {label, confidence}，品类和颜色各最多一个。
+    """
     if not isinstance(text, str):
         raise ContractError('视觉模型没有返回结构化标签', 'INVALID_PERCEPTION')
     cleaned = _FENCE.sub('', _WRAPPER.sub('', text).strip()).strip()
@@ -72,12 +98,31 @@ def parse_visual_labels(text):
 
 
 class MediaService:
-    """媒体入口：解码校验 -> worker 识别 -> 统一事件 -> 编排，并在响应里附带 perception。"""
+    """媒体入口：解码校验、worker 识别、组装事件，最后交给编排器。
+    例如上传一张背包照片，识别成视觉标签后走和文字一样的编排流程。
+    """
 
     def __init__(self, orchestrator, worker):
+        """绑定编排器与模块二 worker：前者处理事件，后者做模型识别。
+        例如先 self.worker.call 拿标签，再 self.app.handle 出结果。
+
+        参数：
+            orchestrator: 接收标准事件的编排器实例。
+            worker: 提供 call(operation, data) 的识别进程适配器。
+        """
         self.app, self.worker = orchestrator, worker
 
     def handle(self, source, data):
+        """校验媒体请求并交给识别进程，组装事件后回带 perception。
+        例如语音先转写成 transcript，视觉标签先过置信度门槛，手势不稳定时返回 pending。
+
+        参数：
+            source (str): 媒体类型，voice、vision 或 gesture。
+            data (dict): 原始请求体，含 trace_id/user_id/session_id 与媒体字段。
+
+        返回：
+            dict: 编排结果，追加 perception（含 provider 与 trace_id）。
+        """
         if not isinstance(data, dict):
             raise ContractError('媒体请求必须是 JSON 对象')
         ids = {key: nonempty(data.get(key), key) for key in ('trace_id', 'user_id', 'session_id')}

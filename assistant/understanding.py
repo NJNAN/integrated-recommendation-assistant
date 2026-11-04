@@ -15,7 +15,9 @@ _THOUSANDS = re.compile(r'(?<=\d)[,，](?=\d{3}(?:\D|$))')
 
 @dataclass
 class IntentResult:
-    """一次事件的理解结果：意图、槽位、反馈方向、动作、冲突与缺失项。"""
+    """承载一次事件的理解结果：意图、槽位、反馈方向、动作、冲突与缺失项。
+    例如“预算300以内的蓝色背包”会得到品类、颜色和预算上限三个槽位。
+    """
     intent: str = 'discover'
     slots: dict = field(default_factory=dict)
     slot_evidence: dict = field(default_factory=dict)
@@ -28,18 +30,39 @@ class IntentResult:
     text: str = ''
 
     def to_dict(self):
+        """把结果转成可 JSON 序列化的普通字典，方便写进响应和 trace。
+        例如落盘或回包前调用 to_dict()，字段会原样变成 dict 键。
+        """
         return asdict(self)
 
 
 def understand(event: InteractionEvent, visual_threshold: float = .7) -> IntentResult:
-    """抽取顺序固定：文本/语音 -> 视觉标签 -> 显式 slots，再按优先级判定意图与缺失项。"""
+    """把一条事件归一成意图、槽位、反馈与缺失项，顺序固定、结果可复现。
+    例如“预算300以内的蓝色背包”会先取文字槽位，再合并视觉标签，最后判为 filter。
+    抽取顺序：文本/语音 -> 视觉标签 -> 显式 slots，再按优先级判定意图与缺失项。
+
+    参数：
+        event (InteractionEvent): 待理解的一条事件，读取 source 和 payload。
+        visual_threshold (float): 视觉标签置信度门槛，低于它的只记入 ignored_labels，不进槽位。
+
+    返回：
+        IntentResult: 归一后的理解结果，缺失项写在 missing 里。
+    """
     payload = event.payload
     text = payload.get('transcript', payload.get('text', ''))
     result = IntentResult(text=text, action=payload.get('action'))
     text_source = 'voice' if event.source == 'voice' else 'text'
 
     def add(key, value, source, confidence=1.0):
-        """同一轮同一槽位出现不同值即记冲突并保留先出现的值，保证结果可复现。"""
+        """写入一个槽位：同轮槽位冲突时保留先出现的值，并记入冲突列表。
+        例如文字说“蓝色”、视觉标签说“红色”，只保留蓝色，冲突写进 conflicts。
+
+        参数：
+            key (str): 槽位名，如 category、color、budget_max。
+            value: 槽位值。
+            source (str): 证据来源，text/voice/vision/explicit。
+            confidence (float): 该来源的置信度，显式槽位默认 1.0。
+        """
         if key in result.slots and result.slots[key] != value:
             result.conflicts.append({'slot': key, 'values': [result.slots[key], value], 'source': source})
             return

@@ -9,13 +9,17 @@ from assistant.orchestrator import Orchestrator
 
 
 def _write_text(settings, name, lines):
-    """对照表与异常记录是 Markdown；_stage 只负责 JSON，这里补一个纯文本写出。"""
+    """对照表与异常记录是 Markdown；_stage 只负责 JSON，这里补一个纯文本写出。
+    例如把“解释与证据对照表”写成 outputs/stage04_evidence_table.md。
+    """
     settings.output_dir.mkdir(parents=True, exist_ok=True)
     (settings.output_dir / name).write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
 def _citations_ok(item):
-    """引用必须可回溯：都在本商品 snippets 内，且 id 以 catalog:<item_id>: 开头。"""
+    """引用必须可回溯：都在本商品 snippets 内，且 id 以 catalog:<item_id>: 开头。
+    例如引用里混进别的商品 id，就判定这条解释不合格。
+    """
     ids = {snippet['id'] for snippet in item['evidence']['snippets']}
     prefix = f"catalog:{item['item_id']}:"
     citations = item['explanation']['citations']
@@ -23,7 +27,9 @@ def _citations_ok(item):
 
 
 def _normal_ok(response):
-    """正常解释：价格写进正文、事实与证据一致、引用可核验、语音文本相同。"""
+    """正常解释：价格写进正文、事实与证据一致、引用可核验、语音文本相同。
+    例如 5 条用例里第一条“正常事实解释”必须全部满足这四项。
+    """
     items = response['items']
     return (response['status'] == 'ok' and bool(items)
             and all(i['trace_id'] == response['trace_id'] for i in items)
@@ -34,22 +40,33 @@ def _normal_ok(response):
 
 
 def _drop_snippets(target):
+    """注入“无证据”：清空证据片段，期望解释降级为 INSUFFICIENT_EVIDENCE。
+    例如模拟目录只给了商品名、没有可核验片段的情况。
+    """
     target.evidence.snippets = []
     return {'field': 'evidence.snippets', 'value': [], 'expected_code': 'INSUFFICIENT_EVIDENCE'}
 
 
 def _drop_price(target):
+    """注入“字段缺失”：删掉证据里的 price，期望 EVIDENCE_MISMATCH。
+    例如证据属性少了 price 键，解释必须停下而不是猜价格。
+    """
     del target.evidence.attributes['price']
     return {'field': 'evidence.attributes.price', 'value': '<deleted>', 'expected_code': 'EVIDENCE_MISMATCH'}
 
 
 def _shift_price(target):
+    """注入“价格不一致”：把证据价格加 1，期望 EVIDENCE_MISMATCH。
+    例如商品标价 10 而证据写 11，就判定为对不上。
+    """
     target.evidence.attributes['price'] += 1
     return {'field': 'evidence.attributes.price', 'value': '<original+1>', 'expected_code': 'EVIDENCE_MISMATCH'}
 
 
 def _inject(name, item, inject):
-    """在深拷贝上注入异常，断言解释降级、引用清空且没有编造内容。"""
+    """在深拷贝上注入异常，断言解释降级、引用清空且没有编造内容。
+    例如无证据、缺字段、价格加一三种注入都走同一条判定逻辑。
+    """
     target = deepcopy(item)
     expected = inject(target)
     started = time.perf_counter()
@@ -62,7 +79,9 @@ def _inject(name, item, inject):
 
 
 def run(settings):
-    """跑 5 条用例并落盘三类证据；返回用例列表供 run_all 汇总。"""
+    """跑 5 条用例并落盘三类证据；返回用例列表供 run_all 汇总。
+    例如先跑一条正常解释，再注入三种异常，最后验证弱视觉标签被忽略。
+    """
     normal_event = event('explanation-normal', '推荐台灯')
     cases = [case('正常事实解释', Orchestrator(settings), normal_event, 'ok', _normal_ok)]
     items = cases[0]['response']['items']

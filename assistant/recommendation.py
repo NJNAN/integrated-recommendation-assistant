@@ -144,7 +144,7 @@ class RecommendationAdapter:
         self.remote = remote if remote is not None else (HTTPRecommender(settings) if settings.recommender_url else None)
 
     def _recall_upstream(self, request):
-        """向模块一真实推荐服务要一批候选，只取「候选 ID + 分数」。
+        """负责向模块一获取候选商品和推荐分数，并进行数据校验和去重。
 
         参数：
             request (RecommendationRequest): 本次推荐请求。本函数实际只用到其中两个字段：
@@ -189,7 +189,9 @@ class RecommendationAdapter:
 
     @staticmethod
     def _hard_failures(product, constraints):
-        """判断一件商品是否违反硬约束（违反就不许推荐，跟分数无关）。
+        """获得候选商品后，先进行硬约束过滤。
+这部分主要检查品类、颜色、预算以及价格缺失情况。
+例如用户要蓝色背包、预算 300 元以内，那么红色背包、蓝色水杯和 500 元的蓝色背包都会被排除。。
 
         参数：
             product (dict): 目录里的一行商品。本函数只读三个键：
@@ -223,7 +225,7 @@ class RecommendationAdapter:
         return failures
 
     def _score_breakdown(self, request, product, targets, upstream, mode, constraints):
-        """给一个候选商品算六项分数（每一项都能单独解释，总分就是六项之和）。
+        """采用了六项加权评分机制，包括商品热度、上下文匹配、商品相似度、上游推荐分数、用户反馈和标签亲和度。
 
         参数：
             request (RecommendationRequest): 本次请求。本函数用到：
@@ -277,7 +279,9 @@ class RecommendationAdapter:
                 'tag_affinity': round(affinity, 6)}
 
     def _evidence(self, request, product, sources, constraints):
-        """给一件商品组装「证据包」（解释模块只能引用这里的内容）。
+        """生成证据包，保存商品属性、召回来源和命中的用户条件，供解释模块使用。
+最后按总分从高到低排序，同分商品按商品 ID 排序，再通过 `TopK` 截断，默认最多返回六件商品。
+如果上游服务超时，系统会切换到本地热门商品召回。
 
         参数：
             request (RecommendationRequest): 本次请求；只用它的 `trace_id`

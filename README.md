@@ -16,6 +16,7 @@
 - **超时与降级说明（阶段3 提交物）：[docs/超时与降级说明.md](docs/超时与降级说明.md)**
 - **成员3 逐函数讲稿（按文件/函数/参数逐个讲）：[docs/成员3_讲稿_按文件逐函数.md](docs/成员3_讲稿_按文件逐函数.md)**
 - **成员3 模块一对接代码讲稿（模块一里和阶段3 直接相关的部分）：[docs/成员3_模块一对接代码讲稿.md](docs/成员3_模块一对接代码讲稿.md)**
+- **成员3 三分钟口播稿（答辩直接念）：[docs/成员3_讲稿_三分钟口播.md](docs/成员3_讲稿_三分钟口播.md)**
 - 部署、降级、风险与演示提纲：[docs/deployment.md](docs/deployment.md)
 - 六阶段小结：[docs/stage_summaries.md](docs/stage_summaries.md)
 - 提交清单：[docs/submission_checklist.md](docs/submission_checklist.md)
@@ -46,8 +47,19 @@
 - **纯离线模式**：`IRA_PROFILE=demo`，不启动模块一、不加载模型，只用 `data/catalog.json` 的 18 件合成商品。
 
 ```powershell
-python -m pip install -r ..\01_recommender_system\release\requirements-web.txt   # 仅 auto 模式需要
-python -B app.py                       # 打开 http://127.0.0.1:8080
+python -m pip install -r ..\01_recommender_system\release\requirements-web.txt   # 仅 auto 模式需要 Flask
+
+start.bat                       # 一键启动（自动接模块一，就绪后打开 http://127.0.0.1:8080）
+start.bat demo                  # 纯离线：18 件合成商品，不启模块一（断网也能演示）
+start.bat detach                # 后台启动，脚本立即返回；日志 runtime\server.out.log
+start.bat stop                  # 停止服务（网页端口 + 模块一 5001 都清掉）
+start.bat 8090                  # 换端口
+start.bat demo detach           # 组合使用
+
+stop-all.bat                    # 全停：网页服务 + 模块一 + 模块二 worker + 后台窗口，并复核端口
+
+.\start.ps1 -Mode demo          # 等价的 PowerShell 版（-Mode / -Detach / -Port / -Stop）
+python -B app.py                # 等价的直接启动方式，打开 http://127.0.0.1:8080
 
 $env:IRA_PROFILE = 'demo'; python -B app.py    # 纯离线演示（只要标准库）
 

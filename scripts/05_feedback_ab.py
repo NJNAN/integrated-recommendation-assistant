@@ -11,29 +11,39 @@ QUERY = {'text': '推荐300元以内的礼物'}
 
 
 def _rank(response, item_id):
-    """目标商品在结果中的名次；不在结果里返回 None。"""
+    """取目标商品在结果里的名次（从 1 开始），不在结果里返回 None。
+    例如基线第 3 名、正反馈后第 1 名，rank_delta 就是 -2。
+    """
     ids = [item['item_id'] for item in response['items']]
     return ids.index(item_id) + 1 if item_id in ids else None
 
 
 def _score(response, item_id):
-    """目标商品的分数；不在结果里返回 None。"""
+    """取目标商品的最终分数，不在结果里返回 None。
+    例如正反馈后分数从 0.42 升到 0.57，score_delta 就是 +0.15。
+    """
     return next((item['score'] for item in response['items'] if item['item_id'] == item_id), None)
 
 
 def _scored(response):
-    """完整排序结果，用于断言重复反馈不改变任何分数。"""
+    """把排序结果压成 (id, score) 列表，便于整份比对。
+    例如重复点赞后两张列表逐项相等，才说明反馈是覆盖而不是累加。
+    """
     return [(item['item_id'], item['score']) for item in response['items']]
 
 
 def _case(name, input_event, response, expected_status, passed, reason, **extra):
-    """组装一条带排名/分数证据的 A/B 用例。"""
+    """组装一条 A/B 用例记录，附上排名与分数变化作为证据。
+    例如“正反馈提升”这条会把 rank_delta=-2 一起写进 JSON。
+    """
     return {'name': name, 'input': input_event, 'expected_status': expected_status,
             'response': response, 'primary_reason': reason, 'passed': bool(passed), **extra}
 
 
 def _write_markdown(settings, result, ranks, rank_delta, score_delta):
-    """写反馈对照表与性能摘要：只留答辩要讲的结论与统计口径。"""
+    """写反馈对照表与性能摘要两个 md，只留答辩要讲的结论和统计口径。
+    例如对照表固定三行：无反馈、正反馈、负反馈。
+    """
     settings.output_dir.mkdir(parents=True, exist_ok=True)
     table = ['# 反馈前后对照', '',
              f'- generated_at: {result["generated_at"]}',
@@ -71,7 +81,9 @@ def _write_markdown(settings, result, ranks, rank_delta, score_delta):
 
 
 def run(settings):
-    """跑 5 条 A/B 用例并落盘 JSON 与两个 md。"""
+    """跑 5 条反馈 A/B 用例：固定查询与候选池，只让反馈变化。
+    例如目标取基线中间名次，正反馈上升、负反馈下降，结果落盘 JSON 与两个 md。
+    """
     app = Orchestrator(settings)
     payload = {**QUERY, 'top_k': settings.max_top_k}
     ev_before = event('feedback-before', payload=payload)

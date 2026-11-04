@@ -20,30 +20,51 @@ CSP = ("default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' 
 
 
 def _reject_constant(value):
-    """拒绝 NaN/Infinity，避免非有限数字进入业务层。"""
+    """拒绝 JSON 里的 NaN/Infinity，挡住非有限数字。
+    例如请求体出现 {"price": Infinity} 就抛 ValueError，不进业务层。
+    """
     raise ValueError('JSON 不允许非有限数字')
 
 
 def create_server(settings, orchestrator=None, media_worker=None):
-    """组装线程化服务；orchestrator/worker 可注入，便于测试或替换上游。"""
+    """组装线程化 HTTP 服务，把业务层和媒体进程一起接进请求处理器。
+    例如测试里传入假的 orchestrator 就能绕开真实推荐上游。
+    """
     app = orchestrator or Orchestrator(settings)
     worker = media_worker or ModuleTwoWorker(settings)
     media = MediaService(app, worker)
 
     class Server(ThreadingHTTPServer):
+        """带守护线程的 HTTP 服务器，关闭时顺带收掉媒体子进程。
+        例如按 Ctrl+C 结束服务，模块二的 worker 进程也会一起退出。
+        """
+
         daemon_threads = True
 
         def server_close(self):
+            """关闭监听套接字前先关掉媒体 worker，避免留下孤儿进程。
+            例如端口释放后立刻重跑 06 脚本，不会撞上残留进程。
+            """
             closer = getattr(worker, 'close', None)
             if closer:
                 closer()
             super().server_close()
 
     class Handler(BaseHTTPRequestHandler):
+        """处理单条 HTTP 请求：静态走白名单，POST 走校验与错误映射。
+        例如 GET /style.css 命中白名单，/favicon.ico 一律 404。
+        """
+
         def log_message(self, fmt, *args):
+            """静默访问日志，避免用户输入和请求体落进标准输出。
+            例如 POST /api/events 的查询文本不会被打到控制台。
+            """
             pass  # 用户输入与请求体不进入访问日志
 
         def send_body(self, status, body, content_type='application/json; charset=utf-8'):
+            """统一响应出口：写状态码与安全响应头，再发出 dict 或字节串。
+            例如所有响应都带 CSP 和 no-store，页面不会被中间层缓存。
+            """
             if isinstance(body, dict):
                 body = json.dumps(body, ensure_ascii=False, allow_nan=False).encode('utf-8')
             self.send_response(status)
@@ -56,12 +77,17 @@ def create_server(settings, orchestrator=None, media_worker=None):
             self.wfile.write(body)
 
         def fail(self, status, code, message, trace_id=''):
-            """边界错误也带 trace_id，方便前端日志与后端响应对齐。"""
+            """按统一错误信封返回 4xx/5xx，并保证一定带 trace_id。
+            例如 413 超大请求体也返回 BODY_TOO_LARGE 和同一个 trace_id。
+            """
             self.send_body(status, {'trace_id': trace_id or str(uuid.uuid4()), 'status': 'error',
                                     'error': {'code': code, 'message': message}, 'message': message,
                                     'items': [], 'degraded': False, 'warnings': []})
 
         def do_GET(self):
+            """处理健康检查与三个静态文件，其余路径一律 404。
+            例如 /api/health 返回目录规模，/app.js 读白名单里的静态文件。
+            """
             path = urlsplit(self.path).path
             if path == '/api/health':
                 catalog = app.recommender.catalog
@@ -82,6 +108,9 @@ def create_server(settings, orchestrator=None, media_worker=None):
             self.fail(404, 'NOT_FOUND', '接口或资源不存在')
 
         def do_POST(self):
+            """校验来源、类型与体积后分发请求，并把异常映射成状态码。
+            例如上游超时回 504，JSON 解析失败回 400，未预期异常回 500。
+            """
             self.connection.settimeout(10)
             path = urlsplit(self.path).path
             if path != '/api/events' and path not in MEDIA:

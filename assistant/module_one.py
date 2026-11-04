@@ -24,7 +24,8 @@ NOUNS = (('杯子', {'MUG', 'MUGS', 'CUP', 'CUPS'}), ('雨伞', {'UMBRELLA', 'UM
 
 
 def _prices(path, known):  # 读交易 CSV，聚合最后观测单价与交易次数
-    """从历史交易 CSV 里，算出每件商品的「最后观测单价」和「交易次数」。
+    """读取历史交易 CSV，过滤退货和无效交易，然后整理每件商品最后一次观测到的交易单价，并统计有效交易次数。
+
 
     参数：
         path (str | pathlib.Path): 交易明细 CSV 的路径，来自模块一项目的
@@ -69,7 +70,9 @@ def _prices(path, known):  # 读交易 CSV，聚合最后观测单价与交易�
 
 
 def import_catalog(catalog_path, transactions_path, output):
-    """把模块一的「商品表 + 历史交易」合成我们自己的商品目录 JSON。
+    """把商品表和交易数据合并成统一的 JSON 商品目录。这里主要处理价格、颜色、品类和商品热度。
+价格使用历史交易单价，缺少价格就明确标记；颜色和品类根据商品描述提取，无法确定时不会随意猜测；热
+度则根据有效交易次数归一化得到。同时，文件还会记录数据来源和哈希值，方便追踪。
 
     参数：
         catalog_path (str | pathlib.Path): 模块一发布包里的商品表
@@ -159,7 +162,7 @@ class ModuleOneService:
         self.settings, self.process, self.log = settings, None, None
 
     def start(self):
-        """启动模块一冻结服务，并等它真的就绪（最多 20 秒）。
+        """负责启动模块一的服务，并通过健康检查确认服务是否准备完成。启动失败时也会清理进程。
 
         参数：
             无（用 `__init__` 里记下的 settings）。
@@ -235,7 +238,9 @@ class ModuleOneService:
 
 
 def integrated_settings(settings):
-    """启动时决定：接模块一真实服务，还是走离线目录。
+    """根据当前环境决定连接真实推荐服务，还是使用离线商品目录。
+真正的 HTTP 请求封装在 `adapters.py` 中，通过接口调用模块一，不需要直接修改模块一的内部实现。
+所以，这个文件主要解决的是两个模块之间的数据转换和服务对接问题。
 
     参数：
         settings (config.settings.Settings): 原始配置。本函数读：

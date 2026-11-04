@@ -13,30 +13,37 @@ const HINT = {text: '支持多轮修改与撤销', voice: '录音识别最长20�
 let recording = null, camera = null, cameraTimer = null, cameraStreamId = null; let recordingStarting = false, cameraStarting = false;
 
 // ---------- 小工具：转义 / DOM / 按钮 / 消息 / 媒体状态 / 控件刷新 / HTTP ----------
+/** 转义 HTML 特殊字符，避免商品名里的 < 破坏页面；渲染任何外部文本前都先过一遍。 */
 function esc(value) {
   return String(value).replace(/[&<>"]/g,
     (char) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[char]));
 }
+/** 创建一个带类名和文本的元素；拼卡片、消息气泡这类小节点时用。 */
 function el(tag, cls, text) {
   const node = document.createElement(tag); if (cls) node.className = cls;
   if (text !== undefined) node.textContent = text; return node;
 }
+/** 生成一个按钮并绑定点击回调；反馈、比较、导出等按钮都走这里。 */
 function btn(text, cls, onClick) {
   const node = el('button', cls, text); node.type = 'button';
   node.onclick = onClick; return node;
 }
+/** 往对话区追加一条消息并滚到底部；用户输入和助手回复都这样显示。 */
 function chat(text, user = false) {
   const box = el('div', user ? 'user-message' : 'assistant-message'); if (!user) box.append(el('span', 'speaker', '拾物助手'));
   box.append(el('p', '', text)); $('messages').append(box);
   $('messages').scrollTop = $('messages').scrollHeight;
 }
+/** 更新媒体状态栏文字，error=true 时标红；录音或拍照失败时提示原因。 */
 function st(text, error = false) {
   $('media-status').hidden = false; $('media-status').textContent = text;
   $('media-status').className = 'media-status' + (error ? ' error' : '');
 }
+/** 切换全局忙碌状态并刷新控件；请求进行中时禁用按钮，避免重复提交。 */
 function busy(value) {
   state.busy = value; ctl();
 }
+/** 按当前状态统一刷新所有按钮的可用性；录音中、请求中或选中不足两件时该灰就灰。 */
 function ctl() {
   document.querySelectorAll('button').forEach((node) => {
     node.disabled = state.busy;
@@ -51,6 +58,7 @@ function ctl() {
     node.disabled = true;
   });
 }
+/** 发一次 JSON POST 并解析响应；/api/events 和 /api/media/* 共用。 */
 async function post(url, payload) {
   const r = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(payload)});
@@ -58,6 +66,7 @@ async function post(url, payload) {
 }
 
 // ---------- 事件请求与推荐结果渲染 ----------
+/** 组装事件并发往 /api/events，把结果渲染成卡片；文字、找相似、撤销、比较都走它，失败时在状态栏提示重试。 */
 async function send(payload, source = 'text', label) {
   if (state.busy || state.recording) return; if (label) chat(label, true);
   busy(true);
@@ -71,9 +80,11 @@ async function send(payload, source = 'text', label) {
     $('result-status').className = 'result-status error';
   } finally { busy(false); }
 }
+/** 把价格格式化成 ¥/£，null 显示“价格缺失”；卡片和比较表共用。 */
 function money(value, currency = 'CNY') {
   return value === null ? '价格缺失' : `${currency === 'GBP' ? '£' : '¥'}${value}`;
 }
+/** 把一条推荐渲染成卡片 HTML；每张卡带喜欢/不喜欢、找相似和证据折叠。 */
 function cardHTML(item, index, response) {
   const preference = response.context?.preferences?.[item.item_id];
   const meta = response.dataset === 'synthetic-demo-v1' ? '合成演示商品'
@@ -102,6 +113,7 @@ function cardHTML(item, index, response) {
     </details>
   </div></article>`;
 }
+/** 用一次响应重绘整个结果区：条件标签、商品卡、手势下拉和 trace 面板；每次请求完成后调用。 */
 function render(response) {
   const items = response.items || []; state.selected.clear();
   $('compare-count').textContent = '0';
@@ -153,6 +165,7 @@ $('products').addEventListener('change', (event) => {
 });
 
 // ---------- 文本 / 视觉标签 / 手势输入与模式切换 ----------
+/** 解析“背包:0.95,红色:0.8”这类视觉标签输入；格式或置信度不合法就提示并返回 null。 */
 function parseLabelInput(raw) {
   const labels = [];
   for (const entry of raw.trim().split(/[,，]/).filter(Boolean)) {
@@ -208,6 +221,7 @@ document.querySelectorAll('[data-mode]').forEach((tab) => tab.addEventListener('
 }));
 
 // ---------- 语音：录音、PCM16 编码与 WAV 上传 ----------
+/** 把二进制分块转成 base64；录音 PCM 和上传的音频/图片都靠它进 JSON。 */
 function bytes64(bytes) {
   let result = '';
   for (let i = 0; i < bytes.length; i += 8192) {
@@ -215,6 +229,7 @@ function bytes64(bytes) {
   }
   return btoa(result);
 }
+/** 打开麦克风录 20 秒 PCM16；点“开始录音”时启动，超时或手动停止后自动识别。 */
 async function startRecording() {
   if (state.busy || recording || recordingStarting) return; recordingStarting = true;
   ctl(); let stream, context;
@@ -244,6 +259,7 @@ async function startRecording() {
     recordingStarting = false; ctl();
   }
 }
+/** 停止录音并释放麦克风、AudioContext；结束录音或页面关闭时调用。 */
 async function releaseRecording() {
   const take = recording; recording = null;
   state.recording = false; if (!take) return null;
@@ -252,6 +268,7 @@ async function releaseRecording() {
   take.silent.disconnect(); take.stream.getTracks().forEach((track) => track.stop());
   await take.context.close(); return take;
 }
+/** 收尾录音：重采样到 16kHz/16bit 单声道后上传识别；录音太短会提示重录。 */
 async function finishRecording() {
   const take = await releaseRecording(); if (!take) return;
   busy(false);
@@ -273,6 +290,7 @@ async function finishRecording() {
 }
 
 // ---------- 媒体请求、摄像头拍照与手势轮询 ----------
+/** 调一次 /api/media/<source> 做语音、图片或手势识别；结果写回输入框并渲染推荐，手势出错就停摄像头。 */
 async function mediaRequest(source, payload, label) {
   if (state.busy) return; const gesture = source === 'gesture';
   const session = state.session; const stream = cameraStreamId;
@@ -317,12 +335,14 @@ async function mediaRequest(source, payload, label) {
     }
   }
 }
+/** 截当前摄像头画面并缩到 640px 内的 JPEG base64；拍照识别和手势轮询都用它。 */
 function frame64() {
   const video = $('camera-preview'); if (!video.videoWidth) throw new Error('摄像头画面尚未准备好');
   const canvas = document.createElement('canvas'); const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight));
   canvas.width = Math.round(video.videoWidth * scale); canvas.height = Math.round(video.videoHeight * scale);
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); return canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
 }
+/** 每 100ms 抓一帧做手势识别；手势模式下持续轮询，切走模式或关摄像头就停。 */
 async function gestureLoop() {
   if (!camera || state.mode !== 'gesture') return;
   if (!state.busy && !recording) {
@@ -335,6 +355,7 @@ async function gestureLoop() {
   }
   if (camera && state.mode === 'gesture') cameraTimer = setTimeout(gestureLoop, 100);
 }
+/** 打开摄像头并显示预览；视觉或手势模式下点“开启摄像头”时调用。 */
 async function startCamera() {
   if (state.busy || camera || cameraStarting) return; const mode = state.mode;
   cameraStarting = true; ctl();
@@ -355,6 +376,7 @@ async function startCamera() {
     cameraStarting = false; ctl();
   }
 }
+/** 关闭摄像头并清掉轮询定时器；切换模式、结束会话或页面隐藏时调用。 */
 function stopCamera() {
   clearTimeout(cameraTimer); camera?.getTracks().forEach((track) => track.stop());
   camera = null; cameraStreamId = null;

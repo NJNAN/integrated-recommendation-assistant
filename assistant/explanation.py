@@ -7,12 +7,16 @@ SLOT_NAMES = {'category': '品类', 'color': '颜色', 'recipient': '对象', 's
 
 
 def _degraded(code, text):
-    """降级返回：引用必须清空，保证异常时不会凭空生成证据。"""
+    """降级返回：引用必须清空，保证异常时不会凭空生成证据。
+    例如证据包为空时返回 INSUFFICIENT_EVIDENCE，citations 一定是空列表。
+    """
     return {'text': text, 'speech_text': text, 'citations': [], 'degraded': True, 'code': code}
 
 
 def _price_text(item, attributes):
-    """价格短语只来自证据属性；价格缺失时明确说明，不猜数字。"""
+    """价格短语只来自证据属性；价格缺失时明确说明，不猜数字。
+    例如 10 英镑写成“历史观测单价 £10”，价格是 None 就写“价格缺失”。
+    """
     price = attributes['price']
     if price is None:
         return '价格缺失'
@@ -21,7 +25,9 @@ def _price_text(item, attributes):
 
 
 def _condition_text(item, matched):
-    """把命中的硬约束翻译成答辩时可以逐条讲的条件说明。"""
+    """把命中的硬约束翻译成答辩时可以逐条讲的条件说明。
+    例如预算 300 元以内、蓝色，会输出“符合当前条件：预算不超过300元、颜色为蓝色。”
+    """
     parts = []
     for key, value in matched.items():
         if key == 'budget_max':
@@ -34,7 +40,9 @@ def _condition_text(item, matched):
 
 
 def explain(item: RecommendationItem) -> dict:
-    """为一条推荐生成可核验解释；任何不一致都返回降级结果与错误码。"""
+    """为一条推荐生成可核验解释；任何不一致都返回降级结果与错误码。
+    规则：只引用 item.evidence 的事实，证据不足给 INSUFFICIENT_EVIDENCE，对不上给 EVIDENCE_MISMATCH。
+    """
     if not isinstance(item, RecommendationItem):
         return _degraded('INVALID_ITEM', '无法生成解释：输入不是推荐商品对象。')
     pack = item.evidence

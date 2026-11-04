@@ -14,14 +14,33 @@ MODULE_ONE_ACCOUNTS = (
 
 
 def _path(name, default):
+    """从环境变量取路径，没设置就退回仓库内的默认值。
+
+    例如 IRA_OUTPUT_DIR 可覆盖输出目录，未设置时落到仓库的 outputs/。
+
+    参数：
+        name (str): 环境变量名。
+        default (str | Path): 未设置时的默认路径。
+
+    返回：
+        Path: 统一成 Path 对象，避免各处再转换。
+    """
     return Path(os.getenv(name, default))
 
 
 def _module_root(name):
-    """找兄弟项目的代码：开发机优先用同级目录，否则用仓库内 vendor/ 副本。
+    """定位兄弟模块的代码目录：先找同级目录，再退回仓库内的 vendor 副本。
+
+    例如本机 ../01_recommender_system 存在就直接用，否则用 vendor/ 里的副本。
 
     这样别人 clone 仓库后，模块一/模块二的源码仍然可见（vendor 见仓库 vendor/README.md）；
     没有 vendor 副本时返回一个不存在的路径，调用方按“没有上游”处理，自动走离线。
+
+    参数：
+        name (str): 兄弟项目的目录名。
+
+    返回：
+        Path: 可用的模块根目录，或一个不存在的路径。
     """
     sibling = ROOT.parent / name
     return sibling if sibling.is_dir() else ROOT / 'vendor' / name
@@ -29,6 +48,10 @@ def _module_root(name):
 
 @dataclass(frozen=True)
 class Settings:
+    """集中存放所有路径、端口和阈值，业务代码不再写死这些常量。
+
+    例如端口用环境变量 IRA_PORT 覆盖，默认 8080；商品目录默认 data/catalog.json。
+    """
     catalog_path: Path = field(default_factory=lambda: _path('IRA_CATALOG', ROOT / 'data/catalog.json'))
     output_dir: Path = field(default_factory=lambda: _path('IRA_OUTPUT_DIR', ROOT / 'outputs'))
     web_dir: Path = ROOT / 'web'
@@ -58,7 +81,16 @@ class Settings:
 
 
 def offline_demo_settings(base):
-    """回退到内置合成目录：不连模块一、不用任何账号。"""
+    """生成离线演示配置：只用内置目录，不连模块一、不留任何账号。
+
+    例如自动接入失败时，用它替换配置继续本地演示。
+
+    参数：
+        base (Settings): 原始配置，其余字段保持不变。
+
+    返回：
+        Settings: 清空推荐服务与账号后的新配置。
+    """
     return replace(base, catalog_path=ROOT / 'data/catalog.json', recommender_url='',
                    recommender_username='', recommender_password='', recommender_accounts=(),
                    upstream_timeout_seconds=2.0)

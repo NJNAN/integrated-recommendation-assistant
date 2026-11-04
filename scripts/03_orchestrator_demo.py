@@ -138,11 +138,15 @@ def run(settings):
                 and all('popularity' in item['sources'] for item in response['items']))
 
     # 前三条：分别验证成功、边界（空集）、失败降级三类行为。
+    # 第一是正常推荐，输入“蓝色背包预算 300 以内”，检查返回商品是否满足条件。
+    # 第二是硬约束空结果，输入“耳机预算 1 元以内”，检查系统是否正确返回空集。
+    # 第三是模拟上游超时，检查系统能否自动降级，并且继续遵守硬约束。
     cases = [case('正常推荐', app, event('orchestrator-normal', '蓝色背包预算300以内'), 'ok', normal_ok),
              case('硬约束空集', app, event('orchestrator-empty', '耳机预算1以内', session='empty'), 'empty', empty_ok),
              case('上游超时降级', degraded_app, event('orchestrator-timeout', '蓝色背包预算300以内'), 'ok', degraded_ok)]
 
     # 第四条：同一事件用两个全新 Orchestrator 各跑一次，比较 items+context 的 sha256。
+    # 第四是确定性复现，让相同请求在相同配置和初始状态下执行两次，比较商品结果和会话状态是否一致。
     # 排序键是 (-score, item_id) 且没有随机数，所以两次结果必须逐字段一致。
     repro_event = event('repro', '推荐礼物预算300以内')
     first, second = Orchestrator(settings).handle(repro_event), Orchestrator(settings).handle(repro_event)
@@ -155,6 +159,9 @@ def run(settings):
                   'comparison': {'same_items_and_scores': first['items'] == second['items'],
                                  'same_context': first['context'] == second['context']}})
     # 落盘 + 打印；finish 在有失败时抛 SystemExit(1)，保证“跑失败就是失败”。
+    #脚本通过 `write_json()` 保存测试输入、实际结果和通过情况。
+#如果测试失败，脚本会返回非零退出状态，方便自动化验收。
+#这样就不仅能验证单个函数，还能检查从用户输入到最终推荐结果的完整流程。
     write_json(settings, 'stage03_demo.json', report(cases))
     finish(settings, cases, '阶段03')
     return cases

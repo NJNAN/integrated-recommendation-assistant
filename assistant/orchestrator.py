@@ -20,7 +20,8 @@ from assistant.understanding import understand
 
 
 class Orchestrator:
-    """编排器：唯一入口。依赖通过构造注入，测试时可以换成假上游 / 假会话。"""
+    """这个文件相当于整个系统的调度中心，负责把意图识别、会话管理、商品推荐和结果解释几个模块连接起来。
+初始化时，主要准备了配置对象、推荐适配器和会话存储对象。"""
 
     def __init__(self, settings, recommender=None, store=None):
         """装配三个依赖，并准备一把锁。

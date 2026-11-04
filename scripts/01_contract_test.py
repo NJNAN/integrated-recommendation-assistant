@@ -6,9 +6,28 @@ from assistant.orchestrator import Orchestrator
 
 
 def _event_cases(app):
-    """6 条契约用例：合法事件、零预算、缺字段、非法视觉、空筛选追问。"""
+    """构造阶段1 契约用例：合法事件、零预算、缺字段、非法视觉和空筛选追问。
+
+    例如把 trace_id 删掉就该得到 INVALID_EVENT，而不是 500。
+
+    参数：
+        app (Orchestrator): 复用同一个编排器跑全部用例。
+
+    返回：
+        list: 用例结果列表，供报告与日志汇总。
+    """
 
     def same_trace(response):
+        """断言 trace 里每一行都沿用请求的 trace_id，保证链路可追。
+
+        例如出现别的 trace_id，说明跨模块传递时丢了追踪字段。
+
+        参数：
+            response (dict): 编排器返回的响应体。
+
+        返回：
+            bool: 全部一致时为真。
+        """
         return all(row['trace_id'] == response['trace_id'] for row in response['trace'])
 
     rows = [
@@ -34,7 +53,16 @@ def _event_cases(app):
 
 
 def _request_roundtrip():
-    """跨模块推荐请求必须能无损往返 JSON。"""
+    """验证推荐请求能无损往返 JSON，一个字段都不能丢。
+
+    例如带 GBP 预算的请求 to_dict 再 from_dict 后必须完全一致。
+
+    返回：
+        bool: 往返一致返回真，否则断言失败。
+
+    异常：
+        AssertionError: 往返结果不一致时抛出。
+    """
     source = event('request-contract')
     request = RecommendationRequest(source['trace_id'], source['user_id'], source['session_id'],
                                     source['timestamp'], source['source'], 'discover',
@@ -45,7 +73,17 @@ def _request_roundtrip():
 
 
 def _log_lines(cases, roundtrip):
-    """日志写清命令、解释器版本和每条 PASS/FAIL，便于直接贴进报告。"""
+    """拼出可贴进交付报告的日志行：命令、解释器版本和每条 PASS/FAIL。
+
+    例如报告里能直接看到 request_json_roundtrip: PASS。
+
+    参数：
+        cases (list): 用例结果列表。
+        roundtrip (bool): 请求往返是否通过。
+
+    返回：
+        list[str]: 逐行日志文本。
+    """
     return ['command: python -B scripts/01_contract_test.py',
             'runner: python -B scripts/run_all.py',
             f"python: {sys.version.split()[0]}",
@@ -55,7 +93,16 @@ def _log_lines(cases, roundtrip):
 
 
 def run(settings):
-    """生成阶段1 报告与日志；返回用例列表供 run_all 汇总。"""
+    """跑完阶段1 契约验收，写出报告与日志，返回用例列表供 run_all 汇总。
+
+    例如 run_all 会把这里的用例并进总报告，失败时整体退出码非零。
+
+    参数：
+        settings (Settings): 决定输出目录与目录来源的配置。
+
+    返回：
+        list: 本次执行的用例结果。
+    """
     cases = _event_cases(Orchestrator(settings))
     roundtrip = _request_roundtrip()
     write_json(settings, 'stage01_contract_report.json', report(cases))

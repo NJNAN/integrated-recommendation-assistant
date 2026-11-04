@@ -1,4 +1,6 @@
-"""Standalone entry point, executed ONLY with module two's Python environment."""
+"""薄入口：只在模块二自己的 Python 环境里跑的常驻进程，用 stdin/stdout 传 JSON。
+例如收到 voice 请求才懒加载 ASR 模型，不预先占内存。
+"""
 import base64
 import importlib
 import io
@@ -22,6 +24,9 @@ detector_key = None
 
 
 def image_frame(encoded):
+    """把 base64 图解码成 OpenCV 帧，先校验尺寸再占内存。
+    例如超过 4096 边长或 400 万像素的图直接报错，不交给 OpenCV。
+    """
     # Validate decompressed dimensions before OpenCV allocates a pixel array.
     from PIL import Image
     import cv2
@@ -41,6 +46,9 @@ def image_frame(encoded):
 
 
 def infer(operation, data):
+    """按操作类型分发到语音、视觉、手势模型，首次才加载。
+    例如同一用户连续手势复用 detector，换用户就清空时序状态。
+    """
     global asr, vision, detector, detector_key
     if operation == 'voice':
         if asr is None:

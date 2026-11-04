@@ -3,7 +3,9 @@ from assistant.contracts import ContractError
 
 
 def apply_feedback(session, item_id, sign):
-    """覆盖式写入偏好：同方向重复反馈不累加权重，非法目标抛 INVALID_FEEDBACK。"""
+    """把一条点赞或点踩写入会话偏好，同一商品覆盖而不累加。
+    例如连点两次“喜欢”仍记 +1；反馈没展示过的商品会报 INVALID_FEEDBACK。
+    """
     if type(sign) is not int or sign not in (-1, 1):
         raise ContractError('反馈必须为 1（喜欢）或 -1（不喜欢）', 'INVALID_FEEDBACK')
     if item_id not in session.last_item_ids:
